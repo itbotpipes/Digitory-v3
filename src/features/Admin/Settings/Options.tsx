@@ -51,19 +51,9 @@ export default function Options({ className }: OptionsProps) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('media', file);
-
     try {
       const token = localStorage.getItem('admin_token') || '';
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/media`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        body: formData
-      });
-      const json = await res.json();
+      const json = await api.upload('/media', file, token);
       const url = json.data?.url || json.url;
       if (url) {
         if (target === 'black') {
