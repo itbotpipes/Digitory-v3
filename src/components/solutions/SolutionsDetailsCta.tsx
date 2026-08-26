@@ -50,7 +50,7 @@ export default function CtaSection({ title, desc }: SolutionsDetailsCtaProps) {
         {/* Mascot Image at Top */}
         <div className="relative w-56 h-56 mb-8 select-none">
           <img
-            src="/mascot_newdigi.png"
+            src="/Mascot copy.png"
             alt="Digitory Mascot"
             className="w-full h-full object-contain"
           />

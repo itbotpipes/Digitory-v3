@@ -337,39 +337,26 @@ export default function DigitoryLiveRecord() {
         />
       ))}
 
-      {/* Central 3D hardware stack */}
-      <div className="record-stack">
-        <div className="stack-layer stack-layer-4" />
-        <div className="stack-layer stack-layer-3" />
-        <div className="stack-layer stack-layer-2" />
-
-        <div className="record-card">
-          <div className="brand-row">
-            <DigitoryMark />
-            <span className="brand-name">Digitory</span>
-          </div>
-          <div className="live-record-label">ONE LIVE RECORD</div>
-          <div className="order-card">
-            <div className="order-head">
-              <span>{activeDetails.table}</span>
-              <span className="order-time">{activeDetails.time}</span>
-            </div>
-            <div className="order-content">
-              <div className="order-items">
-                {activeDetails.items.map((item, idx) => (
-                  <div key={idx}>
-                    {item.qty} × {item.name}
-                  </div>
-                ))}
-              </div>
-              <div className="order-amount">{activeDetails.price}</div>
-            </div>
-            <div className={`live-status ${activeDetails.statusColor}`}>
-              <span className="live-dot" />
-              {activeDetails.status}
-            </div>
-          </div>
-        </div>
+      {/* Central 3D hardware stack using Layer 1.png */}
+      <div className="record-stack" style={{ 
+        position: 'relative', 
+        width: '330px', 
+        height: '330px', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center' 
+      }}>
+        {/* The physical device image */}
+        <img 
+          src="/Layer 1.png" 
+          alt="Digitory Live Record" 
+          style={{ 
+            width: '100%', 
+            height: 'auto', 
+            objectFit: 'contain',
+            pointerEvents: 'none'
+          }} 
+        />
       </div>
     </div>
   );
@@ -471,8 +458,6 @@ function NetworkSVG({ hoveredNodeId }: { hoveredNodeId: number | null }) {
         </radialGradient>
       </defs>
 
-      <circle cx="350" cy="350" r="260" fill="url(#orangeGlow)" />
-
       {/* Connector lines */}
       <g strokeLinecap="round" fill="none">
         {NODES.map((n) => {
@@ -507,14 +492,6 @@ function NetworkSVG({ hoveredNodeId }: { hoveredNodeId: number | null }) {
           );
         })}
       </g>
-
-      <ellipse
-        cx="350" cy="470"
-        rx="200" ry="70"
-        fill="#FF6A00"
-        opacity="0.07"
-        filter="url(#blurGlow)"
-      />
     </svg>
   );
 }
