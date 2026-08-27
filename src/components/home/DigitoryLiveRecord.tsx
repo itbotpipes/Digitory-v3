@@ -28,242 +28,32 @@ interface Node {
   num: string;
   title: string;
   sub: string;
+  slug: string;
   Icon: LucideIcon;
-  details: NodeDetails;
 }
 
 const NODES: Node[] = [
-  {
-    id: 1,
-    num: "01",
-    title: "POS & Billing",
-    sub: "Fast • Accurate • Reliable",
-    Icon: CreditCard,
-    details: {
-      table: "Counter 02",
-      time: "08:43 PM",
-      items: [
-        { name: "Cheese Garlic Bread", qty: 1 },
-        { name: "Cold Brew Coffee", qty: 2 }
-      ],
-      price: "₹450",
-      status: "BILLING",
-      statusColor: "text-orange-500"
-    }
-  },
-  {
-    id: 2,
-    num: "02",
-    title: "QR Ordering",
-    sub: "Contactless • Quick",
-    Icon: QrCode,
-    details: {
-      table: "Table 04",
-      time: "08:45 PM",
-      items: [
-        { name: "Virgin Mojito", qty: 2 },
-        { name: "Peri Peri Fries", qty: 1 }
-      ],
-      price: "₹380",
-      status: "QR ORDERED",
-      statusColor: "text-blue-500"
-    }
-  },
-  {
-    id: 3,
-    num: "03",
-    title: "Order Management",
-    sub: "Track • Manage",
-    Icon: ClipboardList,
-    details: {
-      table: "KOT #412",
-      time: "08:46 PM",
-      items: [
-        { name: "Veg Hakka Noodles", qty: 1 },
-        { name: "Chilli Paneer Dry", qty: 1 }
-      ],
-      price: "₹540",
-      status: "DISPATCHED",
-      statusColor: "text-purple-500"
-    }
-  },
-  {
-    id: 4,
-    num: "04",
-    title: "Kitchen Display",
-    sub: "Real-time • Clear",
-    Icon: Tv,
-    details: {
-      table: "Station 1 (Mains)",
-      time: "08:48 PM",
-      items: [
-        { name: "Dal Makhani", qty: 1 },
-        { name: "Lachha Paratha", qty: 3 }
-      ],
-      price: "₹410",
-      status: "COOKING",
-      statusColor: "text-amber-500"
-    }
-  },
-  {
-    id: 5,
-    num: "05",
-    title: "Smart Stock Counting",
-    sub: "Live • Automated",
-    Icon: Boxes,
-    details: {
-      table: "Store Room",
-      time: "08:49 PM",
-      items: [
-        { name: "Fresh Cream", qty: "12/20" },
-        { name: "Butter Blocks", qty: "8/15" }
-      ],
-      price: "85% OK",
-      status: "AUDITED",
-      statusColor: "text-teal-500"
-    }
-  },
-  {
-    id: 6,
-    num: "06",
-    title: "Inventory Management",
-    sub: "GRN • PO • Vendors",
-    Icon: Archive,
-    details: {
-      table: "PO #819",
-      time: "08:50 PM",
-      items: [
-        { name: "Basmati Rice (50kg)", qty: "2 Bags" },
-        { name: "Refined Oil (15L)", qty: "5 Tins" }
-      ],
-      price: "Sent",
-      status: "GRN RECORDED",
-      statusColor: "text-indigo-500"
-    }
-  },
-  {
-    id: 7,
-    num: "07",
-    title: "Recipe Management",
-    sub: "Casted • Consistent",
-    Icon: ChefHat,
-    details: {
-      table: "Dish Costing",
-      time: "08:52 PM",
-      items: [
-        { name: "Paneer Tikka (Rec.)", qty: "Cost: ₹110" },
-        { name: "Selling Price", qty: "Price: ₹320" }
-      ],
-      price: "34% Cost",
-      status: "OPTIMIZED",
-      statusColor: "text-emerald-500"
-    }
-  },
-  {
-    id: 8,
-    num: "08",
-    title: "Clubs & Events",
-    sub: "Cashless • Engaging",
-    Icon: Sparkles,
-    details: {
-      table: "VVIP Event",
-      time: "08:54 PM",
-      items: [
-        { name: "Entry Cover Charge", qty: "25 Ppl" },
-        { name: "VIP Table Booking", qty: "2 Tables" }
-      ],
-      price: "₹45,000",
-      status: "CASHLESS",
-      statusColor: "text-rose-500"
-    }
-  },
-  {
-    id: 9,
-    num: "09",
-    title: "Business Analytics",
-    sub: "Cost • Revenue • Profit",
-    Icon: BarChart3,
-    details: {
-      table: "EOD Summary",
-      time: "08:55 PM",
-      items: [
-        { name: "Net Sales Today", qty: "₹1,24,500" },
-        { name: "Gross Margin", qty: "68.2%" }
-      ],
-      price: "+14.2% MoM",
-      status: "HEALTHY",
-      statusColor: "text-green-500"
-    }
-  },
-  {
-    id: 10,
-    num: "10",
-    title: "Customer Loyalty",
-    sub: "CRM • Rewards",
-    Icon: Users,
-    details: {
-      table: "Member #482",
-      time: "08:56 PM",
-      items: [
-        { name: "Siddharth Sharma", qty: "Gold" },
-        { name: "Points Redeemed", qty: "320 pts" }
-      ],
-      price: "₹120 Disc",
-      status: "REWARDED",
-      statusColor: "text-pink-500"
-    }
-  },
-  {
-    id: 11,
-    num: "11",
-    title: "Procurement",
-    sub: "Purchase • Control",
-    Icon: ShoppingCart,
-    details: {
-      table: "Vendor Portal",
-      time: "08:58 PM",
-      items: [
-        { name: "Poultry Supplier", qty: "Chicken" },
-        { name: "Price Approved", qty: "₹240/kg" }
-      ],
-      price: "Best Bid",
-      status: "CONTRACTED",
-      statusColor: "text-cyan-500"
-    }
-  },
-  {
-    id: 12,
-    num: "12",
-    title: "Menu Engineering",
-    sub: "Profit • Optimised",
-    Icon: TrendingUp,
-    details: {
-      table: "Menu Matrix",
-      time: "09:00 PM",
-      items: [
-        { name: "Butter Chicken", qty: "Star ★" },
-        { name: "Tandoori Roti", qty: "High Vol" }
-      ],
-      price: "Max Profit",
-      status: "RECOMMENDED",
-      statusColor: "text-violet-500"
-    }
-  },
+  { id: 1,  num: "01", title: "POS & Billing",        sub: "Fast • Accurate • Reliable", slug: "pos",                 Icon: CreditCard },
+  { id: 2,  num: "02", title: "QR Ordering",          sub: "Contactless • Quick",       slug: "qr-ordering",        Icon: QrCode },
+  { id: 3,  num: "03", title: "Order Management",     sub: "Track • Manage",            slug: "pos",                 Icon: ClipboardList },
+  { id: 4,  num: "04", title: "Kitchen Display",      sub: "Real-time • Clear",         slug: "kds",                 Icon: Tv },
+  { id: 5,  num: "05", title: "Smart Stock Counting", sub: "Live • Automated",          slug: "inventory",           Icon: Boxes },
+  { id: 6,  num: "06", title: "Inventory Management", sub: "GRN • PO • Vendors",        slug: "inventory",           Icon: Archive },
+  { id: 7,  num: "07", title: "Recipe Management",    sub: "Casted • Consistent",       slug: "recipe-management",   Icon: ChefHat },
+  { id: 8,  num: "08", title: "Clubs & Events",       sub: "Cashless • Engaging",       slug: "event-management",    Icon: Sparkles },
+  { id: 9,  num: "09", title: "Business Analytics",   sub: "Cost • Revenue • Profit",   slug: "reports",             Icon: BarChart3 },
+  { id: 10, num: "10", title: "Customer Loyalty",     sub: "CRM • Rewards",             slug: "loyalty",             Icon: Users },
+  { id: 11, num: "11", title: "Procurement",          sub: "Purchase • Control",        slug: "production-planning", Icon: ShoppingCart },
+  { id: 12, num: "12", title: "Menu Engineering",     sub: "Profit • Optimised",        slug: "menu-engineering",    Icon: TrendingUp },
 ];
 
 export default function DigitoryLiveRecord() {
-  const [expandedId, setExpandedId] = useState<number | null>(null);
-
-  const toggleNode = (id: number) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
-
   return (
     <div className="w-full max-w-[620px] mx-auto flex flex-col gap-2.5" style={{ userSelect: "none" }}>
 
       {/* Upper header block - Left Aligned with card start (pl-[12%]) */}
       <div className="flex flex-col items-start text-left mb-1 w-full pl-[12%]">
-        <h2 className="text-[18px] font-extrabold tracking-tight leading-tight text-zinc-900 dark:text-white">
+        <h2 className="text-[21px] font-extrabold tracking-tight leading-tight text-zinc-900 dark:text-white">
           12 solutions. <span className="text-[#FF5A0A]">One operating system.</span>
         </h2>
       </div>
@@ -271,47 +61,42 @@ export default function DigitoryLiveRecord() {
       {/* 12 stacked cards container - Right Aligned with container right edge */}
       <div className="flex flex-col items-end gap-1 w-full relative">
         {NODES.map((n) => {
-          const isExpanded = expandedId === n.id;
           const isFirst = n.id === 1;
-
-          // Uniform width matching the first card (88%)
           const cardWidthPct = 88;
 
           return (
-            <div
+            <a
               key={n.id}
-              className="flex flex-col border border-zinc-200/50 dark:border-zinc-800/50 rounded-lg overflow-hidden bg-white dark:bg-zinc-900 transition-all duration-200"
+              href={`/solutions/${n.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col border border-zinc-200/50 dark:border-zinc-800/50 rounded-lg overflow-hidden bg-white dark:bg-zinc-900 transition-all duration-200 hover:border-orange-500/40 hover:shadow-md hover:-translate-y-[1px]"
               style={{
                 width: `${cardWidthPct}%`,
-                boxShadow: isExpanded
-                  ? "0 4px 12px rgba(0, 0, 0, 0.05)"
-                  : "0 1px 3px rgba(0, 0, 0, 0.01)",
+                boxShadow: "0 1px 3px rgba(0, 0, 0, 0.01)",
               }}
             >
-              {/* Header clickable row (ultra-compact padding) */}
+              {/* Card clickable row */}
               <div
-                onClick={() => toggleNode(n.id)}
-                className="flex items-center justify-between px-3 py-1 hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50 transition-colors duration-200 cursor-pointer"
+                className="flex items-center justify-between px-3 py-1 hover:bg-zinc-50/80 dark:hover:bg-zinc-850/80 transition-colors duration-200 cursor-pointer"
                 style={{
                   borderLeft: isFirst
                     ? "3.5px solid #FF5A0A"
-                    : isExpanded
-                      ? "3.5px solid rgba(255, 90, 10, 0.6)"
-                      : "3.5px solid transparent",
-                  paddingLeft: (isFirst || isExpanded) ? "10px" : "13px"
+                    : "3.5px solid transparent",
+                  paddingLeft: isFirst ? "10px" : "13px"
                 }}
               >
                 {/* Left Group */}
                 <div className="flex items-center gap-2.5">
-                  <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 w-4">
+                  <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 w-4 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
                     {n.num}
                   </span>
 
-                  <div className="flex items-center justify-center w-6 h-6 text-zinc-500 dark:text-zinc-400">
+                  <div className="flex items-center justify-center w-6 h-6 text-zinc-500 dark:text-zinc-400 group-hover:text-[#FF5A0A] transition-colors">
                     <n.Icon size={13} strokeWidth={2.2} />
                   </div>
 
-                  <span className="text-[11.5px] font-bold text-zinc-800 dark:text-zinc-200">
+                  <span className="text-[11.5px] font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-[#FF5A0A] transition-colors">
                     {n.title}
                   </span>
 
@@ -328,58 +113,15 @@ export default function DigitoryLiveRecord() {
                     {n.sub}
                   </span>
 
-                  {/* Styled Arrow Link matching reference mock */}
-                  <div style={{ color: isExpanded ? '#FF5A0A' : '#71717a' }} className="flex items-center justify-center pl-1">
+                  {/* Styled Arrow Link */}
+                  <div className="flex items-center justify-center pl-1 text-zinc-400 dark:text-zinc-500 group-hover:text-[#FF5A0A] group-hover:translate-x-0.5 transition-all">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </div>
                 </div>
               </div>
-
-              {/* Dynamic Accordion Body */}
-              {isExpanded && (
-                <div className="px-10 pb-3 pt-0.5 bg-zinc-50/50 dark:bg-zinc-950/30 animate-[fadeIn_0.15s_ease-out]">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-zinc-100 dark:border-zinc-800/80 pt-2">
-                    {/* Left block: details list */}
-                    <div className="space-y-1">
-                      <span className="text-[9px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-bold block">
-                        Record Information
-                      </span>
-                      <div className="text-[11px] text-zinc-650 dark:text-zinc-350 font-bold">
-                        {n.details.table}
-                      </div>
-                      <div className="space-y-0.5">
-                        {n.details.items.map((item, idx) => (
-                          <div key={idx} className="text-[10px] text-zinc-500 dark:text-zinc-400">
-                            {item.qty} × {item.name}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Right block: metrics/stats */}
-                    <div className="flex flex-col justify-between sm:items-end">
-                      <div className="space-y-0.5 sm:text-right">
-                        <span className="text-[9px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-bold block">
-                          Metric / Price
-                        </span>
-                        <div className="text-[14px] font-black text-zinc-800 dark:text-zinc-200">
-                          {n.details.price}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-1 mt-1">
-                        <span className="w-1.2 h-1.2 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[9px] font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-wider">
-                          {n.details.status}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            </a>
           );
         })}
       </div>

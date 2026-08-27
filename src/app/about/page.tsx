@@ -7,7 +7,6 @@ import { generateSeoMetadata } from "@/lib/seo";
 import AboutHero from '../../components/about/AboutHero';
 import ProblemsSection from '../../components/about/ProblemsSection';
 import StorySection from '../../components/about/StorySection';
-import LiveQueueSection from '../../components/about/LiveQueueSection';
 import BeliefsSection from '../../components/about/BeliefsSection';
 import TeamSection from '../../components/about/TeamSection';
 import MissionCta from '../../components/about/MissionCta';
@@ -40,10 +39,6 @@ export default function AboutPage() {
         </ScrollFocusWrapper>
 
         <ScrollFocusWrapper>
-          <LiveQueueSection />
-        </ScrollFocusWrapper>
-
-        <ScrollFocusWrapper>
           <BeliefsSection showBeliefs={false} showStats={true} />
         </ScrollFocusWrapper>
 
@@ -52,11 +47,11 @@ export default function AboutPage() {
         </ScrollFocusWrapper>
 
         <ScrollFocusWrapper>
-          <BeliefsSection showBeliefs={true} showStats={false} />
+          <TeamSection />
         </ScrollFocusWrapper>
 
         <ScrollFocusWrapper>
-          <TeamSection />
+          <BeliefsSection showBeliefs={true} showStats={false} />
         </ScrollFocusWrapper>
 
 
