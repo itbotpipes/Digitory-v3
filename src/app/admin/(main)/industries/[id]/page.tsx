@@ -296,16 +296,26 @@ export default function AdminIndustryEditor({ params }: IndustryEditorProps) {
                     <span className="text-[11px] font-medium leading-tight">No Hero Image</span>
                   </div>
                 )}
-                
-                <div className="flex flex-col gap-2">
-                  <button
-                    type="button"
-                    disabled={uploadingField !== null}
-                    onClick={() => heroImageInputRef.current?.click()}
-                    className="bg-[#FF4F18] text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-[#E03F0D] disabled:opacity-50 transition-colors cursor-pointer w-max"
-                  >
-                    {uploadingField === 'heroImage' ? 'Uploading to Cloudinary...' : 'Upload Hero Image'}
-                  </button>
+                           <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <button
+                      type="button"
+                      disabled={uploadingField !== null}
+                      onClick={() => heroImageInputRef.current?.click()}
+                      className="bg-[#FF4F18] text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-[#E03F0D] disabled:opacity-50 transition-colors cursor-pointer w-max"
+                    >
+                      {uploadingField === 'heroImage' ? 'Uploading to Cloudinary...' : 'Upload Hero Image'}
+                    </button>
+                    {formData.heroImage && (
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, heroImage: '' })}
+                        className="bg-red-500/10 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/40 px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-500/20 transition-colors cursor-pointer"
+                      >
+                        Remove Image
+                      </button>
+                    )}
+                  </div>
                   <input
                     ref={heroImageInputRef}
                     type="file"
@@ -349,14 +359,25 @@ export default function AdminIndustryEditor({ params }: IndustryEditorProps) {
                 )}
                 
                 <div className="flex flex-col gap-2">
-                  <button
-                    type="button"
-                    disabled={uploadingField !== null}
-                    onClick={() => cardImageInputRef.current?.click()}
-                    className="bg-[#FF4F18] text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-[#E03F0D] disabled:opacity-50 transition-colors cursor-pointer w-max"
-                  >
-                    {uploadingField === 'image' ? 'Uploading to Cloudinary...' : 'Upload Card Image'}
-                  </button>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <button
+                      type="button"
+                      disabled={uploadingField !== null}
+                      onClick={() => cardImageInputRef.current?.click()}
+                      className="bg-[#FF4F18] text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-[#E03F0D] disabled:opacity-50 transition-colors cursor-pointer w-max"
+                    >
+                      {uploadingField === 'image' ? 'Uploading to Cloudinary...' : 'Upload Card Image'}
+                    </button>
+                    {formData.image && (
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, image: '' })}
+                        className="bg-red-500/10 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/40 px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-500/20 transition-colors cursor-pointer"
+                      >
+                        Remove Image
+                      </button>
+                    )}
+                  </div>
                   <input
                     ref={cardImageInputRef}
                     type="file"
