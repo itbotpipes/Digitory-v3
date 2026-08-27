@@ -304,7 +304,7 @@ export default function Hero() {
 
   return (
     <section className="mx-auto max-w-7xl px-6 md:px-8 pt-0 pb-10 md:pt-0 md:pb-16 lg:pt-0 lg:pb-20">
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center -mt-4 md:-mt-8 lg:-mt-12">
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center -mt-4 md:-mt-6 lg:-mt-6">
 
         {/* Left Copy Column */}
         <div className="lg:col-span-5 flex flex-col justify-center space-y-6 md:space-y-8">
@@ -346,29 +346,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column */}
-        <div className="lg:col-span-7 flex flex-col items-center justify-center w-full select-none gap-6">
+        {/* Right Column with stable height container */}
+        <div className="lg:col-span-7 flex flex-col items-center justify-start w-full select-none min-h-[630px] lg:h-[630px]">
           <DigitoryLiveRecord />
-
-          {/* AI Layer Pill */}
-          <div className="flex justify-center w-full mt-[-60px] z-20">
-            <div className="inline-flex items-center justify-center gap-3 border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md rounded-full px-6 py-2 text-[10px] font-bold text-zinc-700 dark:text-zinc-300 shadow-[0_4px_20px_rgba(0,0,0,0.02)] whitespace-nowrap">
-              <div className="flex items-center gap-1.5 text-[#FF4F18]">
-                <Cpu className="w-3.5 h-3.5" />
-                <span className="font-extrabold tracking-wider uppercase">DIGITORY AI LAYER</span>
-              </div>
-              <span className="text-zinc-300 dark:text-zinc-700">|</span>
-              <div className="flex items-center gap-2 text-[9.5px] uppercase tracking-wider text-zinc-500 dark:text-zinc-300">
-                <span>Predict Demand</span>
-                <span className="text-[#FF4F18] font-black">•</span>
-                <span>Detect Anomalies</span>
-                <span className="text-[#FF4F18] font-black">•</span>
-                <span>Optimise Operations</span>
-                <span className="text-[#FF4F18] font-black">•</span>
-                <span>Act in Real Time</span>
-              </div>
-            </div>
-          </div>
         </div>
 
       </div>
