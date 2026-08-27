@@ -261,15 +261,8 @@ export default function DigitoryLiveRecord() {
   return (
     <div className="w-full max-w-[620px] mx-auto flex flex-col gap-2.5" style={{ userSelect: "none" }}>
       
-      {/* Upper header block matching reference - 20% bigger & Left Aligned */}
-      <div className="flex flex-col items-start text-left gap-1.5 mb-1 pl-[6%]">
-        <div className="inline-flex items-center gap-1.5 text-[10.5px] font-black tracking-wider text-[#FF5A0A]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5A0A]" />
-          <span>DIGITORY OS</span>
-          <span className="text-zinc-300">/</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-emerald-500">LIVE</span>
-        </div>
+      {/* Upper header block matching reference - Left Aligned */}
+      <div className="flex flex-col items-start text-left mb-1 pl-[6%]">
         <h2 className="text-[30px] font-extrabold tracking-tight leading-tight text-zinc-900 dark:text-white">
           12 solutions. <span className="text-[#FF5A0A]">One operating system.</span>
         </h2>
@@ -281,8 +274,8 @@ export default function DigitoryLiveRecord() {
           const isExpanded = expandedId === n.id;
           const isFirst = n.id === 1;
 
-          // Pyramid effect: width expands step-by-step as we go down (01 is narrowest, 12 is widest)
-          const cardWidthPct = 88 + (n.id - 1) * 1.09;
+          // Uniform width matching the first card (88%)
+          const cardWidthPct = 88;
 
           return (
             <div 

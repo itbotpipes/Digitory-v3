@@ -303,8 +303,8 @@ export default function Hero() {
   const activeDetails = activeNode ? activeNode.details : defaultDetails;
 
   return (
-    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-0 pb-10 md:pt-0 md:pb-16 lg:pt-0 lg:pb-20">
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center -mt-4 md:-mt-6 lg:-mt-6">
+    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-4 pb-10 md:pt-6 md:pb-16 lg:pt-8 lg:pb-20">
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center">
 
         {/* Left Copy Column */}
         <div className="lg:col-span-5 flex flex-col justify-center space-y-6 md:space-y-8">
