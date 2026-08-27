@@ -307,7 +307,7 @@ export default function Hero() {
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center">
 
         {/* Left Copy Column */}
-        <div className="lg:col-span-5 flex flex-col justify-center space-y-6 md:space-y-8">
+        <div className="lg:col-span-6 flex flex-col justify-center space-y-6 md:space-y-8">
           {/* Heading */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-[1.1]">
             Manage busy hours <span className="text-[#FF4F18]">with ease</span>
@@ -346,8 +346,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column with stable height container */}
-        <div className="lg:col-span-7 flex flex-col items-center justify-start w-full select-none min-h-[630px] lg:h-[630px]">
+        {/* Right Column with stable height container - reduced from col-span-7 to col-span-6 and width constrained */}
+        <div className="lg:col-span-6 flex flex-col items-center justify-start w-full select-none min-h-[580px] lg:h-[580px] max-w-[530px] ml-auto">
           <DigitoryLiveRecord />
         </div>
 

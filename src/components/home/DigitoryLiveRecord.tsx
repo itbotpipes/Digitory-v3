@@ -33,11 +33,11 @@ interface Node {
 }
 
 const NODES: Node[] = [
-  { 
-    id: 1,  
-    num: "01", 
-    title: "POS & Billing",         
-    sub: "Fast • Accurate • Reliable", 
+  {
+    id: 1,
+    num: "01",
+    title: "POS & Billing",
+    sub: "Fast • Accurate • Reliable",
     Icon: CreditCard,
     details: {
       table: "Counter 02",
@@ -51,11 +51,11 @@ const NODES: Node[] = [
       statusColor: "text-orange-500"
     }
   },
-  { 
-    id: 2,  
-    num: "02", 
-    title: "QR Ordering",           
-    sub: "Contactless • Quick",        
+  {
+    id: 2,
+    num: "02",
+    title: "QR Ordering",
+    sub: "Contactless • Quick",
     Icon: QrCode,
     details: {
       table: "Table 04",
@@ -69,11 +69,11 @@ const NODES: Node[] = [
       statusColor: "text-blue-500"
     }
   },
-  { 
-    id: 3,  
-    num: "03", 
-    title: "Order Management",      
-    sub: "Track • Manage",             
+  {
+    id: 3,
+    num: "03",
+    title: "Order Management",
+    sub: "Track • Manage",
     Icon: ClipboardList,
     details: {
       table: "KOT #412",
@@ -87,11 +87,11 @@ const NODES: Node[] = [
       statusColor: "text-purple-500"
     }
   },
-  { 
-    id: 4,  
-    num: "04", 
-    title: "Kitchen Display",       
-    sub: "Real-time • Clear",          
+  {
+    id: 4,
+    num: "04",
+    title: "Kitchen Display",
+    sub: "Real-time • Clear",
     Icon: Tv,
     details: {
       table: "Station 1 (Mains)",
@@ -105,11 +105,11 @@ const NODES: Node[] = [
       statusColor: "text-amber-500"
     }
   },
-  { 
-    id: 5,  
-    num: "05", 
-    title: "Smart Stock Counting",  
-    sub: "Live • Automated",           
+  {
+    id: 5,
+    num: "05",
+    title: "Smart Stock Counting",
+    sub: "Live • Automated",
     Icon: Boxes,
     details: {
       table: "Store Room",
@@ -123,11 +123,11 @@ const NODES: Node[] = [
       statusColor: "text-teal-500"
     }
   },
-  { 
-    id: 6,  
-    num: "06", 
-    title: "Inventory Management",  
-    sub: "GRN • PO • Vendors",         
+  {
+    id: 6,
+    num: "06",
+    title: "Inventory Management",
+    sub: "GRN • PO • Vendors",
     Icon: Archive,
     details: {
       table: "PO #819",
@@ -141,11 +141,11 @@ const NODES: Node[] = [
       statusColor: "text-indigo-500"
     }
   },
-  { 
-    id: 7,  
-    num: "07", 
-    title: "Recipe Management",     
-    sub: "Casted • Consistent",        
+  {
+    id: 7,
+    num: "07",
+    title: "Recipe Management",
+    sub: "Casted • Consistent",
     Icon: ChefHat,
     details: {
       table: "Dish Costing",
@@ -159,11 +159,11 @@ const NODES: Node[] = [
       statusColor: "text-emerald-500"
     }
   },
-  { 
-    id: 8,  
-    num: "08", 
-    title: "Clubs & Events",        
-    sub: "Cashless • Engaging",        
+  {
+    id: 8,
+    num: "08",
+    title: "Clubs & Events",
+    sub: "Cashless • Engaging",
     Icon: Sparkles,
     details: {
       table: "VVIP Event",
@@ -177,11 +177,11 @@ const NODES: Node[] = [
       statusColor: "text-rose-500"
     }
   },
-  { 
-    id: 9,  
-    num: "09", 
-    title: "Business Analytics",    
-    sub: "Cost • Revenue • Profit",    
+  {
+    id: 9,
+    num: "09",
+    title: "Business Analytics",
+    sub: "Cost • Revenue • Profit",
     Icon: BarChart3,
     details: {
       table: "EOD Summary",
@@ -195,11 +195,11 @@ const NODES: Node[] = [
       statusColor: "text-green-500"
     }
   },
-  { 
-    id: 10, 
-    num: "10", 
-    title: "Customer Loyalty",      
-    sub: "CRM • Rewards",              
+  {
+    id: 10,
+    num: "10",
+    title: "Customer Loyalty",
+    sub: "CRM • Rewards",
     Icon: Users,
     details: {
       table: "Member #482",
@@ -213,11 +213,11 @@ const NODES: Node[] = [
       statusColor: "text-pink-500"
     }
   },
-  { 
-    id: 11, 
-    num: "11", 
-    title: "Procurement",           
-    sub: "Purchase • Control",         
+  {
+    id: 11,
+    num: "11",
+    title: "Procurement",
+    sub: "Purchase • Control",
     Icon: ShoppingCart,
     details: {
       table: "Vendor Portal",
@@ -231,11 +231,11 @@ const NODES: Node[] = [
       statusColor: "text-cyan-500"
     }
   },
-  { 
-    id: 12, 
-    num: "12", 
-    title: "Menu Engineering",      
-    sub: "Profit • Optimised",         
+  {
+    id: 12,
+    num: "12",
+    title: "Menu Engineering",
+    sub: "Profit • Optimised",
     Icon: TrendingUp,
     details: {
       table: "Menu Matrix",
@@ -260,10 +260,10 @@ export default function DigitoryLiveRecord() {
 
   return (
     <div className="w-full max-w-[620px] mx-auto flex flex-col gap-2.5" style={{ userSelect: "none" }}>
-      
+
       {/* Upper header block - Left Aligned with card start (pl-[12%]) */}
       <div className="flex flex-col items-start text-left mb-1 w-full pl-[12%]">
-        <h2 className="text-[24px] font-extrabold tracking-tight leading-tight text-zinc-900 dark:text-white">
+        <h2 className="text-[18px] font-extrabold tracking-tight leading-tight text-zinc-900 dark:text-white">
           12 solutions. <span className="text-[#FF5A0A]">One operating system.</span>
         </h2>
       </div>
@@ -278,13 +278,13 @@ export default function DigitoryLiveRecord() {
           const cardWidthPct = 88;
 
           return (
-            <div 
+            <div
               key={n.id}
               className="flex flex-col border border-zinc-200/50 dark:border-zinc-800/50 rounded-lg overflow-hidden bg-white dark:bg-zinc-900 transition-all duration-200"
               style={{
                 width: `${cardWidthPct}%`,
-                boxShadow: isExpanded 
-                  ? "0 4px 12px rgba(0, 0, 0, 0.05)" 
+                boxShadow: isExpanded
+                  ? "0 4px 12px rgba(0, 0, 0, 0.05)"
                   : "0 1px 3px rgba(0, 0, 0, 0.01)",
               }}
             >
@@ -293,11 +293,11 @@ export default function DigitoryLiveRecord() {
                 onClick={() => toggleNode(n.id)}
                 className="flex items-center justify-between px-3 py-1 hover:bg-zinc-50/50 dark:hover:bg-zinc-850/50 transition-colors duration-200 cursor-pointer"
                 style={{
-                  borderLeft: isFirst 
-                    ? "3.5px solid #FF5A0A" 
-                    : isExpanded 
-                    ? "3.5px solid rgba(255, 90, 10, 0.6)" 
-                    : "3.5px solid transparent",
+                  borderLeft: isFirst
+                    ? "3.5px solid #FF5A0A"
+                    : isExpanded
+                      ? "3.5px solid rgba(255, 90, 10, 0.6)"
+                      : "3.5px solid transparent",
                   paddingLeft: (isFirst || isExpanded) ? "10px" : "13px"
                 }}
               >
@@ -327,7 +327,7 @@ export default function DigitoryLiveRecord() {
                   <span className="text-[11px] text-zinc-400 dark:text-zinc-500 font-medium hidden sm:inline">
                     {n.sub}
                   </span>
-                  
+
                   {/* Styled Arrow Link matching reference mock */}
                   <div style={{ color: isExpanded ? '#FF5A0A' : '#71717a' }} className="flex items-center justify-center pl-1">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -385,7 +385,7 @@ export default function DigitoryLiveRecord() {
       </div>
 
       {/* DIGITORY AI LAYER Pill - strict single row on desktop/tablet - matches cards style/width */}
-      <div 
+      <div
         className="flex flex-row items-center bg-zinc-950 text-white rounded-xl px-4 py-2.5 gap-2.5 justify-between w-[88%] self-end overflow-hidden"
         style={{
           boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)"
@@ -398,14 +398,10 @@ export default function DigitoryLiveRecord() {
 
         <div className="flex items-center text-zinc-800 self-stretch shrink-0 text-[10px] select-none">|</div>
 
-        <div className="flex flex-row items-center justify-between gap-3 flex-1 text-[8.5px] text-zinc-400 font-semibold overflow-hidden">
+        <div className="flex flex-row items-center justify-between gap-4 flex-1 text-[8.5px] text-zinc-400 font-semibold overflow-hidden">
           <div className="flex flex-col whitespace-nowrap">
             <span className="text-white font-bold text-[9px]">Predict Demand</span>
             <span className="text-zinc-500 text-[8px]">Know what's coming</span>
-          </div>
-          <div className="flex flex-col whitespace-nowrap">
-            <span className="text-white font-bold text-[9px]">Detect Anomalies</span>
-            <span className="text-zinc-500 text-[8px]">Spot issues early</span>
           </div>
           <div className="flex flex-col whitespace-nowrap">
             <span className="text-white font-bold text-[9px]">Optimise Operations</span>
