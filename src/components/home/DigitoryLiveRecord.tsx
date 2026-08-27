@@ -261,15 +261,15 @@ export default function DigitoryLiveRecord() {
   return (
     <div className="w-full max-w-[620px] mx-auto flex flex-col gap-2.5" style={{ userSelect: "none" }}>
       
-      {/* Upper header block matching reference - Left Aligned */}
-      <div className="flex flex-col items-start text-left mb-1 pl-[6%]">
-        <h2 className="text-[30px] font-extrabold tracking-tight leading-tight text-zinc-900 dark:text-white">
+      {/* Upper header block - Left Aligned with card start (pl-[12%]) */}
+      <div className="flex flex-col items-start text-left mb-1 w-full pl-[12%]">
+        <h2 className="text-[24px] font-extrabold tracking-tight leading-tight text-zinc-900 dark:text-white">
           12 solutions. <span className="text-[#FF5A0A]">One operating system.</span>
         </h2>
       </div>
 
-      {/* 12 stacked cards container in a pyramid shape (wider as you go down) */}
-      <div className="flex flex-col items-center gap-1 w-full relative">
+      {/* 12 stacked cards container - Right Aligned with container right edge */}
+      <div className="flex flex-col items-end gap-1 w-full relative">
         {NODES.map((n) => {
           const isExpanded = expandedId === n.id;
           const isFirst = n.id === 1;
@@ -384,36 +384,36 @@ export default function DigitoryLiveRecord() {
         })}
       </div>
 
-      {/* DIGITORY AI LAYER Pill - strict single row on desktop/tablet */}
+      {/* DIGITORY AI LAYER Pill - strict single row on desktop/tablet - matches cards style/width */}
       <div 
-        className="flex flex-row items-center bg-zinc-950 text-white rounded-2xl px-5 py-3 gap-3 justify-between w-[100%] overflow-hidden"
+        className="flex flex-row items-center bg-zinc-950 text-white rounded-xl px-4 py-2.5 gap-2.5 justify-between w-[88%] self-end overflow-hidden"
         style={{
           boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)"
         }}
       >
-        <div className="flex items-center gap-1.5 text-[#FF5A0A] font-black tracking-widest text-[9.5px] shrink-0">
+        <div className="flex items-center gap-1.5 text-[#FF5A0A] font-black tracking-widest text-[8.5px] shrink-0">
           <span className="w-1.5 h-1.5 bg-[#FF5A0A] rounded-xs rotate-45" />
           DIGITORY AI LAYER
         </div>
 
-        <div className="flex items-center text-zinc-600 dark:text-zinc-800 self-stretch shrink-0 text-[11px] select-none">|</div>
+        <div className="flex items-center text-zinc-800 self-stretch shrink-0 text-[10px] select-none">|</div>
 
-        <div className="flex flex-row items-center justify-between gap-4 flex-1 text-[9.5px] text-zinc-400 font-semibold overflow-hidden">
+        <div className="flex flex-row items-center justify-between gap-3 flex-1 text-[8.5px] text-zinc-400 font-semibold overflow-hidden">
           <div className="flex flex-col whitespace-nowrap">
-            <span className="text-white font-bold text-[10px]">Predict Demand</span>
-            <span className="text-zinc-500 text-[8.5px]">Know what's coming</span>
+            <span className="text-white font-bold text-[9px]">Predict Demand</span>
+            <span className="text-zinc-500 text-[8px]">Know what's coming</span>
           </div>
           <div className="flex flex-col whitespace-nowrap">
-            <span className="text-white font-bold text-[10px]">Detect Anomalies</span>
-            <span className="text-zinc-500 text-[8.5px]">Spot issues early</span>
+            <span className="text-white font-bold text-[9px]">Detect Anomalies</span>
+            <span className="text-zinc-500 text-[8px]">Spot issues early</span>
           </div>
           <div className="flex flex-col whitespace-nowrap">
-            <span className="text-white font-bold text-[10px]">Optimise Operations</span>
-            <span className="text-zinc-500 text-[8.5px]">Reduce waste</span>
+            <span className="text-white font-bold text-[9px]">Optimise Operations</span>
+            <span className="text-zinc-500 text-[8px]">Reduce waste</span>
           </div>
           <div className="flex flex-col whitespace-nowrap">
-            <span className="text-white font-bold text-[10px]">Act in Real Time</span>
-            <span className="text-zinc-500 text-[8.5px]">Intelligent • Automated</span>
+            <span className="text-white font-bold text-[9px]">Act in Real Time</span>
+            <span className="text-zinc-500 text-[8px]">Intelligent • Automated</span>
           </div>
         </div>
       </div>
