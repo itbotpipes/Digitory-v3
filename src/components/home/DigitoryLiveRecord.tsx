@@ -262,7 +262,7 @@ export default function DigitoryLiveRecord() {
     <div className="w-full max-w-[620px] mx-auto flex flex-col gap-2.5" style={{ userSelect: "none" }}>
       
       {/* Upper header block matching reference - 20% bigger & Left Aligned */}
-      <div className="flex flex-col items-start text-left gap-1 mb-1 pl-[7%]">
+      <div className="flex flex-col items-start text-left gap-1.5 mb-1 pl-[6%]">
         <div className="inline-flex items-center gap-1.5 text-[10.5px] font-black tracking-wider text-[#FF5A0A]">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF5A0A]" />
           <span>DIGITORY OS</span>
@@ -270,15 +270,9 @@ export default function DigitoryLiveRecord() {
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-emerald-500">LIVE</span>
         </div>
-        <h2 className="text-[30px] font-extrabold tracking-tight text-zinc-900 dark:text-white leading-none">
-          12 solutions.
+        <h2 className="text-[30px] font-extrabold tracking-tight leading-tight text-zinc-900 dark:text-white">
+          12 solutions. <span className="text-[#FF5A0A]">One operating system.</span>
         </h2>
-        <h2 className="text-[30px] font-extrabold tracking-tight text-[#FF5A0A] leading-none -mt-1">
-          One operating system.
-        </h2>
-        <p className="text-[12px] text-zinc-500 font-semibold mt-1">
-          Every part of your restaurant. Connected on one live record.
-        </p>
       </div>
 
       {/* 12 stacked cards container in a pyramid shape (wider as you go down) */}
