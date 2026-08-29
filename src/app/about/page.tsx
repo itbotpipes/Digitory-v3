@@ -55,9 +55,9 @@ export default function AboutPage() {
         </ScrollFocusWrapper>
 
 
-        <ScrollFocusWrapper>
+        {/* <ScrollFocusWrapper>
           <ProblemsSection />
-        </ScrollFocusWrapper>
+        </ScrollFocusWrapper> */}
 
         <ScrollFocusWrapper>
           <MissionCta />
