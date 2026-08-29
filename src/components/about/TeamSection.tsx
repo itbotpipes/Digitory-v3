@@ -16,6 +16,17 @@ export default function TeamSection() {
       ],
     },
     {
+      name: 'Sandeep S',
+      role: 'Delivery and Client Relations',
+      image: '/delivery.png',
+      linkedin: 'https://www.linkedin.com/in/sandeep-singh-92931a20/',
+      gradient: 'from-[#FF4F18] to-[#FF8A00]',
+      highlights: [
+        'Ex-Infosys, MSRIT alumni',
+        '20+ years of experience in operations, implementation, and customer success.',
+      ],
+    },
+    {
       name: 'Sudhanshu Killedar',
       role: 'CTO',
       image: '/cto.png',
@@ -35,17 +46,6 @@ export default function TeamSection() {
       highlights: [
         'Retail & consumer business expert, ISB alumni, Ex-Reliance, Shoppers Stop & Landmark',
         '20+ years of experience in retail, consumer business, and marketing.',
-      ],
-    },
-    {
-      name: 'Sandeep S',
-      role: 'Delivery and Client Relations',
-      image: '/delivery.png',
-      linkedin: 'https://www.linkedin.com/in/sandeep-singh-92931a20/',
-      gradient: 'from-[#FF4F18] to-[#FF8A00]',
-      highlights: [
-        'Ex-Infosys, MSRIT alumni',
-        '20+ years of experience in operations, implementation, and customer success.',
       ],
     },
     {
