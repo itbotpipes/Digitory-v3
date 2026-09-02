@@ -356,7 +356,7 @@ export default function Capabilities() {
         {filteredGroups.map((group, groupIdx) => (
           <div key={groupIdx} className="flex flex-col md:flex-row gap-8 lg:gap-12">
             {/* Group Title Column */}
-            <div className="w-full md:w-1/4 shrink-0">
+            <div className="w-full md:w-1/5 shrink-0">
               <div className="sticky top-24 pt-2">
                 <h3 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white mb-2">
                   {group.name}
@@ -365,12 +365,12 @@ export default function Capabilities() {
               </div>
             </div>
             
-            {/* Group Items Grid */}
-            <div className="w-full md:w-3/4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+            {/* Group Items Grid with border lines */}
+            <div className="w-full md:w-4/5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-zinc-200/80 dark:border-zinc-800/80 rounded-2xl overflow-hidden bg-white dark:bg-[#121214]">
                 {group.items.map((item) => {
-                  const cardContent = (
-                    <div className="h-full p-5 flex flex-col justify-start transition-all duration-300 hover:bg-zinc-50 dark:hover:bg-zinc-900/40 border border-zinc-200/60 dark:border-zinc-800/60 rounded-[20px] bg-white dark:bg-[#121214] shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-md">
+                  const cellContent = (
+                    <div className="h-full p-6 flex flex-col justify-start transition-colors duration-200 border-r border-b border-zinc-200/80 dark:border-zinc-800/80 group-hover:bg-zinc-50/90 dark:group-hover:bg-zinc-900/50">
                       
                       {item.isComingSoon && (
                         <div className="mb-3">
@@ -381,7 +381,7 @@ export default function Capabilities() {
                       )}
 
                       {item.image ? (
-                        <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-4 bg-zinc-50 dark:bg-zinc-900">
+                        <div className="relative w-full aspect-video rounded-lg overflow-hidden mb-4 bg-zinc-50 dark:bg-zinc-900">
                           <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                         </div>
                       ) : (
@@ -400,22 +400,22 @@ export default function Capabilities() {
                         )
                       )}
 
-                      <h4 className="text-base font-bold text-zinc-950 dark:text-white mb-2 leading-snug">{item.title}</h4>
+                      <h4 className="text-base font-bold text-zinc-950 dark:text-white mb-2 leading-snug group-hover:text-[#FF4F18] transition-colors">{item.title}</h4>
                       <p className="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed">{item.desc}</p>
                     </div>
                   );
 
                   if (item.isComingSoon) {
                     return (
-                      <div key={item.id} className="cursor-not-allowed opacity-80 filter grayscale-[50%]">
-                        {cardContent}
+                      <div key={item.id} className="cursor-not-allowed opacity-75 filter grayscale-[40%] group">
+                        {cellContent}
                       </div>
                     );
                   }
 
                   return (
-                    <Link key={item.id} href={`/solutions/${item.id}`} className="cursor-pointer group">
-                      {cardContent}
+                    <Link key={item.id} href={`/solutions/${item.id}`} className="cursor-pointer group block h-full">
+                      {cellContent}
                     </Link>
                   );
                 })}
