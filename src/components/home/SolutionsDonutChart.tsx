@@ -39,7 +39,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "pos",
     category: "Run Operations",
     desc: "Dine-in, online, and direct billing with instant payment reconciliation.",
-    color: "#FF4F18",
+    color: "#f4883c",
     Icon: CreditCard,
   },
   {
@@ -50,7 +50,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "qr-ordering",
     category: "Run Operations",
     desc: "Guests scan, order, and pay directly from their table live with KDS.",
-    color: "#06B6D4",
+    color: "#f47c3c",
     Icon: QrCode,
   },
   {
@@ -61,7 +61,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "pos",
     category: "Run Operations",
     desc: "Centralized KOT tracking and order dispatch for kitchen & service floor.",
-    color: "#8B5CF6",
+    color: "#fc9834",
     Icon: ClipboardList,
   },
   {
@@ -72,7 +72,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "kds",
     category: "Run Operations",
     desc: "Real-time kitchen order tickets to eliminate order delays & shouting.",
-    color: "#F59E0B",
+    color: "#fca42c",
     Icon: Tv,
   },
   {
@@ -83,7 +83,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "inventory",
     category: "Manage Inventory",
     desc: "Live inventory tracking that deducts ingredients automatically per order.",
-    color: "#10B981",
+    color: "#ffac3c",
     Icon: Boxes,
   },
   {
@@ -94,7 +94,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "inventory",
     category: "Manage Inventory",
     desc: "Manage purchase orders, stock levels, and vendors before running out.",
-    color: "#6366F1",
+    color: "#f8bb8f",
     Icon: Archive,
   },
   {
@@ -105,7 +105,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "recipe-management",
     category: "Manage Inventory",
     desc: "Lock recipe portions and food cost margins so dish profits hold firm.",
-    color: "#EC4899",
+    color: "#f6a66e",
     Icon: ChefHat,
   },
   {
@@ -116,7 +116,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "event-management",
     category: "Scale & Specialize",
     desc: "Cashless ticket sales, VIP table bookings, and high-volume event settlement.",
-    color: "#F43F5E",
+    color: "#f4914c",
     Icon: Sparkles,
   },
   {
@@ -127,7 +127,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "reports",
     category: "Grow & Understand",
     desc: "Live sales dashboards, item revenue analytics, and outlet metrics.",
-    color: "#3B82F6",
+    color: "#f37d2a",
     Icon: BarChart3,
   },
   {
@@ -138,7 +138,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "loyalty",
     category: "Grow & Understand",
     desc: "Build guest profiles, run targeted loyalty campaigns and repeat orders.",
-    color: "#14B8A6",
+    color: "#ec690d",
     Icon: Users,
   },
   {
@@ -149,7 +149,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "production-planning",
     category: "Manage Inventory",
     desc: "Compare vendor quotes, automate purchase approvals and supply chain.",
-    color: "#84CC16",
+    color: "#f67c03",
     Icon: ShoppingCart,
   },
   {
@@ -160,7 +160,7 @@ export const SOLUTIONS: SolutionItem[] = [
     slug: "menu-engineering",
     category: "Manage Inventory",
     desc: "Analyze dish popularity & margins to design high-yielding menus.",
-    color: "#A855F7",
+    color: "#f98f00",
     Icon: TrendingUp,
   },
 ];
@@ -168,9 +168,11 @@ export const SOLUTIONS: SolutionItem[] = [
 // Helper to convert polar coordinates to Cartesian
 function polarToCartesian(centerX: number, centerY: number, radius: number, angleInDegrees: number) {
   const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+  const rawX = centerX + radius * Math.cos(angleInRadians);
+  const rawY = centerY + radius * Math.sin(angleInRadians);
   return {
-    x: centerX + radius * Math.cos(angleInRadians),
-    y: centerY + radius * Math.sin(angleInRadians),
+    x: Number(rawX.toFixed(4)),
+    y: Number(rawY.toFixed(4)),
   };
 }
 
@@ -220,7 +222,7 @@ export default function SolutionsDonutChart() {
       <div className="relative w-full aspect-square max-w-[460px] flex items-center justify-center">
         
         {/* SVG Donut Chart */}
-        <svg viewBox="0 0 460 460" className="w-full h-full overflow-visible drop-shadow-md">
+        <svg viewBox="0 0 460 460" className="w-full h-full overflow-visible drop-shadow-md" suppressHydrationWarning>
           <defs>
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
               <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#FF4F18" floodOpacity="0.35" />
@@ -253,7 +255,7 @@ export default function SolutionsDonutChart() {
                   className="transition-all duration-300 stroke-white dark:stroke-[#0d0d0e]"
                   strokeWidth={2}
                   style={{
-                    filter: isHovered ? `drop-shadow(0px 4px 12px ${item.color}80)` : "none",
+                    filter: isHovered ? "drop-shadow(0px 4px 14px rgba(255, 79, 24, 0.65))" : "none",
                   }}
                 />
               </g>
@@ -277,11 +279,11 @@ export default function SolutionsDonutChart() {
               >
                 <circle
                   r={isHovered ? 16 : 13}
-                  fill={isHovered ? item.color : "white"}
+                  fill={isHovered ? "#FF4F18" : "white"}
                   className="dark:fill-zinc-900 transition-all duration-300 stroke-zinc-200 dark:stroke-zinc-700"
                   strokeWidth={1.5}
                   style={{
-                    filter: isHovered ? `drop-shadow(0 2px 8px ${item.color}80)` : "none",
+                    filter: isHovered ? "drop-shadow(0 4px 12px rgba(255, 79, 24, 0.6))" : "none",
                   }}
                 />
                 <foreignObject
@@ -304,14 +306,17 @@ export default function SolutionsDonutChart() {
         </svg>
 
         {/* Center Info Card overlay */}
-        <div className="absolute inset-0 m-auto w-[220px] h-[220px] rounded-full bg-white/95 dark:bg-[#121214]/95 backdrop-blur-md border border-zinc-200/80 dark:border-zinc-800/80 shadow-[0_8px_30px_rgba(0,0,0,0.12)] flex flex-col items-center justify-center p-4 text-center transition-all duration-300">
+        <div
+          className={`absolute inset-0 m-auto w-[220px] h-[220px] rounded-full bg-white/95 dark:bg-[#121214]/95 backdrop-blur-md transition-all duration-300 flex flex-col items-center justify-center p-4 text-center ${
+            activeSolution
+              ? "border-2 border-[#FF4F18] shadow-[0_8px_30px_rgba(255,79,24,0.3)] scale-[1.03]"
+              : "border border-zinc-200/80 dark:border-zinc-800/80 shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
+          }`}
+        >
           {activeSolution ? (
             <div className="flex flex-col items-center justify-center h-full w-full animate-fadeIn">
               <div className="flex items-center gap-1.5 mb-1">
-                <span
-                  className="text-[10px] font-extrabold px-2 py-0.5 rounded-full text-white"
-                  style={{ backgroundColor: activeSolution.color }}
-                >
+                <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full text-white bg-[#FF4F18]">
                   #{activeSolution.num}
                 </span>
                 <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 truncate max-w-[120px]">
@@ -319,10 +324,7 @@ export default function SolutionsDonutChart() {
                 </span>
               </div>
 
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center my-1 text-white shadow-sm"
-                style={{ backgroundColor: activeSolution.color }}
-              >
+              <div className="w-8 h-8 rounded-full flex items-center justify-center my-1 text-white bg-[#FF4F18] shadow-[0_4px_12px_rgba(255,79,24,0.35)]">
                 <activeSolution.Icon size={16} />
               </div>
 
@@ -336,15 +338,14 @@ export default function SolutionsDonutChart() {
 
               <Link
                 href={`/solutions/${activeSolution.slug}`}
-                className="text-[10px] font-bold hover:underline flex items-center gap-1"
-                style={{ color: activeSolution.color }}
+                className="text-[10px] font-bold text-[#FF4F18] hover:underline flex items-center gap-1"
               >
                 Explore details &rarr;
               </Link>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full w-full px-2">
-              <div className="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-950/40 text-[#FF4F18] flex items-center justify-center mb-2 border border-orange-100 dark:border-orange-900/50">
+              <div className="w-10 h-10 rounded-full bg-transparent text-[#FF4F18] flex items-center justify-center mb-2 border border-zinc-200 dark:border-zinc-800">
                 <span className="text-sm font-black">12</span>
               </div>
               <h3 className="text-sm font-extrabold text-zinc-900 dark:text-white leading-tight">
