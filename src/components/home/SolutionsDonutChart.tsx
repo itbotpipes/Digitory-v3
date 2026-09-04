@@ -219,7 +219,10 @@ export default function SolutionsDonutChart() {
     <div className="w-full max-w-[500px] mx-auto flex flex-col items-center select-none">
 
       {/* Donut Container with central overlay */}
-      <div className="relative w-full aspect-square max-w-[460px] flex items-center justify-center">
+      <div 
+        className="relative w-full aspect-square max-w-[460px] flex items-center justify-center"
+        onMouseLeave={() => setHoveredId(null)}
+      >
         
         {/* SVG Donut Chart */}
         <svg viewBox="0 0 460 460" className="w-full h-full overflow-visible drop-shadow-md" suppressHydrationWarning>
@@ -245,7 +248,6 @@ export default function SolutionsDonutChart() {
               <g
                 key={item.id}
                 onMouseEnter={() => setHoveredId(item.id)}
-                onMouseLeave={() => setHoveredId(null)}
                 className="cursor-pointer transition-all duration-300"
               >
                 <path
@@ -274,7 +276,6 @@ export default function SolutionsDonutChart() {
                 key={`badge-${item.id}`}
                 transform={`translate(${pos.x}, ${pos.y})`}
                 onMouseEnter={() => setHoveredId(item.id)}
-                onMouseLeave={() => setHoveredId(null)}
                 className="cursor-pointer transition-all duration-300"
               >
                 <circle
@@ -338,6 +339,8 @@ export default function SolutionsDonutChart() {
 
               <Link
                 href={`/solutions/${activeSolution.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[10px] font-bold text-[#FF4F18] hover:underline flex items-center gap-1"
               >
                 Explore details &rarr;
