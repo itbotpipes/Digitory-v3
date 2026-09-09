@@ -46,10 +46,17 @@ export default function AdminSolutionEditor({ params }: SolutionEditorProps) {
     businessTypesTitle: '',
     businessTypesDesc: '',
     faqs: [] as any[],
+    showOnHome: false,
+    homeTitle: '',
+    homeDescription: '',
+    homeImage: '',
+    homeOrder: 0,
   });
 
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingHomeImage, setUploadingHomeImage] = useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const homeFileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -88,6 +95,46 @@ export default function AdminSolutionEditor({ params }: SolutionEditorProps) {
       alert(err.message || 'Failed to upload image');
     } finally {
       setUploadingImage(false);
+    }
+  };
+
+  const handleHomeImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingHomeImage(true);
+    setMessage('');
+
+    try {
+      const token = localStorage.getItem('admin_token') || '';
+      const data = new FormData();
+      data.append('file', file);
+      
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/media`, {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: data,
+      });
+
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token');
+        alert('Your session has expired. Please log in again.');
+        window.location.href = '/admin/login';
+        return;
+      }
+
+      if (!res.ok) throw new Error('Upload failed');
+      const json = await res.json();
+      const cloudUrl = json.data?.url || json.url;
+      
+      setFormData(prev => ({ ...prev, homeImage: cloudUrl }));
+      setMessage('Homepage card image uploaded successfully!');
+    } catch (err: any) {
+      console.error(err);
+      setMessage(err.message || 'Failed to upload homepage image');
+      alert(err.message || 'Failed to upload homepage image');
+    } finally {
+      setUploadingHomeImage(false);
     }
   };
   
@@ -157,6 +204,11 @@ export default function AdminSolutionEditor({ params }: SolutionEditorProps) {
         businessTypesTitle: s.businessTypesTitle || '',
         businessTypesDesc: s.businessTypesDesc || '',
         faqs: s.faqs || [],
+        showOnHome: Boolean(s.showOnHome),
+        homeTitle: s.homeTitle || '',
+        homeDescription: s.homeDescription || '',
+        homeImage: s.homeImage || '',
+        homeOrder: s.homeOrder || 0,
       });
     } catch (err) {
       console.error(err);
@@ -227,13 +279,43 @@ export default function AdminSolutionEditor({ params }: SolutionEditorProps) {
     return <div className="p-8 text-center">Loading editor...</div>;
   }
 
+  const handleDuplicate = async () => {
+    if (isNew) return;
+    setSaving(true);
+    try {
+      const token = localStorage.getItem('admin_token');
+      const res = await api.post(`/solutions/${resolvedParams.id}/duplicate`, {}, token!);
+      const newDoc = res.data;
+      setMessage(`Solution duplicated successfully! Redirecting to new solution (${newDoc.slug})...`);
+      setTimeout(() => {
+        window.location.href = `/admin/solutions/${newDoc._id}`;
+      }, 1000);
+    } catch (err: any) {
+      console.error(err);
+      setMessage(err.message || 'Failed to duplicate solution');
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-[#111111] p-6 md:p-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-8 border-b border-zinc-200 dark:border-zinc-800 pb-6">
         <h2 className="text-2xl font-bold">{isNew ? 'Create New Solution' : 'Edit Solution'}</h2>
-        <Link href="/admin/dashboard" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white font-medium">
-          &larr; Back to Dashboard
-        </Link>
+        <div className="flex items-center gap-4">
+          {!isNew && (
+            <button
+              type="button"
+              onClick={handleDuplicate}
+              disabled={saving}
+              className="bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 px-4 py-2 rounded-xl text-xs font-bold transition-colors cursor-pointer"
+            >
+              Duplicate Solution
+            </button>
+          )}
+          <Link href="/admin/dashboard" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white font-medium text-sm">
+            &larr; Back to Dashboard
+          </Link>
+        </div>
       </div>
 
       {message && (
@@ -345,6 +427,129 @@ export default function AdminSolutionEditor({ params }: SolutionEditorProps) {
                 className="w-full px-4 py-2 rounded-xl text-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18]"
               />
             </div>
+          </div>
+
+          {/* Home Page Feature Card Settings Block */}
+          <div className="grid grid-cols-1 gap-6 bg-orange-50/10 dark:bg-orange-950/5 p-6 rounded-2xl border border-orange-200/30 dark:border-orange-950/20">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-xs font-bold text-[#FF4F18] uppercase tracking-wider block mb-1">
+                  Home Page Section Settings
+                </span>
+                <p className="text-xs text-zinc-500">Select if this solution appears in the Home Page Feature Grid and customize its title, description, and card image.</p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label htmlFor="showOnHomeToggle" className="text-xs font-bold text-zinc-800 dark:text-zinc-200 cursor-pointer">
+                  Show on Home Page
+                </label>
+                <input
+                  type="checkbox"
+                  id="showOnHomeToggle"
+                  checked={formData.showOnHome}
+                  onChange={e => setFormData({ ...formData, showOnHome: e.target.checked })}
+                  className="w-5 h-5 accent-[#FF4F18] rounded cursor-pointer"
+                />
+              </div>
+            </div>
+
+            {formData.showOnHome && (
+              <div className="space-y-4 pt-4 border-t border-orange-200/30 dark:border-orange-950/20">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-semibold mb-1">Home Page Card Title (Overrides Solution Title)</label>
+                    <input
+                      type="text"
+                      value={formData.homeTitle}
+                      onChange={e => setFormData({ ...formData, homeTitle: e.target.value })}
+                      placeholder={formData.title || 'e.g. Orders & billing'}
+                      className="w-full px-4 py-2 rounded-xl text-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold mb-1">Display Order (e.g. 1, 2, 3)</label>
+                    <input
+                      type="number"
+                      value={formData.homeOrder}
+                      onChange={e => setFormData({ ...formData, homeOrder: parseInt(e.target.value) || 0 })}
+                      placeholder="0"
+                      className="w-full px-4 py-2 rounded-xl text-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18]"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold mb-1">Home Page Card Description</label>
+                  <textarea
+                    value={formData.homeDescription}
+                    onChange={e => setFormData({ ...formData, homeDescription: e.target.value })}
+                    placeholder={formData.description || 'e.g. Manage dine-in, takeaway, online, and QR orders in one place.'}
+                    rows={3}
+                    className="w-full px-4 py-2 rounded-xl text-sm border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold mb-2">Home Page Card Image Mockup</label>
+                  <div className="flex flex-col sm:flex-row gap-4 items-start bg-white dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800">
+                    {formData.homeImage ? (
+                      <div className="relative w-40 h-28 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 group">
+                        <img src={formData.homeImage} alt="Home Card Preview" className="w-full h-full object-contain p-2" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                          <button
+                            type="button"
+                            onClick={() => setFormData({ ...formData, homeImage: '' })}
+                            className="bg-red-600 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-red-700"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="w-40 h-28 rounded-xl border-2 border-dashed border-zinc-300 dark:border-zinc-700 flex flex-col items-center justify-center p-3 text-center text-zinc-400 dark:text-zinc-500 bg-zinc-50 dark:bg-zinc-900/40">
+                        <span className="text-[10px] font-medium">Default Image ({formData.image ? 'Using Solution Image' : 'No Image'})</span>
+                      </div>
+                    )}
+
+                    <div className="flex flex-col gap-2 flex-1">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          disabled={uploadingHomeImage}
+                          onClick={() => homeFileInputRef.current?.click()}
+                          className="bg-[#FF4F18] text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-[#E03F0D] disabled:opacity-50 transition-colors cursor-pointer"
+                        >
+                          {uploadingHomeImage ? 'Uploading...' : 'Upload Custom Home Card Image'}
+                        </button>
+                        {formData.homeImage && (
+                          <button
+                            type="button"
+                            onClick={() => setFormData({ ...formData, homeImage: '' })}
+                            className="bg-red-500/10 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/40 px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-500/20"
+                          >
+                            Use Default Image
+                          </button>
+                        )}
+                      </div>
+                      <input
+                        ref={homeFileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleHomeImageUpload}
+                        className="hidden"
+                      />
+                      <input
+                        type="text"
+                        value={formData.homeImage}
+                        onChange={e => setFormData({ ...formData, homeImage: e.target.value })}
+                        placeholder="Direct Image URL (e.g. /image4.png or Cloudinary URL)"
+                        className="w-full px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-xs font-mono"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 gap-6 bg-orange-50/10 dark:bg-orange-950/5 p-5 rounded-2xl border border-orange-200/30 dark:border-orange-950/20">

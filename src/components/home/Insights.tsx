@@ -140,8 +140,8 @@ export default function InsightsPage() {
         
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-[44px] font-[850] tracking-tight leading-[1.15] text-[#111111]">
-            Latest <span className="text-[#FF4F18]">insights.</span>
+          <h2 className="text-3xl sm:text-4xl md:text-[44px] font-[850] tracking-tight leading-[1.15] text-[#111111] dark:text-white">
+            Latest <span className="text-[#FF4F18]">blogs</span>
           </h2>
           
           <div>

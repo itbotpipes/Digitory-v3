@@ -11,7 +11,8 @@ export default function SeoLayout({ children }: { children: React.ReactNode }) {
     { name: 'Dashboard', path: '/admin/seo' },
     { name: 'Pages List', path: '/admin/seo/pages' },
     { name: 'Speed & Performance Audit', path: '/admin/seo/audit' },
-    { name: 'Tools (Sitemap & Robots)', path: '/admin/seo/tools' },
+    { name: '301 & 302 Redirects', path: '/admin/seo/redirects' },
+    { name: 'Tools (Sitemap, Robots & LLM)', path: '/admin/seo/tools' },
   ];
 
   return (

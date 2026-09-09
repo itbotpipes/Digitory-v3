@@ -438,28 +438,28 @@ export default function Capabilities() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-5">
             <div className="flex items-start gap-3">
-              <svg className="w-4 h-4 text-zinc-400 shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="w-4 h-4 text-[#FF4F18] shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-[15px] font-medium text-zinc-700 dark:text-zinc-300">Forecast demand across menu and outlets</span>
             </div>
             
             <div className="flex items-start gap-3">
-              <svg className="w-4 h-4 text-zinc-400 shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="w-4 h-4 text-[#FF4F18] shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-[15px] font-medium text-zinc-700 dark:text-zinc-300">Auto-build purchase orders — buy what sells, cut waste</span>
             </div>
 
             <div className="flex items-start gap-3">
-              <svg className="w-4 h-4 text-zinc-400 shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="w-4 h-4 text-[#FF4F18] shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-[15px] font-medium text-zinc-700 dark:text-zinc-300">Spot anomalies before they cost you</span>
             </div>
 
             <div className="flex items-start gap-3">
-              <svg className="w-4 h-4 text-zinc-400 shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="w-4 h-4 text-[#FF4F18] shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-[15px] font-medium text-zinc-700 dark:text-zinc-300">Getting smarter with every feature we ship</span>

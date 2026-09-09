@@ -5,9 +5,9 @@ import React from 'react';
 export default function Stats() {
   const stats = [
     {
-      value: '30%',
-      label: 'Less Wastage',
-      desc: 'Keep better track of your inventory and reduce food waste',
+      value: '100%',
+      label: 'Operational Visibility',
+      desc: 'Track orders, inventory, sales, and customer data in real time',
     },
     {
       value: '2x',
@@ -15,14 +15,14 @@ export default function Stats() {
       desc: 'View live reports from all your outlets in one place',
     },
     {
-      value: '100%',
-      label: 'Operational Visibility',
-      desc: 'Track orders, inventory, sales, and customer data in real time',
+      value: '30%',
+      label: 'Less Wastage',
+      desc: 'Keep better track of your inventory and reduce food waste',
     },
     {
       value: '1',
       label: 'Connected System',
-      desc: ' Manage everything from one system instead of using multiple apps',
+      desc: 'Manage everything from one system instead of using multiple apps',
     },
   ];
 

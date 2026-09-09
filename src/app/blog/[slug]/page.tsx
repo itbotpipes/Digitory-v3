@@ -2,6 +2,7 @@ import ClientPage from "./ClientPage";
 import { api } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { generateSeoMetadata } from "@/lib/seo";
+import { ARTICLES_DATA } from "@/app/data/blogData";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,14 @@ export async function generateMetadata({ params }: PageProps) {
     }
   } catch (err) {}
   
+  const fallback = ARTICLES_DATA[slug];
+  if (fallback) {
+    return {
+      title: `${fallback.title} | Digitory`,
+      description: fallback.introText || '',
+    };
+  }
+
   return {
     title: 'Blog | Digitory',
   };
@@ -36,7 +45,16 @@ async function BlogDetailsPage({ params }: PageProps) {
       blog = res.data;
     }
   } catch (err) {
-    console.error("Failed to fetch blog", err);
+    // API returned 404 or backend down
+  }
+
+  if (!blog) {
+    blog = ARTICLES_DATA[slug];
+  }
+
+  if (!blog) {
+    const firstKey = Object.keys(ARTICLES_DATA)[0];
+    blog = ARTICLES_DATA[firstKey] || null;
   }
 
   if (!blog) {

@@ -66,24 +66,46 @@ export default function Features() {
   useEffect(() => {
     async function loadSolutionsFromBackend() {
       try {
-        const res = await api.get('/solutions?limit=30');
+        const res = await api.get('/solutions?limit=50');
         const loaded: any[] = res.data?.docs || res.data?.results || res.data || [];
         if (loaded && loaded.length > 0) {
-          const mapped = defaultFeatureItems.map((defaultItem) => {
-            const foundBackend = loaded.find(
-              (s: any) =>
-                s.slug === defaultItem.slug ||
-                s.id === defaultItem.slug ||
-                s._id === defaultItem.slug
-            );
+          // Filter solutions explicitly selected to show on home page
+          const homeSelected = loaded.filter((s: any) => s.showOnHome === true);
 
-            return {
-              ...defaultItem,
-              slug: foundBackend?.slug || defaultItem.slug,
-            };
-          });
+          if (homeSelected.length > 0) {
+            // Sort by homeOrder if available
+            homeSelected.sort((a, b) => (a.homeOrder || 0) - (b.homeOrder || 0));
 
-          setFeatures(mapped);
+            const dynamicItems: FeatureItem[] = homeSelected.map((s, idx) => ({
+              num: (idx + 1).toString().padStart(2, '0'),
+              slug: s.slug,
+              title: s.homeTitle || s.gridTitle || s.title || s.shortLabel,
+              desc: s.homeDescription || s.gridDesc || s.description || s.subtitle || '',
+              imageSrc: s.homeImage || s.image || defaultFeatureItems[idx % defaultFeatureItems.length]?.imageSrc || '/image4.png',
+            }));
+
+            setFeatures(dynamicItems);
+          } else {
+            // Fallback: sync slugs with default items
+            const mapped = defaultFeatureItems.map((defaultItem) => {
+              const foundBackend = loaded.find(
+                (s: any) =>
+                  s.slug === defaultItem.slug ||
+                  s.id === defaultItem.slug ||
+                  s._id === defaultItem.slug
+              );
+
+              return {
+                ...defaultItem,
+                title: foundBackend?.homeTitle || foundBackend?.gridTitle || foundBackend?.title || defaultItem.title,
+                desc: foundBackend?.homeDescription || foundBackend?.gridDesc || foundBackend?.description || defaultItem.desc,
+                imageSrc: foundBackend?.homeImage || foundBackend?.image || defaultItem.imageSrc,
+                slug: foundBackend?.slug || defaultItem.slug,
+              };
+            });
+
+            setFeatures(mapped);
+          }
         }
       } catch (err) {
         console.warn('Failed to load solutions from backend in Features component:', err);
@@ -128,14 +150,14 @@ export default function Features() {
         {/* Features Card Container with 3x2 inner grid */}
         <div className="border border-zinc-200 dark:border-zinc-800 rounded-[28px] overflow-hidden bg-white dark:bg-zinc-900 grid grid-cols-1 md:grid-cols-3">
           {features.map((item, idx) => {
-            const borderClasses =
-              idx === 0 || idx === 1
-                ? 'border-b border-zinc-200 dark:border-zinc-800 md:border-r md:border-b'
-                : idx === 2
-                ? 'border-b border-zinc-200 dark:border-zinc-800 md:border-b'
-                : idx === 3 || idx === 4
-                ? 'border-b border-zinc-200 dark:border-zinc-800 md:border-b-0 md:border-r'
-                : 'border-b-0';
+            const isLastRow = Math.floor(idx / 3) === Math.floor((features.length - 1) / 3);
+            const isLastColInRow = (idx + 1) % 3 === 0;
+
+            const borderClasses = `
+              border-b border-zinc-200 dark:border-zinc-800
+              ${!isLastRow ? 'md:border-b' : 'md:border-b-0'}
+              ${!isLastColInRow ? 'md:border-r' : 'md:border-r-0'}
+            `;
 
             return (
               <Link

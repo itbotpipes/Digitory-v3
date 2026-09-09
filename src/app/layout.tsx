@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   description: "Manage rush hours, not rush. The operating system for modern restaurants.",
 };
 
+import DynamicHead from "@/components/DynamicHead";
+import AnalyticsScripts from "@/components/AnalyticsScripts";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,7 +31,11 @@ export default function RootLayout({
       lang="en"
       className={`${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <DynamicHead />
+        <AnalyticsScripts />
+        {children}
+      </body>
     </html>
   );
 }

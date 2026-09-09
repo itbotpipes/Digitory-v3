@@ -18,6 +18,15 @@ export default function Options({ className }: OptionsProps) {
   const [logoBlackUrl, setLogoBlackUrl] = useState('/digitory-black.png');
   const [logoWhiteUrl, setLogoWhiteUrl] = useState('/digitory-white.png');
   const [companyName, setCompanyName] = useState('Digitory');
+  const [siteTitle, setSiteTitle] = useState('Digitory - Restaurant Operating System');
+  const [faviconUrl, setFaviconUrl] = useState('/favicon.ico');
+  // Analytics variables
+  const [googleAnalyticsId, setGoogleAnalyticsId] = useState('');
+  const [googleTagManagerId, setGoogleTagManagerId] = useState('');
+  const [facebookPixelId, setFacebookPixelId] = useState('');
+  const [customHeadScripts, setCustomHeadScripts] = useState('');
+  const [customBodyScripts, setCustomBodyScripts] = useState('');
+
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -28,18 +37,29 @@ export default function Options({ className }: OptionsProps) {
         const res = await api.get('/settings', token);
         const branding = res.data?.branding || res.data?.data?.branding;
         if (branding) {
-          // If branding logo is configured in settings DB, load it
-          if (branding.logo) {
-            setLogoBlackUrl(branding.logo);
-            // Check if there is an alternative logo config or fallback
-            setLogoWhiteUrl(branding.logoWhite || branding.logo);
-          }
+          setLogoBlackUrl(branding.logo || '/digitory-black.png');
+          setLogoWhiteUrl(branding.logoWhite || '/digitory-white.png');
           if (branding.companyName) {
             setCompanyName(branding.companyName);
           }
+          if (branding.siteTitle) {
+            setSiteTitle(branding.siteTitle);
+          }
+          if (branding.favicon) {
+            setFaviconUrl(branding.favicon);
+          }
+        }
+
+        const analyticsData = res.data?.analytics || res.data?.data?.analytics;
+        if (analyticsData) {
+          setGoogleAnalyticsId(analyticsData.googleAnalyticsId || '');
+          setGoogleTagManagerId(analyticsData.googleTagManagerId || '');
+          setFacebookPixelId(analyticsData.facebookPixelId || '');
+          setCustomHeadScripts(analyticsData.customHeadScripts || '');
+          setCustomBodyScripts(analyticsData.customBodyScripts || '');
         }
       } catch (err) {
-        console.error('Failed to load branding settings:', err);
+        console.error('Failed to load settings:', err);
       } finally {
         setLoading(false);
       }
@@ -47,7 +67,7 @@ export default function Options({ className }: OptionsProps) {
     fetchSettings();
   }, []);
 
-  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>, target: 'black' | 'white') => {
+  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>, target: 'black' | 'white' | 'favicon') => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -58,17 +78,21 @@ export default function Options({ className }: OptionsProps) {
       if (url) {
         if (target === 'black') {
           setLogoBlackUrl(url);
-          // Sync changes immediately locally
           localStorage.setItem('branding_logo_black', url);
-        } else {
+          window.dispatchEvent(new Event('branding_logo_update'));
+        } else if (target === 'white') {
           setLogoWhiteUrl(url);
           localStorage.setItem('branding_logo_white', url);
+          window.dispatchEvent(new Event('branding_logo_update'));
+        } else if (target === 'favicon') {
+          setFaviconUrl(url);
+          localStorage.setItem('branding_favicon', url);
+          window.dispatchEvent(new CustomEvent('branding_settings_update', { detail: { favicon: url, siteTitle } }));
         }
-        window.dispatchEvent(new Event('branding_logo_update'));
       }
     } catch (err) {
       console.error('Upload failed:', err);
-      setMessage('❌ Failed to upload logo image');
+      setMessage('❌ Failed to upload image');
     }
   };
 
@@ -82,19 +106,33 @@ export default function Options({ className }: OptionsProps) {
         branding: {
           logo: logoBlackUrl,
           logoWhite: logoWhiteUrl,
-          companyName
+          companyName,
+          siteTitle,
+          favicon: faviconUrl
+        },
+        analytics: {
+          googleAnalyticsId,
+          googleTagManagerId,
+          facebookPixelId,
+          customHeadScripts,
+          customBodyScripts
         }
       };
       await api.put('/settings', payload, token);
-      setMessage('✅ Branding settings updated successfully!');
+      setMessage('✅ Settings updated successfully!');
       
-      // Cache values locally for fast navbar rendering
       localStorage.setItem('branding_logo_black', logoBlackUrl);
       localStorage.setItem('branding_logo_white', logoWhiteUrl);
+      localStorage.setItem('branding_site_title', siteTitle);
+      localStorage.setItem('branding_favicon', faviconUrl);
+      localStorage.setItem('site_analytics_settings', JSON.stringify(payload.analytics));
+
       window.dispatchEvent(new Event('branding_logo_update'));
+      window.dispatchEvent(new CustomEvent('branding_settings_update', { detail: { favicon: faviconUrl, siteTitle } }));
+      window.dispatchEvent(new CustomEvent('analytics_settings_update', { detail: { analytics: payload.analytics } }));
     } catch (err: any) {
       console.error(err);
-      setMessage('❌ ' + (err.message || 'Failed to update branding settings'));
+      setMessage('❌ ' + (err.message || 'Failed to update settings'));
     } finally {
       setSaving(false);
     }
@@ -117,58 +155,193 @@ export default function Options({ className }: OptionsProps) {
 
   return (
     <div className={clsx("space-y-8 max-w-4xl", className)}>
-      <form onSubmit={handleSaveSettings} className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80 rounded-3xl p-6 space-y-6">
-        <div>
-          <h2 className="text-lg font-extrabold tracking-tight text-zinc-900 dark:text-white mb-1">Navbar Logo & Branding Settings</h2>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Upload custom logo assets for the admin panel header layout.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Logo Light Mode (Black Logo) */}
-          <div className="p-5 bg-zinc-50 dark:bg-zinc-950/20 border border-zinc-200 dark:border-zinc-850 rounded-2xl space-y-4">
-            <div>
-              <h3 className="text-xs font-extrabold uppercase tracking-wide text-zinc-400 mb-1">Logo (Light Theme)</h3>
-              <p className="text-[10px] text-zinc-550 leading-tight">Image displayed inside Sidebar navigation on light mode screens.</p>
-            </div>
-            
-            <div className="h-16 w-full flex items-center justify-center bg-white rounded-xl border border-zinc-150 p-2">
-              <img src={logoBlackUrl} alt="Light Mode Logo Preview" className="h-8 max-w-full object-contain" onError={(e) => { e.currentTarget.src = '/digitory-black.png'; }} />
-            </div>
-
-            <label className="flex items-center justify-center gap-2 border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-[#FF4F18]/50 px-4 py-3 rounded-xl cursor-pointer hover:bg-white dark:hover:bg-zinc-900 transition-colors text-xs font-semibold">
-              <Upload size={14} className="text-zinc-400" />
-              <span>Upload Light Theme Logo</span>
-              <input type="file" accept="image/*" onChange={(e) => handleUploadImage(e, 'black')} className="hidden" />
-            </label>
+      <form onSubmit={handleSaveSettings} className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80 rounded-3xl p-6 space-y-8">
+        {/* SECTION 1: BROWSER TAB & IDENTITY */}
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-lg font-extrabold tracking-tight text-zinc-900 dark:text-white mb-1">Browser Tab & Website Identity Settings</h2>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">Configure the browser tab icon (favicon) and the tab title displayed across your website.</p>
           </div>
 
-          {/* Logo Dark Mode (White Logo) */}
-          <div className="p-5 bg-zinc-50 dark:bg-zinc-950/20 border border-zinc-200 dark:border-zinc-850 rounded-2xl space-y-4">
-            <div>
-              <h3 className="text-xs font-extrabold uppercase tracking-wide text-zinc-400 mb-1">Logo (Dark Theme)</h3>
-              <p className="text-[10px] text-zinc-550 leading-tight">Image displayed inside Sidebar navigation on dark mode screens.</p>
+          {/* Browser Tab Preview Card */}
+          <div className="p-5 bg-[#FAF9F7] dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-4">
+            <h3 className="text-xs font-extrabold uppercase tracking-wide text-zinc-400">Browser Tab Live Preview</h3>
+            <div className="inline-flex items-center gap-3 bg-[#2D2A26] text-zinc-200 px-4 py-2.5 rounded-t-xl text-xs font-semibold max-w-md shadow-md border-t-2 border-[#FF4F18]">
+              <img 
+                src={faviconUrl} 
+                alt="Favicon preview" 
+                className="w-4 h-4 object-contain rounded-xs"
+                onError={(e) => { e.currentTarget.src = '/favicon.ico'; }}
+              />
+              <span className="truncate max-w-[280px] text-zinc-100">{siteTitle || 'Digitory - Restaurant Operating System'}</span>
+              <span className="ml-auto text-zinc-400 text-xs hover:text-white cursor-default">×</span>
             </div>
 
-            <div className="h-16 w-full flex items-center justify-center bg-zinc-900 rounded-xl border border-zinc-800 p-2">
-              <img src={logoWhiteUrl} alt="Dark Mode Logo Preview" className="h-8 max-w-full object-contain" onError={(e) => { e.currentTarget.src = '/digitory-white.png'; }} />
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+              <div className="space-y-2">
+                <label className="block text-xs font-bold uppercase tracking-wide text-zinc-500">Favicon Icon Image</label>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center justify-center p-2 shrink-0">
+                    <img 
+                      src={faviconUrl} 
+                      alt="Favicon" 
+                      className="w-7 h-7 object-contain"
+                      onError={(e) => { e.currentTarget.src = '/favicon.ico'; }}
+                    />
+                  </div>
+                  <label className="flex-1 flex items-center justify-center gap-2 border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-[#FF4F18]/50 px-4 py-2.5 rounded-xl cursor-pointer hover:bg-white dark:hover:bg-zinc-900 transition-colors text-xs font-semibold">
+                    <Upload size={14} className="text-zinc-400" />
+                    <span>Upload Favicon Icon</span>
+                    <input type="file" accept="image/*,.ico" onChange={(e) => handleUploadImage(e, 'favicon')} className="hidden" />
+                  </label>
+                </div>
+                <input
+                  type="text"
+                  value={faviconUrl}
+                  onChange={(e) => setFaviconUrl(e.target.value)}
+                  placeholder="Or paste Favicon Image URL..."
+                  className="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-xs focus:outline-none focus:ring-1 focus:ring-[#FF4F18]"
+                />
+              </div>
 
-            <label className="flex items-center justify-center gap-2 border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-[#FF4F18]/50 px-4 py-3 rounded-xl cursor-pointer hover:bg-white dark:hover:bg-zinc-900 transition-colors text-xs font-semibold">
-              <Upload size={14} className="text-zinc-400" />
-              <span>Upload Dark Theme Logo</span>
-              <input type="file" accept="image/*" onChange={(e) => handleUploadImage(e, 'white')} className="hidden" />
-            </label>
+              <div className="space-y-2">
+                <label className="block text-xs font-bold uppercase tracking-wide text-zinc-500">Browser Tab Title Text</label>
+                <input
+                  type="text"
+                  required
+                  value={siteTitle}
+                  onChange={(e) => setSiteTitle(e.target.value)}
+                  placeholder="e.g. Digitory - Restaurant Operating System"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-sm focus:outline-none focus:ring-1 focus:ring-[#FF4F18]"
+                />
+                <p className="text-[11px] text-zinc-400">This text appears in browser tabs, bookmarks, and search engine titles.</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label className="block text-xs font-bold uppercase tracking-wide text-zinc-500">Company / Brand Name</label>
-          <input
-            value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
-            className="w-full max-w-md px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-sm focus:outline-none focus:ring-1 focus:ring-[#FF4F18]"
-            placeholder="Digitory"
-          />
+        {/* SECTION 2: ANALYTICS & TRACKING PIXELS */}
+        <div className="pt-6 border-t border-zinc-150 dark:border-zinc-800 space-y-6">
+          <div>
+            <h2 className="text-lg font-extrabold tracking-tight text-zinc-900 dark:text-white mb-1">Analytics & Marketing Pixels</h2>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">Integrate Google Analytics, Google Tag Manager, Meta (Facebook) Pixel, and custom head scripts.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* GA4 */}
+            <div className="p-4 bg-zinc-50 dark:bg-zinc-950/20 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2">
+              <label className="block text-xs font-extrabold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                Google Analytics ID
+              </label>
+              <input
+                type="text"
+                value={googleAnalyticsId}
+                onChange={(e) => setGoogleAnalyticsId(e.target.value)}
+                placeholder="G-XXXXXXXXXX"
+                className="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs font-mono text-zinc-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#FF4F18]"
+              />
+              <p className="text-[10px] text-zinc-400">Measurement ID (GA4)</p>
+            </div>
+
+            {/* GTM */}
+            <div className="p-4 bg-zinc-50 dark:bg-zinc-950/20 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2">
+              <label className="block text-xs font-extrabold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                Google Tag Manager ID
+              </label>
+              <input
+                type="text"
+                value={googleTagManagerId}
+                onChange={(e) => setGoogleTagManagerId(e.target.value)}
+                placeholder="GTM-XXXXXXX"
+                className="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs font-mono text-zinc-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#FF4F18]"
+              />
+              <p className="text-[10px] text-zinc-400">Container ID (GTM)</p>
+            </div>
+
+            {/* Meta Pixel */}
+            <div className="p-4 bg-zinc-50 dark:bg-zinc-950/20 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2">
+              <label className="block text-xs font-extrabold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                Meta / Facebook Pixel ID
+              </label>
+              <input
+                type="text"
+                value={facebookPixelId}
+                onChange={(e) => setFacebookPixelId(e.target.value)}
+                placeholder="123456789012345"
+                className="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs font-mono text-zinc-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#FF4F18]"
+              />
+              <p className="text-[10px] text-zinc-400">Pixel ID (Facebook Meta Ads)</p>
+            </div>
+          </div>
+
+          {/* Custom Head Scripts */}
+          <div className="space-y-2">
+            <label className="block text-xs font-bold uppercase tracking-wide text-zinc-500">
+              Custom Head Tracking Scripts (JavaScript / Hotjar / Clarity)
+            </label>
+            <textarea
+              rows={4}
+              value={customHeadScripts}
+              onChange={(e) => setCustomHeadScripts(e.target.value)}
+              placeholder="Paste raw <script> or tracking code snippets here..."
+              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs font-mono text-zinc-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#FF4F18] resize-none"
+            />
+            <p className="text-[11px] text-zinc-400">Pasted script tags are automatically injected into the public site head layout.</p>
+          </div>
+        </div>
+
+        {/* SECTION 3: NAVBAR LOGO & BRANDING */}
+        <div className="pt-6 border-t border-zinc-150 dark:border-zinc-800 space-y-6">
+          <div>
+            <h2 className="text-lg font-extrabold tracking-tight text-zinc-900 dark:text-white mb-1">Navbar Logo & Branding Settings</h2>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">Upload custom logo assets for the admin panel header layout.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-5 bg-zinc-50 dark:bg-zinc-950/20 border border-zinc-200 dark:border-zinc-850 rounded-2xl space-y-4">
+              <div>
+                <h3 className="text-xs font-extrabold uppercase tracking-wide text-zinc-400 mb-1">Logo (Light Theme)</h3>
+                <p className="text-[10px] text-zinc-550 leading-tight">Image displayed inside Sidebar navigation on light mode screens.</p>
+              </div>
+              
+              <div className="h-16 w-full flex items-center justify-center bg-white rounded-xl border border-zinc-150 p-2">
+                <img src={logoBlackUrl} alt="Light Mode Logo Preview" className="h-8 max-w-full object-contain" onError={(e) => { e.currentTarget.src = '/digitory-black.png'; }} />
+              </div>
+
+              <label className="flex items-center justify-center gap-2 border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-[#FF4F18]/50 px-4 py-3 rounded-xl cursor-pointer hover:bg-white dark:hover:bg-zinc-900 transition-colors text-xs font-semibold">
+                <Upload size={14} className="text-zinc-400" />
+                <span>Upload Light Theme Logo</span>
+                <input type="file" accept="image/*" onChange={(e) => handleUploadImage(e, 'black')} className="hidden" />
+              </label>
+            </div>
+
+            <div className="p-5 bg-zinc-50 dark:bg-zinc-950/20 border border-zinc-200 dark:border-zinc-850 rounded-2xl space-y-4">
+              <div>
+                <h3 className="text-xs font-extrabold uppercase tracking-wide text-zinc-400 mb-1">Logo (Dark Theme)</h3>
+                <p className="text-[10px] text-zinc-550 leading-tight">Image displayed inside Sidebar navigation on dark mode screens.</p>
+              </div>
+
+              <div className="h-16 w-full flex items-center justify-center bg-zinc-900 rounded-xl border border-zinc-800 p-2">
+                <img src={logoWhiteUrl} alt="Dark Mode Logo Preview" className="h-8 max-w-full object-contain" onError={(e) => { e.currentTarget.src = '/digitory-white.png'; }} />
+              </div>
+
+              <label className="flex items-center justify-center gap-2 border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-[#FF4F18]/50 px-4 py-3 rounded-xl cursor-pointer hover:bg-white dark:hover:bg-zinc-900 transition-colors text-xs font-semibold">
+                <Upload size={14} className="text-zinc-400" />
+                <span>Upload Dark Theme Logo</span>
+                <input type="file" accept="image/*" onChange={(e) => handleUploadImage(e, 'white')} className="hidden" />
+              </label>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-xs font-bold uppercase tracking-wide text-zinc-500">Company / Brand Name</label>
+            <input
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              className="w-full max-w-md px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-sm focus:outline-none focus:ring-1 focus:ring-[#FF4F18]"
+              placeholder="Digitory"
+            />
+          </div>
         </div>
 
         <div className="pt-4 border-t border-zinc-100 dark:border-zinc-850 flex items-center justify-between gap-4">
@@ -179,7 +352,7 @@ export default function Options({ className }: OptionsProps) {
             </p>
           )}
           <Button type="submit" disabled={saving} className="bg-[#FF4F18] text-white hover:bg-[#E03F0D] font-extrabold px-6 py-2.5 rounded-xl text-xs ml-auto shrink-0 shadow-xs cursor-pointer">
-            {saving ? 'Saving...' : 'Save Branding Changes'}
+            {saving ? 'Saving...' : 'Save Settings'}
           </Button>
         </div>
       </form>

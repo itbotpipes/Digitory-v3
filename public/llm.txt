@@ -1,0 +1,15 @@
+# Digitory - Restaurant Operating System
+
+> Manage rush hours, not rush. The operating system for modern restaurants.
+
+## Core System & Features
+- Point of Sale (POS) Integrations
+- Real-time Analytics & Anomaly Detection
+- Kitchen Display System (KDS)
+- Inventory & Recipe Management
+
+## Important Pages
+- [/about]: Learn more about Digitory
+- [/solutions]: Explore all 12 restaurant solutions
+- [/request-demo]: Request a live product demonstration
+- [/contact]: Get in touch with our team

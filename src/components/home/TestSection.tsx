@@ -148,10 +148,14 @@ export default function TestSection() {
         </h2>
 
         {/* 2-Column Grid */}
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-12 items-start">
 
-          {/* Left: WhatsApp Mockup Image */}
-          <div className="lg:col-span-6 flex justify-center w-full">
+          {/* Left: WhatsApp Mockup Image (Before Digitory) */}
+          <div className="lg:col-span-6 flex flex-col items-center w-full">
+            <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-6 text-center">
+              Before Digitory
+            </h3>
+
             <div className="w-full max-w-[440px] rounded-[32px] bg-[#F0EBE3] shadow-2xl overflow-hidden relative">
               <style dangerouslySetInnerHTML={{
                 __html: `
@@ -308,8 +312,12 @@ export default function TestSection() {
             </div>
           </div>
 
-          {/* Right: Steps Timeline */}
+          {/* Right: Steps Timeline (After Digitory) */}
           <div className="lg:col-span-6 w-full max-w-[480px] mx-auto lg:ml-auto">
+            <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#FF4F18] mb-6 text-center lg:text-left">
+              After Digitory
+            </h3>
+
             <div className="relative pl-16 space-y-8 py-4">
 
               {/* Vertical timeline line */}
@@ -335,10 +343,10 @@ export default function TestSection() {
 
                   {/* Step Text Info */}
                   <div className="w-full pb-5 border-b border-[#FF4F18]/25">
-                    <h4 className="text-sm sm:text-base md:text-lg font-bold text-zinc-950 leading-tight">
+                    <h4 className="text-sm sm:text-base md:text-lg font-bold text-zinc-950 dark:text-white leading-tight">
                       {step.title}
                     </h4>
-                    <p className="text-zinc-550 text-xs sm:text-sm mt-1 leading-normal">
+                    <p className="text-zinc-550 dark:text-zinc-400 text-xs sm:text-sm mt-1 leading-normal">
                       {step.desc}
                     </p>
                   </div>

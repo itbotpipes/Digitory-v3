@@ -142,8 +142,8 @@ export default function Updates() {
 
       <section className="mx-auto max-w-7xl px-6 md:px-8 py-10 md:py-16">
         {/* Section Title */}
-        <h2 className="text-3xl sm:text-4xl md:text-[44px] font-[850] tracking-tight text-[#111111] mb-10 leading-[1.15]">
-          Latest <span className="text-[#FF4F18]">updates</span>
+        <h2 className="text-3xl sm:text-4xl md:text-[44px] font-[850] tracking-tight text-[#111111] dark:text-white mb-10 leading-[1.15]">
+          Latest <span className="text-[#FF4F18]">news</span>
         </h2>
 
         {/* 2-Column Grid */}
@@ -223,9 +223,9 @@ export default function Updates() {
 
           {/* Right Column: Featured Update Card (Desktop only) */}
           <div className="hidden lg:block lg:col-span-6">
-            <div className="rounded-[28px] overflow-hidden border border-zinc-200/80 bg-[#FFF] p-4 flex flex-col shadow-xs">
+            <div className="rounded-[28px] overflow-hidden border border-zinc-200/80 bg-[#FFF] dark:bg-zinc-900 p-4 flex flex-col shadow-xs">
               {/* Featured Image */}
-              <div className="relative w-full aspect-16/10 rounded-[20px] overflow-hidden bg-zinc-100">
+              <div className="relative w-full aspect-16/10 rounded-[20px] overflow-hidden bg-zinc-100 dark:bg-zinc-800">
                 {displayUpdate && (
                   <Image
                     src={displayUpdate.image || "/Background+HorizontalBorder.png"}
@@ -243,25 +243,22 @@ export default function Updates() {
                   {displayUpdate ? displayUpdate.category : "FEATURED UPDATE"}
                 </span>
 
-                <h3 className="text-xl md:text-2xl font-bold text-zinc-950 leading-snug mb-3">
+                <h3 className="text-xl md:text-2xl font-bold text-zinc-950 dark:text-white leading-snug mb-3">
                   {displayUpdate ? displayUpdate.title : "Loading..."}
                 </h3>
 
-                <p className="text-zinc-600 text-xs md:text-sm leading-relaxed mb-6 line-clamp-4">
+                <p className="text-zinc-600 dark:text-zinc-400 text-xs md:text-sm leading-relaxed mb-6 line-clamp-4">
                   {displayUpdate ? displayUpdate.desc : ""}
                 </p>
 
-                {/* Read Full Story Button */}
+                {/* Read Full Story Button - Navigates directly to Blog/Resources on Desktop without opening popup */}
                 {displayUpdate && (
-                  <button
-                    onClick={() => {
-                      setSelectedUpdate(displayUpdate);
-                      setShowDetailModal(true);
-                    }}
+                  <Link
+                    href={displayUpdate.slug && !['1', '2', '3', '4'].includes(displayUpdate.slug) ? `/blogs/${displayUpdate.slug}` : '/blogs'}
                     className="inline-flex justify-center items-center text-center border border-[#FF4F18] bg-transparent px-5 py-2.5 text-[12.6px] font-bold text-[#FF4F18] rounded-full uppercase tracking-wider transition-all duration-200 hover:bg-[#FF4F18]/5 active:scale-[0.98] cursor-pointer w-max"
                   >
                     READ FULL STORY →
-                  </button>
+                  </Link>
                 )}
               </div>
             </div>

@@ -62,7 +62,8 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
 
   // Comment filter state
   const [commentSearchName, setCommentSearchName] = useState('');
-  const [commentSubTab, setCommentSubTab] = useState<'all' | 'reported'>('all');
+  const [commentSubTab, setCommentSubTab] = useState<'all' | 'unhidden' | 'hidden' | 'reported'>('all');
+  const [commentSort, setCommentSort] = useState<'newest' | 'likes_desc'>('newest');
 
   // Leads & Contacts state
   const [leadSearch, setLeadSearch] = useState('');
@@ -274,6 +275,19 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
     } catch (err: any) {
       console.error(err);
       showToast(err.message || 'Failed to update status', 'error');
+    }
+  };
+
+  const handleDuplicateSolution = async (solutionId: string) => {
+    try {
+      const token = localStorage.getItem('admin_token') || '';
+      const res = await api.post(`/solutions/${solutionId}/duplicate`, {}, token);
+      const newDoc = res.data;
+      showToast(`Solution duplicated successfully with slug: ${newDoc.slug}`, 'success');
+      fetchData(token);
+    } catch (err: any) {
+      console.error(err);
+      showToast(err.message || 'Failed to duplicate solution', 'error');
     }
   };
 
@@ -870,33 +884,46 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
             </div>
           )}
           {activeTab === 'comments' && (
-            <div className="p-5 border-b border-zinc-200 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-black/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full sm:w-auto">
-                <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">Filter Comments</span>
-                <div className="flex bg-zinc-150 dark:bg-zinc-800 p-0.5 rounded-lg text-[11px] font-bold shrink-0">
-                  <button
-                    onClick={() => setCommentSubTab('all')}
-                    className={`px-3 py-1 rounded-md transition-colors ${
-                      commentSubTab === 'all'
-                        ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow-xs'
-                        : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
-                    }`}
+            <div className="p-5 border-b border-zinc-200 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-black/20 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-6 w-full lg:w-auto flex-wrap">
+                
+                {/* Status Filter (Hidden / Unhidden / All) */}
+                <div className="flex items-center gap-2">
+                  <label htmlFor="status-filter" className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    Status:
+                  </label>
+                  <select
+                    id="status-filter"
+                    value={commentSubTab}
+                    onChange={(e) => setCommentSubTab(e.target.value as any)}
+                    className="px-3 py-2 text-xs font-bold rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 outline-none focus:border-[#FF4F18] focus:ring-1 focus:ring-[#FF4F18] cursor-pointer shadow-xs"
                   >
-                    All Comments
-                  </button>
-                  <button
-                    onClick={() => setCommentSubTab('reported')}
-                    className={`px-3 py-1 rounded-md transition-colors ${
-                      commentSubTab === 'reported'
-                        ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow-xs'
-                        : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
-                    }`}
-                  >
-                    Reported Comments
-                  </button>
+                    <option value="all">All Statuses</option>
+                    <option value="unhidden">Unhidden</option>
+                    <option value="hidden">Hidden</option>
+                    <option value="reported">Reported</option>
+                  </select>
                 </div>
+
+                {/* Like Filter (Descending / Newest) */}
+                <div className="flex items-center gap-2">
+                  <label htmlFor="like-filter" className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    Like:
+                  </label>
+                  <select
+                    id="like-filter"
+                    value={commentSort}
+                    onChange={(e) => setCommentSort(e.target.value as any)}
+                    className="px-3 py-2 text-xs font-bold rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 outline-none focus:border-[#FF4F18] focus:ring-1 focus:ring-[#FF4F18] cursor-pointer shadow-xs"
+                  >
+                    <option value="newest">All / Newest First</option>
+                    <option value="likes_desc">❤️ Most Liked (Descending)</option>
+                  </select>
+                </div>
+
               </div>
-              <div className="flex gap-2 w-full sm:w-auto">
+
+              <div className="flex gap-2 w-full lg:w-auto">
                 <input
                   type="text"
                   placeholder="Search by person's name..."
@@ -969,6 +996,7 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
                   {activeTab === 'solutions' && (
                     <>
                       <th className="px-6 py-4 font-semibold">Title</th>
+                      <th className="px-6 py-4 font-semibold">Description</th>
                       <th className="px-6 py-4 font-semibold">Slug</th>
                       <th className="px-6 py-4 font-semibold">Actions</th>
                     </>
@@ -976,6 +1004,7 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
                   {activeTab === 'industries' && (
                     <>
                       <th className="px-6 py-4 font-semibold">Title</th>
+                      <th className="px-6 py-4 font-semibold">Description</th>
                       <th className="px-6 py-4 font-semibold">Slug</th>
                       <th className="px-6 py-4 font-semibold">Actions</th>
                     </>
@@ -1019,8 +1048,22 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
               <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/60">
                 {(() => {
                   let list = data;
-                  if (activeTab === 'comments' && commentSubTab === 'reported') {
-                    list = data.filter((c: any) => c.isReported || (c.reports && c.reports.length > 0));
+                  if (activeTab === 'comments') {
+                    if (commentSubTab === 'reported') {
+                      list = data.filter((c: any) => c.isReported || (c.reports && c.reports.length > 0));
+                    } else if (commentSubTab === 'hidden') {
+                      list = data.filter((c: any) => c.isHidden === true);
+                    } else if (commentSubTab === 'unhidden') {
+                      list = data.filter((c: any) => !c.isHidden);
+                    }
+
+                    if (commentSort === 'likes_desc') {
+                      list = [...list].sort((a: any, b: any) => {
+                        const likesA = a.likesCount || (a.likes ? a.likes.length : 0);
+                        const likesB = b.likesCount || (b.likes ? b.likes.length : 0);
+                        return likesB - likesA;
+                      });
+                    }
                   }
                   return list.map((item: any, i: number) => (
                     <tr key={item._id || i} className="hover:bg-zinc-50/80 dark:hover:bg-zinc-900/40 transition-colors group">
@@ -1113,18 +1156,31 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
                     )}
                     {activeTab === 'solutions' && (
                       <>
-                        <td className="px-6 py-4 font-medium max-w-[250px] truncate">{item.title}</td>
+                        <td className="px-6 py-4 font-medium max-w-[200px] truncate">{item.title}</td>
+                        <td className="px-6 py-4 max-w-[300px] truncate text-zinc-500 dark:text-zinc-400" title={item.description || item.subtitle || item.gridDesc}>
+                          {item.description || item.subtitle || item.gridDesc || 'N/A'}
+                        </td>
                         <td className="px-6 py-4">{item.slug}</td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 space-x-3">
                           <Link href={`/admin/solutions/${item._id}`} className="text-[#FF4F18] font-bold hover:underline transition-opacity">
-                            Edit Solution
+                            Edit
                           </Link>
+                          <button
+                            onClick={() => handleDuplicateSolution(item._id)}
+                            className="text-zinc-600 dark:text-zinc-300 font-bold hover:text-[#FF4F18] transition-colors cursor-pointer"
+                            title="Duplicate this solution with slug-2, slug-3..."
+                          >
+                            Duplicate
+                          </button>
                         </td>
                       </>
                     )}
                     {activeTab === 'industries' && (
                       <>
-                        <td className="px-6 py-4 font-medium max-w-[250px] truncate">{item.title}</td>
+                        <td className="px-6 py-4 font-medium max-w-[200px] truncate">{item.title}</td>
+                        <td className="px-6 py-4 max-w-[300px] truncate text-zinc-500 dark:text-zinc-400" title={item.description || item.subtitle || item.gridDesc}>
+                          {item.description || item.subtitle || item.gridDesc || 'N/A'}
+                        </td>
                         <td className="px-6 py-4">{item.slug}</td>
                         <td className="px-6 py-4">
                           <Link href={`/admin/industries/${item._id}`} className="text-[#FF4F18] font-bold hover:underline transition-opacity">
