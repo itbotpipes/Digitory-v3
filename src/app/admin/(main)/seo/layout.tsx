@@ -10,6 +10,7 @@ export default function SeoLayout({ children }: { children: React.ReactNode }) {
   const tabs = [
     { name: 'Dashboard', path: '/admin/seo' },
     { name: 'Pages List', path: '/admin/seo/pages' },
+    { name: 'Analytics & Pixels', path: '/admin/seo/analytics' },
     { name: 'Speed & Performance Audit', path: '/admin/seo/audit' },
     { name: '301 & 302 Redirects', path: '/admin/seo/redirects' },
     { name: 'Tools (Sitemap, Robots & LLM)', path: '/admin/seo/tools' },

@@ -998,6 +998,7 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
                       <th className="px-6 py-4 font-semibold">Title</th>
                       <th className="px-6 py-4 font-semibold">Description</th>
                       <th className="px-6 py-4 font-semibold">Slug</th>
+                      <th className="px-6 py-4 font-semibold">Home Page</th>
                       <th className="px-6 py-4 font-semibold">Actions</th>
                     </>
                   )}
@@ -1161,6 +1162,16 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
                           {item.description || item.subtitle || item.gridDesc || 'N/A'}
                         </td>
                         <td className="px-6 py-4">{item.slug}</td>
+                        <td className="px-6 py-4">
+                          <span className={`px-3 py-1.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider inline-flex items-center gap-1.5 ${
+                            item.showOnHome 
+                              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-200 dark:border-transparent' 
+                              : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'
+                          }`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${item.showOnHome ? 'bg-emerald-500' : 'bg-zinc-400'}`} />
+                            {item.showOnHome ? 'Shown' : 'Hidden'}
+                          </span>
+                        </td>
                         <td className="px-6 py-4 space-x-3">
                           <Link href={`/admin/solutions/${item._id}`} className="text-[#FF4F18] font-bold hover:underline transition-opacity">
                             Edit
