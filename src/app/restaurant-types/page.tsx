@@ -120,6 +120,7 @@ export default function IndustriesPage() {
         { name: "Espresso Beans 1kg", price: 1200, quantity: 5 },
         { name: "Oat Milk Carton", price: 350, quantity: 2 }
       ]);
+      setCalcOutlets((prev) => (prev < 2 ? 2 : prev));
     }
   }, [businessType]);
 
@@ -310,11 +311,18 @@ export default function IndustriesPage() {
                     </div>
                     <input
                       type="range"
-                      min={1}
+                      min={businessType === "cafe-chains" ? 2 : 1}
                       max={15}
                       step={1}
                       value={calcOutlets}
-                      onChange={(e) => setCalcOutlets(Number(e.target.value))}
+                      onChange={(e) => {
+                        const val = Number(e.target.value);
+                        if (businessType === "cafe-chains" && val < 2) {
+                          setCalcOutlets(2);
+                        } else {
+                          setCalcOutlets(val);
+                        }
+                      }}
                       className="w-full h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-[#FF4F18]"
                     />
                   </div>

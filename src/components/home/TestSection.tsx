@@ -151,8 +151,8 @@ export default function TestSection() {
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-12 items-start">
 
           {/* Left: WhatsApp Mockup Image (Before Digitory) */}
-          <div className="lg:col-span-6 flex flex-col items-center w-full">
-            <h3 className="text-base sm:text-lg font-semibold tracking-tight text-zinc-900 dark:text-white mb-4 text-center">
+          <div className="lg:col-span-6 flex flex-col items-center lg:items-start w-full max-w-[440px] mx-auto lg:mr-auto">
+            <h3 className="text-base sm:text-lg font-semibold tracking-tight text-zinc-900 dark:text-white mb-4 text-center lg:text-left">
               Before Digitory
             </h3>
 

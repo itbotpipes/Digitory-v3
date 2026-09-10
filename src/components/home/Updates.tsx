@@ -143,7 +143,7 @@ export default function Updates() {
       <section className="mx-auto max-w-7xl px-6 md:px-8 py-10 md:py-16">
         {/* Section Title */}
         <h2 className="text-3xl sm:text-4xl md:text-[44px] font-[850] tracking-tight text-[#111111] dark:text-white mb-10 leading-[1.15]">
-          Latest <span className="text-[#FF4F18]">news</span>
+          News & <span className="text-[#FF4F18]">updates</span>
         </h2>
 
         {/* 2-Column Grid */}

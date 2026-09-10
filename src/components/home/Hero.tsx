@@ -3,18 +3,18 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { 
-  CreditCard, 
-  QrCode, 
-  ClipboardList, 
-  Tv, 
-  Boxes, 
-  Archive, 
-  ChefHat, 
-  Sparkles, 
-  BarChart3, 
-  Users, 
-  ShoppingCart, 
+import {
+  CreditCard,
+  QrCode,
+  ClipboardList,
+  Tv,
+  Boxes,
+  Archive,
+  ChefHat,
+  Sparkles,
+  BarChart3,
+  Users,
+  ShoppingCart,
   TrendingUp,
   Cpu
 } from 'lucide-react';
@@ -341,7 +341,7 @@ export default function Hero() {
               ))}
             </div>
             <p className="text-xs md:text-sm text-zinc-500 max-w-xs leading-normal">
-              Trusted by restaurants, cafÃ©s, bars, breweries and cloud kitchens across India.
+              Trusted by restaurants, cafes, bars, breweries and cloud kitchens across India.
             </p>
           </div>
         </div>

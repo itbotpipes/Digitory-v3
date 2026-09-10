@@ -36,9 +36,9 @@ export default function SolutionsPage() {
         </ScrollFocusWrapper>
 
         {/* 2. Everything your restro needs in one place */}
-        <ScrollFocusWrapper>
+        {/* <ScrollFocusWrapper>
           <RadialCommandCenter />
-        </ScrollFocusWrapper>
+        </ScrollFocusWrapper> */}
 
         {/* 3. Counter */}
         <ScrollFocusWrapper>
@@ -61,9 +61,9 @@ export default function SolutionsPage() {
         </ScrollFocusWrapper>
 
         {/* 7. See how much you can save */}
-        <ScrollFocusWrapper>
+        {/* <ScrollFocusWrapper>
           <RoiCalculator />
-        </ScrollFocusWrapper>
+        </ScrollFocusWrapper> */}
 
         {/* 8. Latest insights */}
         <ScrollFocusWrapper>
