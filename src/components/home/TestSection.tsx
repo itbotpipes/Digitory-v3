@@ -222,7 +222,7 @@ export default function TestSection() {
               </div>
 
               {/* Chat Area */}
-              <div ref={chatContainerRef} className="p-4 space-y-4 h-[400px] overflow-y-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              <div ref={chatContainerRef} className="p-3.5 space-y-3 h-[350px] overflow-y-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
 
                 {/* Date Separator */}
                 <div className="flex justify-center my-2">
@@ -237,9 +237,8 @@ export default function TestSection() {
                   return (
                     <div
                       key={index}
-                      className={`flex items-start gap-2.5 transition-all duration-300 hover:translate-x-1 animate-[fadeIn_0.3s_ease-out] ${
-                        isOutgoing ? 'flex-row-reverse justify-start' : ''
-                      }`}
+                      className={`flex items-start gap-2.5 transition-all duration-300 hover:translate-x-1 animate-[fadeIn_0.3s_ease-out] ${isOutgoing ? 'flex-row-reverse justify-start' : ''
+                        }`}
                     >
                       {/* Avatar */}
                       <div className={`h-8 w-8 rounded-full flex items-center justify-center shadow-xs shrink-0 text-sm select-none ${msg.avatarColor}`}>
@@ -247,14 +246,12 @@ export default function TestSection() {
                       </div>
 
                       {/* Message Bubble */}
-                      <div className={`rounded-2xl px-3.5 py-2 shadow-[0_1px_2px_rgba(0,0,0,0.08)] max-w-[82%] relative flex flex-col ${
-                        isOutgoing 
-                          ? 'bg-[#D9FDD3] dark:bg-zinc-850 text-zinc-900 dark:text-white rounded-tr-none' 
-                          : 'bg-white dark:bg-zinc-800/90 rounded-tl-none text-zinc-850 dark:text-zinc-100'
-                      }`}>
-                        <span className={`text-[11px] font-bold mb-0.5 leading-none ${
-                          isOutgoing ? 'text-[#00a884]' : 'text-[#FF4F18]'
+                      <div className={`rounded-2xl px-3.5 py-2 shadow-[0_1px_2px_rgba(0,0,0,0.08)] max-w-[82%] relative flex flex-col ${isOutgoing
+                        ? 'bg-[#D9FDD3] dark:bg-zinc-850 text-zinc-900 dark:text-white rounded-tr-none'
+                        : 'bg-white dark:bg-zinc-800/90 rounded-tl-none text-zinc-850 dark:text-zinc-100'
                         }`}>
+                        <span className={`text-[11px] font-bold mb-0.5 leading-none ${isOutgoing ? 'text-[#00a884]' : 'text-[#FF4F18]'
+                          }`}>
                           {msg.role}
                         </span>
                         <p className="text-[13px] leading-snug pr-8 py-0.5 whitespace-pre-wrap break-words">
@@ -293,7 +290,7 @@ export default function TestSection() {
                 </div>
 
                 {/* Send/Microphone Button */}
-                <button 
+                <button
                   type="submit"
                   className="bg-[#00a884] h-9 w-9 rounded-full flex items-center justify-center text-white shadow-sm shrink-0 active:scale-95 transition-transform cursor-pointer"
                 >
@@ -329,13 +326,12 @@ export default function TestSection() {
                   {/* Number Circle */}
                   <div className="absolute -left-16 flex items-center justify-center">
                     <div
-                      className={`flex h-12 w-12 items-center justify-center rounded-full border-2 font-bold text-base transition-all duration-300 ${
-                        step.isGreen
-                          ? 'bg-[#13B257] border-[#13B257] text-white shadow-[0_4px_12px_rgba(19,178,87,0.35)]'
-                          : step.highlighted
+                      className={`flex h-12 w-12 items-center justify-center rounded-full border-2 font-bold text-base transition-all duration-300 ${step.isGreen
+                        ? 'bg-[#13B257] border-[#13B257] text-white shadow-[0_4px_12px_rgba(19,178,87,0.35)]'
+                        : step.highlighted
                           ? 'bg-[#FF4F18] border-[#FF4F18] text-white shadow-[0_4px_12px_rgba(255,79,24,0.35)]'
                           : 'bg-white border-[#FF4F18] text-zinc-800'
-                      }`}
+                        }`}
                     >
                       {step.num}
                     </div>

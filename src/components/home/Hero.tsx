@@ -304,7 +304,7 @@ export default function Hero() {
   const activeDetails = activeNode ? activeNode.details : defaultDetails;
 
   return (
-    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-8 pb-6 md:pt-12 md:pb-10 lg:pt-16 lg:pb-12">
+    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-8 pb-6 md:pt-12 md:pb-10 lg:pt-16 lg:pb-12 min-h-[calc(100vh-80px)] flex flex-col justify-center">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center">
 
         {/* Left Copy Column */}
@@ -330,25 +330,25 @@ export default function Hero() {
           </div>
 
           {/* Trust indicators */}
-          <div className="flex items-center gap-4 pt-4 border-t border-zinc-100">
+          <div className="flex items-center gap-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
             <div className="flex -space-x-3">
               {trustCircles.map((circle, idx) => (
                 <div
                   key={idx}
-                  className={`flex h-8 w-8 items-center justify-center rounded-full ${circle.bg} ${circle.textCol} font-extrabold text-xs border-2 border-white`}
+                  className={`flex h-8 w-8 items-center justify-center rounded-full ${circle.bg} ${circle.textCol} font-extrabold text-xs border-2 border-white dark:border-zinc-900`}
                 >
                   {circle.text}
                 </div>
               ))}
             </div>
-            <p className="text-xs md:text-sm text-zinc-500 max-w-xs leading-normal">
+            <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 max-w-xs leading-normal">
               Trusted by restaurants, cafes, bars, breweries and cloud kitchens across India.
             </p>
           </div>
         </div>
 
         {/* Right Column with Digitory AI Layer Card */}
-        <div className="lg:col-span-6 flex flex-col items-center justify-start w-full select-none max-w-[620px] ml-auto">
+        <div className="lg:col-span-6 flex flex-col items-center justify-start w-full select-none max-w-[530px] ml-auto transition-all duration-200">
           {/* <DigitoryLiveRecord /> */}
           <DigitoryAiLayerCard />
         </div>
