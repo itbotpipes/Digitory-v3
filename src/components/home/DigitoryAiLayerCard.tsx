@@ -23,7 +23,7 @@ import {
 export default function DigitoryAiLayerCard() {
   return (
     <div className="w-full max-w-[530px] bg-white dark:bg-[#121319] border border-zinc-200/90 dark:border-zinc-800/80 rounded-[20px] p-3.5 sm:p-4 shadow-xs dark:shadow-zinc-950/40 transition-colors text-left font-sans">
-      
+
       {/* Header Section */}
       <div className="flex flex-wrap items-center justify-between gap-1.5 pb-2.5 border-b border-zinc-100 dark:border-zinc-800/60">
         {/* Title */}
@@ -231,7 +231,7 @@ export default function DigitoryAiLayerCard() {
       {/* Footer Line */}
       <div className="mt-3.5 pt-2.5 border-t border-zinc-100 dark:border-zinc-800/60 flex items-center justify-center relative">
         <span className="text-[10.5px] font-bold text-zinc-400 dark:text-zinc-500 tracking-tight">
-          12 integrated modules • 1 connected platform
+          12  Ai integrated modules • 1 connected platform
         </span>
 
         {/* Down Arrow Floating Icon */}
