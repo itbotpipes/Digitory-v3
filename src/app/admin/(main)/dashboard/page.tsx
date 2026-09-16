@@ -5,13 +5,7 @@ import { api } from '@/lib/api';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-interface DashboardProps {
-  params?: Promise<any>;
-  searchParams?: Promise<any>;
-  activeTabProp?: 'leads' | 'contacts' | 'updates' | 'blogs' | 'solutions' | 'industries' | 'comments' | 'users' | 'admins' | 'roles' | 'pages';
-}
-
-export default function AdminDashboard({ activeTabProp }: DashboardProps) {
+export function AdminDashboardView({ activeTabProp }: { activeTabProp?: 'leads' | 'contacts' | 'updates' | 'blogs' | 'solutions' | 'industries' | 'comments' | 'users' | 'admins' | 'roles' | 'pages' }) {
   const searchParams = useSearchParams();
   const tabParam = activeTabProp || searchParams?.get('tab') || 'leads';
   const activeTab = ['leads', 'contacts', 'updates', 'blogs', 'solutions', 'industries', 'comments', 'users', 'admins', 'roles', 'pages'].includes(tabParam)
@@ -1956,5 +1950,12 @@ export default function AdminDashboard({ activeTabProp }: DashboardProps) {
     </div>
   );
 }
+
+export const AdminDashboard = AdminDashboardView;
+
+export default function DashboardEntryPage() {
+  return <AdminDashboardView />;
+}
+
 
 
