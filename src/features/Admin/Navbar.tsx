@@ -88,6 +88,12 @@ const links: ILink[] = [
     permission: "manage_industries",
   },
   {
+    label: "Pages (Privacy & Terms)",
+    href: "/admin/pages",
+    Icon: FileText,
+    permission: "manage_blogs",
+  },
+  {
     label: "Staff / Admins",
     href: "/admin/admins",
     Icon: Users,

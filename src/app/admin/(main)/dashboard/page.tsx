@@ -201,6 +201,7 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
             blogs: 'manage_blogs',
             solutions: 'manage_solutions',
             industries: 'manage_industries',
+            pages: 'manage_blogs',
             comments: 'manage_comments',
             users: 'manage_users',
             admins: 'manage_users',
@@ -874,13 +875,10 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
             </div>
           )}
           {activeTab === 'pages' && (
-            <div className="p-5 border-b border-zinc-200 dark:border-zinc-800/80 flex justify-end bg-zinc-50/50 dark:bg-black/20">
-              <button 
-                onClick={handleOpenCreatePage} 
-                className="bg-[#FF4F18] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#E03F0D] transition-colors shadow-[0_4px_14px_rgba(255,79,24,0.35)] hover:shadow-[0_6px_20px_rgba(255,79,24,0.4)] transform hover:-translate-y-0.5 duration-200"
-              >
-                + Create New Page
-              </button>
+            <div className="p-5 border-b border-zinc-200 dark:border-zinc-800/80 flex justify-between items-center bg-zinc-50/50 dark:bg-black/20">
+              <span className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold uppercase tracking-wider">
+                Manage Legal Pages (Privacy Policy & Terms of Service)
+              </span>
             </div>
           )}
           {activeTab === 'comments' && (
@@ -1049,6 +1047,16 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
               <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/60">
                 {(() => {
                   let list = data;
+                  if (activeTab === 'pages') {
+                    list = data.filter((p: any) => ['privacy', 'terms'].includes(p.slug));
+                    const slugsPresent = list.map((p: any) => p.slug);
+                    if (!slugsPresent.includes('privacy')) {
+                      list.push({ _id: 'privacy', title: 'Privacy Policy', slug: 'privacy', status: 'Published', content: '' });
+                    }
+                    if (!slugsPresent.includes('terms')) {
+                      list.push({ _id: 'terms', title: 'Terms of Service', slug: 'terms', status: 'Published', content: '' });
+                    }
+                  }
                   if (activeTab === 'comments') {
                     if (commentSubTab === 'reported') {
                       list = data.filter((c: any) => c.isReported || (c.reports && c.reports.length > 0));
@@ -1318,12 +1326,6 @@ export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'lea
                             className="text-[#FF4F18] font-bold hover:underline transition-opacity"
                           >
                             Edit
-                          </button>
-                          <button 
-                            onClick={() => handleDeletePage(item._id)} 
-                            className="text-red-500 font-bold hover:bg-red-50 dark:hover:bg-red-500/10 px-3 py-1.5 rounded-lg transition-colors"
-                          >
-                            Delete
                           </button>
                         </td>
                       </>
