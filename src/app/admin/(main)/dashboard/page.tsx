@@ -5,7 +5,7 @@ import { api } from '@/lib/api';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-export function AdminDashboardView({ activeTabProp }: { activeTabProp?: 'leads' | 'contacts' | 'updates' | 'blogs' | 'solutions' | 'industries' | 'comments' | 'users' | 'admins' | 'roles' | 'pages' }) {
+export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'leads' | 'contacts' | 'updates' | 'blogs' | 'solutions' | 'industries' | 'comments' | 'users' | 'admins' | 'roles' | 'pages' }) {
   const searchParams = useSearchParams();
   const tabParam = activeTabProp || searchParams?.get('tab') || 'leads';
   const activeTab = ['leads', 'contacts', 'updates', 'blogs', 'solutions', 'industries', 'comments', 'users', 'admins', 'roles', 'pages'].includes(tabParam)
@@ -875,10 +875,8 @@ export function AdminDashboardView({ activeTabProp }: { activeTabProp?: 'leads' 
             </div>
           )}
           {activeTab === 'pages' && (
-            <div className="p-5 border-b border-zinc-200 dark:border-zinc-800/80 flex justify-between items-center bg-zinc-50/50 dark:bg-black/20">
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 font-semibold uppercase tracking-wider">
-                Manage Legal Pages (Privacy Policy & Terms of Service)
-              </span>
+            <div className="p-5 border-b border-zinc-200 dark:border-zinc-800/80 flex items-center justify-between bg-zinc-50/50 dark:bg-black/20">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Manage and edit the Privacy Policy and Terms of Service page content</p>
             </div>
           )}
           {activeTab === 'comments' && (
@@ -1048,14 +1046,10 @@ export function AdminDashboardView({ activeTabProp }: { activeTabProp?: 'leads' 
                 {(() => {
                   let list = data;
                   if (activeTab === 'pages') {
-                    list = data.filter((p: any) => ['privacy', 'terms'].includes(p.slug));
-                    const slugsPresent = list.map((p: any) => p.slug);
-                    if (!slugsPresent.includes('privacy')) {
-                      list.push({ _id: 'privacy', title: 'Privacy Policy', slug: 'privacy', status: 'Published', content: '' });
-                    }
-                    if (!slugsPresent.includes('terms')) {
-                      list.push({ _id: 'terms', title: 'Terms of Service', slug: 'terms', status: 'Published', content: '' });
-                    }
+                    list = data.filter((p: any) =>
+                      ['privacy', 'terms'].includes(p.slug?.toLowerCase()) ||
+                      ['privacy policy', 'terms of service', 'terms and conditions', 'terms & conditions'].includes(p.title?.toLowerCase())
+                    );
                   }
                   if (activeTab === 'comments') {
                     if (commentSubTab === 'reported') {
@@ -1326,6 +1320,12 @@ export function AdminDashboardView({ activeTabProp }: { activeTabProp?: 'leads' 
                             className="text-[#FF4F18] font-bold hover:underline transition-opacity"
                           >
                             Edit
+                          </button>
+                          <button 
+                            onClick={() => handleDeletePage(item._id)} 
+                            className="text-red-500 font-bold hover:bg-red-50 dark:hover:bg-red-500/10 px-3 py-1.5 rounded-lg transition-colors"
+                          >
+                            Delete
                           </button>
                         </td>
                       </>
@@ -1950,12 +1950,5 @@ export function AdminDashboardView({ activeTabProp }: { activeTabProp?: 'leads' 
     </div>
   );
 }
-
-export const AdminDashboard = AdminDashboardView;
-
-export default function DashboardEntryPage() {
-  return <AdminDashboardView />;
-}
-
 
 
