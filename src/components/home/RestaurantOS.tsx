@@ -78,13 +78,15 @@ export default function RestaurantOSPage() {
     },
   ];
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(2);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [playingState, setPlayingState] = useState<{ [key: number]: boolean }>({});
+  const [fullscreenVideo, setFullscreenVideo] = useState<Testimonial | null>(null);
 
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const popupVideoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Synchronize play/pause states based on active index
@@ -94,7 +96,7 @@ export default function RestaurantOSPage() {
 
       video.muted = isMuted;
 
-      if (idx === activeIndex) {
+      if (idx === activeIndex && !fullscreenVideo) {
         const playPromise = video.play();
         if (playPromise !== undefined) {
           playPromise
@@ -102,7 +104,6 @@ export default function RestaurantOSPage() {
               setPlayingState((prev) => ({ ...prev, [idx]: true }));
             })
             .catch(() => {
-              // Auto-play was prevented by browser policy
               setPlayingState((prev) => ({ ...prev, [idx]: false }));
             });
         }
@@ -112,12 +113,12 @@ export default function RestaurantOSPage() {
         setPlayingState((prev) => ({ ...prev, [idx]: false }));
       }
     });
-  }, [activeIndex, isMuted]);
+  }, [activeIndex, isMuted, fullscreenVideo]);
 
   // Pinned Sticky Scroll Handler: Locks screen in place while scrolling through videos
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current) return;
+      if (!containerRef.current || fullscreenVideo) return;
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       const scrollableDistance = rect.height - windowHeight;
@@ -137,12 +138,22 @@ export default function RestaurantOSPage() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [testimonials.length]);
+  }, [testimonials.length, fullscreenVideo]);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setFullscreenVideo(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const togglePlayPause = (idx: number, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -161,6 +172,11 @@ export default function RestaurantOSPage() {
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsMuted((prev) => !prev);
+  };
+
+  const openFullscreen = (item: Testimonial, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setFullscreenVideo(item);
   };
 
   const minSwipeDistance = 40;
@@ -197,35 +213,9 @@ export default function RestaurantOSPage() {
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-10 gap-4">
             <div>
-
               <h2 className="text-2xl sm:text-3xl md:text-[38px] font-[850] tracking-tight leading-[1.15] text-[#111111] dark:text-white">
                 What our <span className="text-[#FF4F18]">customers say</span>
               </h2>
-            </div>
-
-            {/* Section Controls */}
-            <div className="flex items-center gap-2 select-none">
-              <button
-                onClick={() =>
-                  setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-                }
-                className="flex items-center justify-center w-9 h-9 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-[#111111] dark:text-white hover:bg-zinc-50 dark:hover:bg-zinc-800 active:scale-95 transition-all shadow-sm cursor-pointer"
-                aria-label="Previous testimonial video"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
-              </button>
-
-              <button
-                onClick={() => setActiveIndex((prev) => (prev + 1) % testimonials.length)}
-                className="flex items-center justify-center w-9 h-9 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-[#111111] dark:text-white hover:bg-zinc-50 dark:hover:bg-zinc-800 active:scale-95 transition-all shadow-sm cursor-pointer"
-                aria-label="Next testimonial video"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
-              </button>
             </div>
           </div>
 
@@ -304,23 +294,37 @@ export default function RestaurantOSPage() {
                           )}
                         </button>
 
-                        {isActive && (
+                        <div className="flex items-center gap-1.5">
+                          {isActive && (
+                            <button
+                              onClick={(e) => togglePlayPause(idx, e)}
+                              className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-all cursor-pointer"
+                              aria-label={playingState[idx] ? "Pause Video" : "Play Video"}
+                            >
+                              {playingState[idx] ? (
+                                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                                </svg>
+                              ) : (
+                                <svg className="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24">
+                                  <path d="M8 5v14l11-7z" />
+                                </svg>
+                              )}
+                            </button>
+                          )}
+
+                          {/* Fullscreen Expand Popup Button */}
                           <button
-                            onClick={(e) => togglePlayPause(idx, e)}
-                            className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-all cursor-pointer"
-                            aria-label={playingState[idx] ? "Pause Video" : "Play Video"}
+                            onClick={(e) => openFullscreen(item, e)}
+                            className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#FF4F18] transition-all cursor-pointer"
+                            aria-label="Open fullscreen video popup"
+                            title="Watch in fullscreen popup"
                           >
-                            {playingState[idx] ? (
-                              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                              </svg>
-                            ) : (
-                              <svg className="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                            )}
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                            </svg>
                           </button>
-                        )}
+                        </div>
                       </div>
 
                       {/* Bottom Content Area */}
@@ -365,25 +369,138 @@ export default function RestaurantOSPage() {
             </div>
           </div>
 
-          {/* Carousel Pagination Dots */}
-          <div className="flex justify-center items-center gap-2 mt-4 select-none">
-            {testimonials.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveIndex(idx)}
-                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${activeIndex === idx
-                  ? "w-7 bg-[#FF4F18]"
-                  : "w-2.5 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400"
-                  }`}
-                aria-label={`Go to video testimonial ${idx + 1}`}
-              />
-            ))}
+          {/* Carousel Navigation Buttons */}
+          <div className="flex justify-center items-center gap-4 mt-6 select-none">
+            {/* Left Navigation Arrow */}
+            <button
+              onClick={() =>
+                setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+              }
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-[#111111] dark:text-white hover:bg-[#FF4F18] hover:text-white hover:border-[#FF4F18] active:scale-95 transition-all shadow-md cursor-pointer"
+              aria-label="Previous testimonial video"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+
+            {/* Right Navigation Arrow */}
+            <button
+              onClick={() => setActiveIndex((prev) => (prev + 1) % testimonials.length)}
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-[#111111] dark:text-white hover:bg-[#FF4F18] hover:text-white hover:border-[#FF4F18] active:scale-95 transition-all shadow-md cursor-pointer"
+              aria-label="Next testimonial video"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Fullscreen Video Popup Modal */}
+      {fullscreenVideo && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-200"
+          onClick={() => setFullscreenVideo(null)}
+        >
+          <div
+            className="relative w-full max-w-4xl bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Modal Button */}
+            <button
+              onClick={() => setFullscreenVideo(null)}
+              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-[#FF4F18] text-white border border-white/20 flex items-center justify-center transition-all cursor-pointer"
+              aria-label="Close modal popup"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Video Player Container */}
+            <div className="w-full md:w-1/2 bg-black flex items-center justify-center relative aspect-[9/16] md:aspect-auto max-h-[60vh] md:max-h-[85vh]">
+              <video
+                ref={popupVideoRef}
+                src={fullscreenVideo.videoUrl}
+                controls
+                autoPlay
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            {/* Testimonial Information & Controls */}
+            <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between bg-zinc-950 text-white overflow-y-auto">
+              <div className="space-y-6">
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-[#10B981]/20 border border-[#10B981]/30 text-[#10B981] text-xs font-extrabold">
+                    {fullscreenVideo.stat}
+                  </span>
+                </div>
+
+                <blockquote className="text-lg md:text-xl font-medium leading-relaxed text-zinc-100 italic">
+                  "{fullscreenVideo.quote}"
+                </blockquote>
+
+                <div className="flex items-center gap-3 pt-4 border-t border-zinc-800">
+                  <div className="w-12 h-12 rounded-full bg-[#FF4F18] flex items-center justify-center text-white text-base font-bold shadow-md">
+                    {fullscreenVideo.initials}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">
+                      {fullscreenVideo.author}
+                    </h3>
+                    <p className="text-sm text-zinc-400">
+                      {fullscreenVideo.role},{" "}
+                      <span className="text-zinc-300 font-medium">
+                        {fullscreenVideo.location}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Prev / Next Modal Controls */}
+              <div className="flex items-center justify-between pt-6 border-t border-zinc-900 mt-6">
+                <button
+                  onClick={() => {
+                    const currentIdx = testimonials.findIndex((t) => t.id === fullscreenVideo.id);
+                    const prevIdx = (currentIdx - 1 + testimonials.length) % testimonials.length;
+                    setFullscreenVideo(testimonials[prevIdx]);
+                    setActiveIndex(prevIdx);
+                  }}
+                  className="flex items-center gap-2 text-sm font-semibold text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                  </svg>
+                  Previous
+                </button>
+
+                <button
+                  onClick={() => {
+                    const currentIdx = testimonials.findIndex((t) => t.id === fullscreenVideo.id);
+                    const nextIdx = (currentIdx + 1) % testimonials.length;
+                    setFullscreenVideo(testimonials[nextIdx]);
+                    setActiveIndex(nextIdx);
+                  }}
+                  className="flex items-center gap-2 text-sm font-semibold text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  Next
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
 
 
 

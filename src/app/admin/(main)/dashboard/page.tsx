@@ -5,7 +5,8 @@ import { api } from '@/lib/api';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-export default function AdminDashboard({ activeTabProp }: { activeTabProp?: 'leads' | 'contacts' | 'updates' | 'blogs' | 'solutions' | 'industries' | 'comments' | 'users' | 'admins' | 'roles' | 'pages' }) {
+export default function AdminDashboard(props: any) {
+  const activeTabProp = props?.activeTabProp;
   const searchParams = useSearchParams();
   const tabParam = activeTabProp || searchParams?.get('tab') || 'leads';
   const activeTab = ['leads', 'contacts', 'updates', 'blogs', 'solutions', 'industries', 'comments', 'users', 'admins', 'roles', 'pages'].includes(tabParam)
