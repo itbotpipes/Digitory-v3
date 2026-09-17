@@ -84,10 +84,28 @@ export default function RestaurantOSPage() {
   const [isMuted, setIsMuted] = useState(true);
   const [playingState, setPlayingState] = useState<{ [key: number]: boolean }>({});
   const [fullscreenVideo, setFullscreenVideo] = useState<Testimonial | null>(null);
+  const [cardSpacing, setCardSpacing] = useState(275);
 
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const popupVideoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Responsive card spacing to stretch cards across full navbar width
+  useEffect(() => {
+    const updateSpacing = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setCardSpacing(160);
+      } else if (width < 1024) {
+        setCardSpacing(215);
+      } else {
+        setCardSpacing(275);
+      }
+    };
+    updateSpacing();
+    window.addEventListener("resize", updateSpacing);
+    return () => window.removeEventListener("resize", updateSpacing);
+  }, []);
 
   // Synchronize play/pause states based on active index
   useEffect(() => {
@@ -115,14 +133,18 @@ export default function RestaurantOSPage() {
     });
   }, [activeIndex, isMuted, fullscreenVideo]);
 
-  // Pinned Sticky Scroll Handler: Locks screen in place while scrolling through videos
+  // Pinned Sticky Scroll Handler: Preserves 3rd video as default when section comes into view
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current || fullscreenVideo) return;
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       const scrollableDistance = rect.height - windowHeight;
-      if (scrollableDistance <= 0) return;
+
+      // When above or just entering the section, preserve index 2 (3rd video) as default
+      if (rect.top > 0 || scrollableDistance <= 0) {
+        return;
+      }
 
       // Calculate scroll progress ratio inside section (0 to 1)
       const currentScroll = -rect.top;
@@ -246,7 +268,7 @@ export default function RestaurantOSPage() {
                         : "z-10 scale-75 opacity-25 hover:opacity-50"
                       }`}
                     style={{
-                      transform: `translateX(${offset * 210}px) scale(${isActive ? 1 : Math.abs(offset) === 1 ? 0.86 : 0.72
+                      transform: `translateX(${offset * cardSpacing}px) scale(${isActive ? 1 : Math.abs(offset) === 1 ? 0.86 : 0.72
                         })`,
                     }}
                   >
