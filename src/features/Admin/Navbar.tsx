@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import clsx from "clsx";
 import { usePathname, useSearchParams } from "next/navigation";
-import { HomeIcon, SettingsIcon, SearchIcon, FileText, CheckCircle, MessageSquare, Inbox, Users, Megaphone, LogOut, ChevronDown, ChevronRight, Sun, Moon } from "lucide-react";
+import { HomeIcon, SettingsIcon, SearchIcon, FileText, CheckCircle, MessageSquare, Inbox, Users, Megaphone, LogOut, ChevronDown, ChevronRight, Sun, Moon, Video } from "lucide-react";
 import { api } from "@/lib/api";
 
 interface NavbarProps {
@@ -29,6 +29,12 @@ const links: ILink[] = [
     label: "SEO Management",
     href: "/admin/seo",
     Icon: SearchIcon,
+    permission: "manage_blogs",
+  },
+  {
+    label: "Testimonials & Videos",
+    href: "/admin/testimonials",
+    Icon: Video,
     permission: "manage_blogs",
   },
   {

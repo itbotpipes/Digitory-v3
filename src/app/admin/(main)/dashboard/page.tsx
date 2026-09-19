@@ -9,8 +9,8 @@ export default function AdminDashboard(props: any) {
   const activeTabProp = props?.activeTabProp;
   const searchParams = useSearchParams();
   const tabParam = activeTabProp || searchParams?.get('tab') || 'leads';
-  const activeTab = ['leads', 'contacts', 'updates', 'blogs', 'solutions', 'industries', 'comments', 'users', 'admins', 'roles', 'pages'].includes(tabParam)
-    ? (tabParam as 'leads' | 'contacts' | 'updates' | 'blogs' | 'solutions' | 'industries' | 'comments' | 'users' | 'admins' | 'roles' | 'pages')
+  const activeTab = ['leads', 'contacts', 'updates', 'blogs', 'solutions', 'industries', 'comments', 'users', 'admins', 'roles', 'pages', 'testimonials'].includes(tabParam)
+    ? (tabParam as 'leads' | 'contacts' | 'updates' | 'blogs' | 'solutions' | 'industries' | 'comments' | 'users' | 'admins' | 'roles' | 'pages' | 'testimonials')
     : 'leads';
 
   const [data, setData] = useState<any[]>([]);
@@ -55,6 +55,25 @@ export default function AdminDashboard(props: any) {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const imageInputRef = React.useRef<HTMLInputElement>(null);
+
+  // Testimonial management states
+  const [showTestimonialModal, setShowTestimonialModal] = useState(false);
+  const [editingTestimonial, setEditingTestimonial] = useState<any | null>(null);
+  const [testimonialForm, setTestimonialForm] = useState({
+    name: '',
+    role: '',
+    location: '',
+    quote: '',
+    stat: '',
+    initials: '',
+    videoUrl: '',
+    posterUrl: '',
+    status: 'Published',
+    order: 0,
+  });
+  const [savingTestimonial, setSavingTestimonial] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+  const videoFileInputRef = React.useRef<HTMLInputElement>(null);
 
   // Solutions Grid settings state
   const [gridTitle, setGridTitle] = useState('');
@@ -206,7 +225,8 @@ export default function AdminDashboard(props: any) {
             comments: 'manage_comments',
             users: 'manage_users',
             admins: 'manage_users',
-            roles: 'manage_users'
+            roles: 'manage_users',
+            testimonials: 'manage_blogs'
           };
           const required = tabPermissions[activeTab];
           if (required && !perms.includes(required)) {
@@ -325,6 +345,8 @@ export default function AdminDashboard(props: any) {
         endpoint = '/industries?limit=20';
       } else if (activeTab === 'pages') {
         endpoint = '/pages?limit=50';
+      } else if (activeTab === 'testimonials') {
+        endpoint = '/testimonials?limit=50';
       } else if (activeTab === 'comments') {
         endpoint = commentSearchName ? `/comments?name=${encodeURIComponent(commentSearchName)}` : '/comments';
       } else if (activeTab === 'users') {
@@ -616,6 +638,121 @@ export default function AdminDashboard(props: any) {
     setShowUpdateModal(true);
   };
 
+  const handleOpenCreateTestimonial = () => {
+    setEditingTestimonial(null);
+    setTestimonialForm({
+      name: '',
+      role: '',
+      location: '',
+      quote: '',
+      stat: '',
+      initials: '',
+      videoUrl: '',
+      posterUrl: '',
+      status: 'Published',
+      order: (data?.length || 0) + 1,
+    });
+    setShowTestimonialModal(true);
+  };
+
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingVideo(true);
+    try {
+      const token = localStorage.getItem('admin_token') || '';
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/media`, {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error('Video upload failed');
+      const json = await res.json();
+      const cloudUrl: string = json.data?.url || json.url;
+
+      setTestimonialForm(prev => ({ ...prev, videoUrl: cloudUrl }));
+      showToast('Video uploaded to Cloudinary successfully!', 'success');
+    } catch (err: any) {
+      console.error(err);
+      showToast(err.message || 'Failed to upload video', 'error');
+    } finally {
+      setUploadingVideo(false);
+    }
+  };
+
+  const handleOpenEditTestimonial = (item: any) => {
+    setEditingTestimonial(item);
+    setTestimonialForm({
+      name: item.name || item.author || '',
+      role: item.role || item.designation || '',
+      location: item.location || item.company || '',
+      quote: item.quote || '',
+      stat: item.stat || '',
+      initials: item.initials || '',
+      videoUrl: item.videoUrl || '',
+      posterUrl: item.posterUrl || '',
+      status: item.status || 'Published',
+      order: item.order || 0,
+    });
+    setShowTestimonialModal(true);
+  };
+
+  const handleSaveTestimonial = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingTestimonial(true);
+    try {
+      const token = localStorage.getItem('admin_token') || '';
+      const payload = {
+        ...testimonialForm,
+        author: testimonialForm.name,
+        designation: testimonialForm.role,
+        company: testimonialForm.location,
+      };
+
+      if (editingTestimonial) {
+        const res = await api.put(`/testimonials/${editingTestimonial._id}`, payload, token);
+        const updated = res.data?.doc || res.data || res;
+        setData((prev) => prev.map((item: any) => (item._id === editingTestimonial._id ? updated : item)));
+        showToast('Testimonial updated successfully', 'success');
+      } else {
+        const res = await api.post('/testimonials', payload, token);
+        const created = res.data?.doc || res.data || res;
+        setData((prev) => [created, ...prev]);
+        showToast('Testimonial created successfully', 'success');
+      }
+      setShowTestimonialModal(false);
+    } catch (err: any) {
+      console.error(err);
+      showToast(err.message || 'Failed to save testimonial', 'error');
+    } finally {
+      setSavingTestimonial(false);
+    }
+  };
+
+  const handleDeleteTestimonial = async (id: string) => {
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete Testimonial',
+      message: 'Are you sure you want to delete this testimonial? This action cannot be undone.',
+      onConfirm: async () => {
+        try {
+          const token = localStorage.getItem('admin_token');
+          await api.delete(`/testimonials/${id}`, token || '');
+          setData((prev) => prev.filter((item: any) => item._id !== id));
+          showToast('Testimonial deleted successfully!', 'success');
+        } catch (err: any) {
+          console.error(err);
+          showToast('Failed to delete testimonial', 'error');
+        }
+      }
+    });
+  };
+
   const handleSaveUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setSavingUpdate(true);
@@ -647,9 +784,23 @@ export default function AdminDashboard(props: any) {
     <div className="space-y-8 animate-fade-in">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white">Dashboard Overview</h1>
-          <p className="text-zinc-500 dark:text-zinc-400 mt-1">Monitor your leads, content, and engagement metrics.</p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
+            {activeTab === 'testimonials' ? 'Testimonials & Video Cards' : 'Dashboard Overview'}
+          </h1>
+          <p className="text-zinc-500 dark:text-zinc-400 mt-1">
+            {activeTab === 'testimonials'
+              ? 'Manage video testimonials, author credentials, quotes, and card statistics.'
+              : 'Monitor your leads, content, and engagement metrics.'}
+          </p>
         </div>
+        {activeTab === 'testimonials' && (
+          <button
+            onClick={handleOpenCreateTestimonial}
+            className="px-5 py-2.5 bg-[#FF4F18] hover:bg-[#E03F0D] text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center gap-2"
+          >
+            <span>+ Add Video Testimonial</span>
+          </button>
+        )}
       </div>
 
       {loading ? (
@@ -1041,6 +1192,17 @@ export default function AdminDashboard(props: any) {
                       <th className="px-6 py-4 font-semibold">Actions</th>
                     </>
                   )}
+                  {activeTab === 'testimonials' && (
+                    <>
+                      <th className="px-6 py-4 font-semibold">Author / Role</th>
+                      <th className="px-6 py-4 font-semibold">Location</th>
+                      <th className="px-6 py-4 font-semibold">Stat Badge</th>
+                      <th className="px-6 py-4 font-semibold">Quote Snippet</th>
+                      <th className="px-6 py-4 font-semibold">Video URL</th>
+                      <th className="px-6 py-4 font-semibold">Status</th>
+                      <th className="px-6 py-4 font-semibold">Actions</th>
+                    </>
+                  )}
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/60">
@@ -1324,6 +1486,56 @@ export default function AdminDashboard(props: any) {
                           </button>
                           <button 
                             onClick={() => handleDeletePage(item._id)} 
+                            className="text-red-500 font-bold hover:bg-red-50 dark:hover:bg-red-500/10 px-3 py-1.5 rounded-lg transition-colors"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </>
+                    )}
+                    {activeTab === 'testimonials' && (
+                      <>
+                        <td className="px-6 py-4 font-medium">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-[#FF4F18]/10 text-[#FF4F18] font-bold flex items-center justify-center text-xs shrink-0">
+                              {item.initials || (item.name ? item.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2) : 'T')}
+                            </div>
+                            <div>
+                              <div className="font-bold text-zinc-900 dark:text-white">{item.name || item.author}</div>
+                              <div className="text-xs text-zinc-500">{item.role || item.designation}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-xs font-semibold">{item.location || item.company || 'N/A'}</td>
+                        <td className="px-6 py-4">
+                          {item.stat ? (
+                            <span className="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-[#FFF3EF] dark:bg-orange-950/40 text-[#FF4F18]">
+                              {item.stat}
+                            </span>
+                          ) : (
+                            <span className="text-zinc-400 text-xs">-</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 max-w-[280px] truncate text-xs text-zinc-600 dark:text-zinc-300" title={item.quote}>
+                          "{item.quote}"
+                        </td>
+                        <td className="px-6 py-4 max-w-[200px] truncate text-xs font-mono text-blue-500 hover:underline" title={item.videoUrl}>
+                          <a href={item.videoUrl} target="_blank" rel="noreferrer">{item.videoUrl || 'No video'}</a>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wide uppercase ${item.status === 'Published' ? 'bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400' : 'bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'}`}>
+                            {item.status || 'Published'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 space-x-2">
+                          <button 
+                            onClick={() => handleOpenEditTestimonial(item)} 
+                            className="text-[#FF4F18] font-bold hover:underline transition-opacity"
+                          >
+                            Edit
+                          </button>
+                          <button 
+                            onClick={() => handleDeleteTestimonial(item._id)} 
                             className="text-red-500 font-bold hover:bg-red-50 dark:hover:bg-red-500/10 px-3 py-1.5 rounded-lg transition-colors"
                           >
                             Delete
@@ -1892,6 +2104,188 @@ export default function AdminDashboard(props: any) {
                   className="flex-1 bg-[#FF4F18] hover:bg-[#E03F0D] text-white py-2.5 rounded-full text-xs font-bold transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {savingUser ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Testimonial Modal */}
+      {showTestimonialModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-xs animate-fade-in" onClick={() => setShowTestimonialModal(false)} />
+          <div className="relative bg-white dark:bg-[#121214] border border-zinc-200 dark:border-zinc-800/80 rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl z-10 animate-scale-in my-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h2 className="text-xl font-extrabold text-zinc-900 dark:text-white">
+                  {editingTestimonial ? 'Edit Video Testimonial' : 'Create Video Testimonial'}
+                </h2>
+                <p className="text-xs text-zinc-500 mt-1">Configure author details, video link, and stat badge.</p>
+              </div>
+              <button 
+                type="button" 
+                onClick={() => setShowTestimonialModal(false)}
+                className="text-zinc-400 hover:text-zinc-600 dark:hover:text-white transition-colors cursor-pointer text-lg font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveTestimonial} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Author Name *</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={testimonialForm.name}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const inits = val.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+                      setTestimonialForm(prev => ({ ...prev, name: val, initials: prev.initials || inits }));
+                    }}
+                    placeholder="e.g. Rajesh Kumar"
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm text-zinc-900 dark:text-white"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Badge Initials</label>
+                  <input 
+                    type="text" 
+                    maxLength={4}
+                    value={testimonialForm.initials}
+                    onChange={(e) => setTestimonialForm(prev => ({ ...prev, initials: e.target.value.toUpperCase() }))}
+                    placeholder="e.g. RK"
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm text-zinc-900 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Role / Designation</label>
+                  <input 
+                    type="text" 
+                    value={testimonialForm.role}
+                    onChange={(e) => setTestimonialForm(prev => ({ ...prev, role: e.target.value }))}
+                    placeholder="e.g. Owner / Ops Head"
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm text-zinc-900 dark:text-white"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Location / Outlet</label>
+                  <input 
+                    type="text" 
+                    value={testimonialForm.location}
+                    onChange={(e) => setTestimonialForm(prev => ({ ...prev, location: e.target.value }))}
+                    placeholder="e.g. BygBrewski Bangalore"
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm text-zinc-900 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Stat Highlight Badge</label>
+                <input 
+                  type="text" 
+                  value={testimonialForm.stat}
+                  onChange={(e) => setTestimonialForm(prev => ({ ...prev, stat: e.target.value }))}
+                  placeholder="e.g. ↑ 22% faster service or ₹2 Lakh Saved Every Month"
+                  className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm text-zinc-900 dark:text-white"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Video MP4 URL *</label>
+                  <div className="flex items-center gap-2">
+                    <input 
+                      type="file" 
+                      ref={videoFileInputRef}
+                      accept="video/*" 
+                      onChange={handleVideoUpload}
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      disabled={uploadingVideo}
+                      onClick={() => videoFileInputRef.current?.click()}
+                      className="text-[11px] font-bold text-[#FF4F18] bg-[#FFF3EF] hover:bg-[#FFE6DC] dark:bg-orange-950/40 dark:hover:bg-orange-950/60 px-3 py-1 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
+                    >
+                      {uploadingVideo ? (
+                        <>
+                          <span className="w-3.5 h-3.5 border-2 border-[#FF4F18] border-t-transparent rounded-full animate-spin"></span>
+                          <span>Uploading to Cloudinary...</span>
+                        </>
+                      ) : (
+                        <span>☁️ Upload Video File to Cloudinary</span>
+                      )}
+                    </button>
+                  </div>
+                </div>
+                <input 
+                  type="url" 
+                  required
+                  value={testimonialForm.videoUrl}
+                  onChange={(e) => setTestimonialForm(prev => ({ ...prev, videoUrl: e.target.value }))}
+                  placeholder="https://res.cloudinary.com/... or paste video URL"
+                  className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm text-zinc-900 dark:text-white font-mono text-xs"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Quote Text *</label>
+                <textarea 
+                  required
+                  rows={3}
+                  value={testimonialForm.quote}
+                  onChange={(e) => setTestimonialForm(prev => ({ ...prev, quote: e.target.value }))}
+                  placeholder="Write customer testimonial quote..."
+                  className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm text-zinc-900 dark:text-white"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Display Order</label>
+                  <input 
+                    type="number" 
+                    value={testimonialForm.order}
+                    onChange={(e) => setTestimonialForm(prev => ({ ...prev, order: parseInt(e.target.value) || 0 }))}
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm text-zinc-900 dark:text-white"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Publication Status</label>
+                  <select 
+                    value={testimonialForm.status}
+                    onChange={(e) => setTestimonialForm(prev => ({ ...prev, status: e.target.value }))}
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm text-zinc-900 dark:text-white cursor-pointer"
+                  >
+                    <option value="Published">Published</option>
+                    <option value="Draft">Draft</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="pt-4 flex gap-3">
+                <button 
+                  type="button" 
+                  onClick={() => setShowTestimonialModal(false)}
+                  className="flex-1 px-4 py-2.5 font-bold text-xs text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-full transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  disabled={savingTestimonial}
+                  className="flex-1 bg-[#FF4F18] hover:bg-[#E03F0D] text-white py-2.5 rounded-full text-xs font-bold transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  {savingTestimonial ? 'Saving...' : 'Save Testimonial'}
                 </button>
               </div>
             </form>
