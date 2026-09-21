@@ -79,15 +79,26 @@ export default function RestaurantOSPage() {
   ];
 
   const [items, setItems] = useState<Testimonial[]>(testimonials);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [isMuted, setIsMuted] = useState(true);
-  const [playingState, setPlayingState] = useState<{ [key: string]: boolean }>({});
+  const [playingState, setPlayingState] = useState<{ [key: number]: boolean }>({});
   const [fullscreenVideo, setFullscreenVideo] = useState<Testimonial | null>(null);
   const [cardSpacing, setCardSpacing] = useState(275);
 
-  const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
   const popupVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Helper to map continuous position index to an item in the testimonials array
+  const getItemForPos = (pos: number): Testimonial | null => {
+    if (!items || items.length === 0) return null;
+    const index = ((pos % items.length) + items.length) % items.length;
+    return items[index];
+  };
+
+  // Visible position offsets around the center card (offset 0)
+  const visibleOffsets = [-3, -2, -1, 0, 1, 2, 3];
 
   // Fetch dynamic video testimonials from API
   useEffect(() => {
@@ -136,10 +147,6 @@ export default function RestaurantOSPage() {
       });
   }, []);
 
-  // Center slot is ALWAYS index 2
-  const centerIndex = 2;
-  const activeItem = items[centerIndex];
-
   // Responsive card spacing to stretch cards across full navbar width
   useEffect(() => {
     const updateSpacing = () => {
@@ -159,30 +166,34 @@ export default function RestaurantOSPage() {
 
   // Synchronize play/pause states for the center video item
   useEffect(() => {
-    items.forEach((item, idx) => {
-      const video = videoRefs.current[item.id];
+    if (!items || items.length === 0) return;
+    const activeAbsPos = currentIndex;
+
+    Object.keys(videoRefs.current).forEach((keyStr) => {
+      const posKey = Number(keyStr);
+      const video = videoRefs.current[posKey];
       if (!video) return;
 
       video.muted = isMuted;
 
-      if (idx === centerIndex && !fullscreenVideo && item.videoUrl) {
+      if (posKey === activeAbsPos && !fullscreenVideo) {
         const playPromise = video.play();
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
-              setPlayingState((prev) => ({ ...prev, [item.id]: true }));
+              setPlayingState((prev) => ({ ...prev, [posKey]: true }));
             })
             .catch(() => {
-              setPlayingState((prev) => ({ ...prev, [item.id]: false }));
+              setPlayingState((prev) => ({ ...prev, [posKey]: false }));
             });
         }
       } else {
         video.pause();
         try { video.currentTime = 0; } catch (_) {}
-        setPlayingState((prev) => ({ ...prev, [item.id]: false }));
+        setPlayingState((prev) => ({ ...prev, [posKey]: false }));
       }
     });
-  }, [items, isMuted, fullscreenVideo]);
+  }, [currentIndex, isMuted, fullscreenVideo, items]);
 
   // Handle ESC key to close modal
   useEffect(() => {
@@ -195,49 +206,31 @@ export default function RestaurantOSPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Circular Array Rotation Handlers
+  // Navigation Handlers using continuous index positioning
   const handleNext = () => {
-    setItems((prev) => [...prev.slice(1), prev[0]]);
+    setCurrentIndex((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    setItems((prev) => [prev[prev.length - 1], ...prev.slice(0, -1)]);
+    setCurrentIndex((prev) => prev - 1);
   };
 
-  const handleCardClick = (targetIdx: number) => {
-    if (targetIdx === centerIndex) return;
-    if (targetIdx < centerIndex) {
-      const steps = centerIndex - targetIdx;
-      setItems((prev) => {
-        let nextArr = [...prev];
-        for (let i = 0; i < steps; i++) {
-          nextArr = [nextArr[nextArr.length - 1], ...nextArr.slice(0, -1)];
-        }
-        return nextArr;
-      });
-    } else {
-      const steps = targetIdx - centerIndex;
-      setItems((prev) => {
-        let nextArr = [...prev];
-        for (let i = 0; i < steps; i++) {
-          nextArr = [...nextArr.slice(1), nextArr[0]];
-        }
-        return nextArr;
-      });
-    }
+  const handleCardClick = (offset: number) => {
+    if (offset === 0) return;
+    setCurrentIndex((prev) => prev + offset);
   };
 
-  const togglePlayPause = (id: string, e: React.MouseEvent) => {
+  const togglePlayPause = (posKey: number, e: React.MouseEvent) => {
     e.stopPropagation();
-    const video = videoRefs.current[id];
+    const video = videoRefs.current[posKey];
     if (!video) return;
 
     if (video.paused) {
       video.play();
-      setPlayingState((prev) => ({ ...prev, [id]: true }));
+      setPlayingState((prev) => ({ ...prev, [posKey]: true }));
     } else {
       video.pause();
-      setPlayingState((prev) => ({ ...prev, [id]: false }));
+      setPlayingState((prev) => ({ ...prev, [posKey]: false }));
     }
   };
 
@@ -295,25 +288,35 @@ export default function RestaurantOSPage() {
         >
           {/* Centered Slider Track */}
           <div className="flex items-center justify-center min-h-[380px] md:min-h-[440px] relative">
-            {items.map((item, idx) => {
-              const isActive = idx === centerIndex;
-              const offset = idx - centerIndex;
+            {visibleOffsets.map((offset) => {
+              const absPos = currentIndex + offset;
+              const item = getItemForPos(absPos);
+              if (!item) return null;
+
+              const isActive = offset === 0;
+              const absOffset = Math.abs(offset);
+
+              let opacityClass = "opacity-0 pointer-events-none z-0";
+              let scaleValue = 0.6;
+
+              if (isActive) {
+                opacityClass = "z-30 scale-100 opacity-100 pointer-events-auto";
+                scaleValue = 1.0;
+              } else if (absOffset === 1) {
+                opacityClass = "z-20 scale-85 opacity-55 hover:opacity-80 pointer-events-auto";
+                scaleValue = 0.86;
+              } else if (absOffset === 2) {
+                opacityClass = "z-10 scale-75 opacity-25 hover:opacity-50 pointer-events-auto";
+                scaleValue = 0.72;
+              }
 
               return (
                 <div
-                  key={item.id}
-                  onClick={() => handleCardClick(idx)}
-                  className={`absolute transition-all duration-500 ease-out transform origin-center cursor-pointer ${
-                    isActive
-                      ? "z-30 scale-100 opacity-100 pointer-events-auto"
-                      : Math.abs(offset) === 1
-                      ? "z-20 scale-85 opacity-55 hover:opacity-80"
-                      : "z-10 scale-75 opacity-25 hover:opacity-50"
-                  }`}
+                  key={absPos}
+                  onClick={() => handleCardClick(offset)}
+                  className={`absolute transition-all duration-500 ease-out transform origin-center cursor-pointer ${opacityClass}`}
                   style={{
-                    transform: `translateX(${offset * cardSpacing}px) scale(${
-                      isActive ? 1 : Math.abs(offset) === 1 ? 0.86 : 0.72
-                    })`,
+                    transform: `translateX(${offset * cardSpacing}px) scale(${scaleValue})`,
                   }}
                 >
                   {/* Compact Vertical Video Card (9:16 portrait) */}
@@ -327,7 +330,7 @@ export default function RestaurantOSPage() {
                     {/* HTML5 Video Element */}
                     <video
                       ref={(el) => {
-                        videoRefs.current[item.id] = el;
+                        videoRefs.current[absPos] = el;
                       }}
                       src={item.videoUrl}
                       loop
@@ -368,11 +371,11 @@ export default function RestaurantOSPage() {
                       <div className="flex items-center gap-1.5">
                         {isActive && (
                           <button
-                            onClick={(e) => togglePlayPause(item.id, e)}
+                            onClick={(e) => togglePlayPause(absPos, e)}
                             className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-all cursor-pointer"
-                            aria-label={playingState[item.id] ? "Pause Video" : "Play Video"}
+                            aria-label={playingState[absPos] ? "Pause Video" : "Play Video"}
                           >
-                            {playingState[item.id] ? (
+                            {playingState[absPos] ? (
                               <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                                 <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
                               </svg>
@@ -536,7 +539,9 @@ export default function RestaurantOSPage() {
                 <button
                   onClick={() => {
                     handlePrev();
-                    setFullscreenVideo(items[centerIndex - 1 < 0 ? items.length - 1 : centerIndex - 1]);
+                    const nextIdx = currentIndex - 1;
+                    const item = getItemForPos(nextIdx);
+                    if (item) setFullscreenVideo(item);
                   }}
                   className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-zinc-400 hover:text-white transition-colors cursor-pointer"
                 >
@@ -549,7 +554,9 @@ export default function RestaurantOSPage() {
                 <button
                   onClick={() => {
                     handleNext();
-                    setFullscreenVideo(items[centerIndex + 1 >= items.length ? 0 : centerIndex + 1]);
+                    const nextIdx = currentIndex + 1;
+                    const item = getItemForPos(nextIdx);
+                    if (item) setFullscreenVideo(item);
                   }}
                   className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-zinc-400 hover:text-white transition-colors cursor-pointer"
                 >
