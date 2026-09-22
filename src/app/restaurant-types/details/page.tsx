@@ -37,7 +37,7 @@ function IndustriesDetailsContent() {
             title: s.title || '',
             subtitle: s.subtitle || '',
             description: s.description || '',
-            trustText: s.trustText || 'Trusted by restaurants across India.',
+            trustText: s.trustText || 'Trusted by restaurants across the globe.',
             featuresTitle: s.featuresTitle || 'Key capabilities',
             features: s.features || [],
             whyChooseTitle: s.whyChooseTitle || 'Why choose Digitory?',

@@ -1144,6 +1144,7 @@ export default function AdminDashboard(props: any) {
                   {activeTab === 'solutions' && (
                     <>
                       <th className="px-6 py-4 font-semibold">Title</th>
+                      <th className="px-6 py-4 font-semibold">Category & Position</th>
                       <th className="px-6 py-4 font-semibold">Description</th>
                       <th className="px-6 py-4 font-semibold">Slug</th>
                       <th className="px-6 py-4 font-semibold">Home Page</th>
@@ -1323,10 +1324,20 @@ export default function AdminDashboard(props: any) {
                     {activeTab === 'solutions' && (
                       <>
                         <td className="px-6 py-4 font-medium max-w-[200px] truncate">{item.title}</td>
-                        <td className="px-6 py-4 max-w-[300px] truncate text-zinc-500 dark:text-zinc-400" title={item.description || item.subtitle || item.gridDesc}>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2">
+                            <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200">
+                              {item.category || 'Run Operations'}
+                            </span>
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#FF4F18]/10 text-[#FF4F18] border border-[#FF4F18]/20">
+                              Pos #{item.categoryOrder || 1}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 max-w-[260px] truncate text-zinc-500 dark:text-zinc-400" title={item.description || item.subtitle || item.gridDesc}>
                           {item.description || item.subtitle || item.gridDesc || 'N/A'}
                         </td>
-                        <td className="px-6 py-4">{item.slug}</td>
+                        <td className="px-6 py-4 font-mono text-xs">{item.slug}</td>
                         <td className="px-6 py-4">
                           <span className={`px-3 py-1.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider inline-flex items-center gap-1.5 ${
                             item.showOnHome 

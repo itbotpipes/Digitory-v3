@@ -14,7 +14,7 @@ export default function VisionSection() {
             </div>
             <div className="lg:col-span-5 text-zinc-600 dark:text-zinc-400 text-sm md:text-base leading-relaxed lg:pt-2">
               <p>
-                We&apos;re building the technology that will help Indian restaurants run better, grow faster, and focus on hospitality.
+                We&apos;re building the technology that will help restaurants across the globe run better, grow faster, and focus on hospitality.
               </p>
             </div>
           </div>
@@ -30,7 +30,7 @@ export default function VisionSection() {
               </div>
               <h3 className="text-[17px] font-bold text-zinc-900 dark:text-white mb-2 leading-snug">Make every restaurant run better</h3>
               <p className="text-[13px] sm:text-[14px] text-zinc-500 dark:text-zinc-400 leading-relaxed font-normal">
-                We envision to make every restaurant in India, big or small, to run smoothly, make better profits, and spend less time dealing with everyday problems.
+                We envision to make every restaurant, big or small, to run smoothly, make better profits, and spend less time dealing with everyday problems.
               </p>
             </div>
 

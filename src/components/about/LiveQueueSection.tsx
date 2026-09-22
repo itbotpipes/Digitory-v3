@@ -77,7 +77,7 @@ export default function LiveQueueSection() {
     'Restaurant outlets using Digitory',
     'Orders handled every month',
     'Years working with restaurants',
-    'Cities we work in across India',
+    'Cities we work in across the globe',
   ];
 
   return (

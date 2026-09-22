@@ -39,6 +39,7 @@ export default function AdminSolutionEditor({ params }: SolutionEditorProps) {
     securityItems: [] as string[],
     ctaBlock: { title: '', desc: '' },
     category: '',
+    categoryOrder: 0,
     layerTitle: '',
     layerDesc: '',
     metricsTitle: '',
@@ -197,6 +198,7 @@ export default function AdminSolutionEditor({ params }: SolutionEditorProps) {
         securityItems: s.securityItems || [],
         ctaBlock: s.ctaBlock || { title: '', desc: '' },
         category: s.category || '',
+        categoryOrder: typeof s.categoryOrder === 'number' ? s.categoryOrder : 0,
         layerTitle: s.layerTitle || '',
         layerDesc: s.layerDesc || '',
         metricsTitle: s.metricsTitle || '',
@@ -354,13 +356,51 @@ export default function AdminSolutionEditor({ params }: SolutionEditorProps) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Category (e.g. core, frontend, etc.)</label>
+              <label className="block text-sm font-medium mb-1">
+                Category (Solution Grid Category)
+              </label>
+              <div className="space-y-1.5">
+                <select
+                  value={['Run Operations', 'Manage Inventory & Menu', 'Grow & Understand', 'Scale & Specialize'].includes(formData.category) ? formData.category : (formData.category ? 'custom' : '')}
+                  onChange={(e) => {
+                    if (e.target.value !== 'custom') {
+                      setFormData({ ...formData, category: e.target.value });
+                    }
+                  }}
+                  className="w-full px-4 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm"
+                >
+                  <option value="">Select Predefined Category...</option>
+                  <option value="Run Operations">Run Operations</option>
+                  <option value="Manage Inventory & Menu">Manage Inventory & Menu</option>
+                  <option value="Grow & Understand">Grow & Understand</option>
+                  <option value="Scale & Specialize">Scale & Specialize</option>
+                  <option value="custom">Custom Category Name</option>
+                </select>
+                <input
+                  type="text"
+                  value={formData.category}
+                  onChange={e => setFormData({...formData, category: e.target.value})}
+                  placeholder="Or enter custom category name..."
+                  className="w-full px-4 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Order / Position in Category Grid (1st, 2nd, etc.)
+              </label>
               <input
-                type="text"
-                value={formData.category}
-                onChange={e => setFormData({...formData, category: e.target.value})}
-                className="w-full px-4 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18]"
+                type="number"
+                min={1}
+                max={99}
+                value={formData.categoryOrder || ''}
+                onChange={e => setFormData({...formData, categoryOrder: parseInt(e.target.value) || 0})}
+                placeholder="e.g. 1 for 1st, 2 for 2nd, 3 for 3rd..."
+                className="w-full px-4 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-[#F8F9FA] dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#FF4F18] text-sm"
               />
+              <p className="text-xs text-zinc-500 mt-1">
+                Controls which position this card appears in within its category tab on the Solutions Grid (1 = 1st card, 2 = 2nd card).
+              </p>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Short Label (for menus) *</label>

@@ -19,7 +19,7 @@ export default function PrivacyPage() {
       .catch((err) => {
         console.error('Failed to load privacy page:', err);
         // Fallback default
-        setContent(`1. The Operational Challenge in India F&B\nManaging multi-outlet F&B brands in India requires navigating diverse supply chains, seasonal ingredient pricing, and intense competition.\n\nWithout unified software, restaurant owners spend hours reconciling POS numbers with manual inventory sheets, leaving wide gaps for leakage and missed margins.\n\n2. Digitory Smart Automation Ecosystem\nDigitory offers an end-to-end OS tailored for Indian restaurants, integrating order management, central kitchen management, and automated stock reconciliation.\n\nUnified POS & Central Kitchen Management\nInstant whatsapp alerts for inventory anomalies\nGST compliant billing & multi-branch reconciliation`);
+        setContent(`1. The Operational Challenge in F&B\nManaging multi-outlet F&B brands requires navigating diverse supply chains, seasonal ingredient pricing, and intense competition.\n\nWithout unified software, restaurant owners spend hours reconciling POS numbers with manual inventory sheets, leaving wide gaps for leakage and missed margins.\n\n2. Digitory Smart Automation Ecosystem\nDigitory offers an end-to-end OS tailored for all kind of restaurants, integrating order management, central kitchen management, and automated stock reconciliation.\n\nUnified POS & Central Kitchen Management\nInstant whatsapp alerts for inventory anomalies\nGST compliant billing & multi-branch reconciliation`);
       })
       .finally(() => setLoading(false));
   }, []);

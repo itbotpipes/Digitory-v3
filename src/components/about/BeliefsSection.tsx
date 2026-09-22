@@ -13,7 +13,7 @@ export default function BeliefsSection({ showStats = true, showBeliefs = true, s
     { value: '100+', label: 'restaurant outlets', sublabel: 'using Digitory' },
     { value: '2M+', label: 'orders', sublabel: 'handled every month' },
     { value: '10+', label: 'years of experience', sublabel: 'solving restaurant challenges' },
-    { value: '150+', label: 'cities', sublabel: 'across India' },
+    { value: '150+', label: 'cities', sublabel: 'across the globe' },
   ];
 
   const beliefs = [

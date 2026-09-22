@@ -74,7 +74,7 @@ function IndustriesDetailsContent() {
             subtitle: s.subtitle || '',
             description: s.description || '',
             ctaText: s.ctaText || 'Book a demo',
-            trustText: s.trustText || 'Trusted by restaurants across India.',
+            trustText: s.trustText || 'Trusted by restaurants across the globe.',
             featuresTitle: s.featuresTitle || 'Key capabilities',
             features: s.features || [],
             whyChooseTitle: s.whyChooseTitle || 'Why choose Digitory?',
@@ -235,7 +235,7 @@ function IndustriesDetailsContent() {
                   ))}
                 </div>
                 <p className="text-xs md:text-sm text-zinc-500 max-w-xs leading-normal">
-                  {industry.trustText || "Trusted by restaurants, cafés, bars, breweries and cloud kitchens across India."}
+                  {industry.trustText || "Trusted by restaurants, cafés, bars, breweries and cloud kitchens across the globe."}
                 </p>
               </div>
             </div>

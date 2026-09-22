@@ -136,11 +136,11 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "Restaurant POS software built for real restaurant work",
     description: "Digitory helps restaurants, cafés, bars, breweries, and cloud kitchens manage their daily operations with one simple system. Take orders, create bills, track inventory, manage staff, and view business reports, all from one platform. Whether you have one outlet or many, Digitory helps you save time, reduce mistakes, and run your business with confidence.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, cafés, bars, and breweries across India.",
+    trustText: "Trusted by restaurants, cafés, bars, and breweries across the globe.",
     whyChoose: [
       {
-        title: "Built for Indian restaurants",
-        desc: "Running a restaurant in India comes with unique challenges. Online orders, GST, busy weekends, multiple outlets, and changing menus can quickly become difficult to manage. Digitory is designed to handle these everyday challenges so your team can work faster and more efficiently."
+        title: "Made for all kind of restaurants",
+        desc: "Running a restaurant comes with unique challenges. Online orders, busy weekends, multiple outlets, and changing menus can quickly become difficult to manage. Digitory is designed to handle these everyday challenges so your team can work faster and more efficiently."
       },
       {
         title: "Everything in one place",
@@ -216,7 +216,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     ],
     ctaBlock: {
       title: "Ready to simplify your restaurant operations?",
-      desc: "Digitory helps restaurants save time, reduce manual work, and stay in control of every part of the business. From neighbourhood cafés to multi-outlet restaurant chains, restaurants across India trust Digitory to help them grow."
+      desc: "Digitory helps restaurants save time, reduce manual work, and stay in control of every part of the business. From neighbourhood cafés to multi-outlet restaurant chains, restaurants across the globe trust Digitory to help them grow."
     }
   },
   kds: {
@@ -228,7 +228,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "Kitchen Display System (KDS) for faster, smarter kitchens",
     description: "A busy kitchen needs more than skilled chefs. It needs a system that keeps every order organised. Digitory's Kitchen Display System (KDS) sends orders directly from the billing counter to the kitchen screen in real time. No paper tickets, no confusion, and no missed orders. Whether you run a restaurant, café, bar, brewery, or cloud kitchen, Digitory helps your team prepare food faster and serve customers on time.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, cafés, bars, and breweries across India.",
+    trustText: "Trusted by restaurants, cafés, bars, and breweries across the globe.",
     whyChoose: [
       {
         title: "Orders reach the kitchen instantly",
@@ -279,7 +279,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     ],
     extraOwnersChoice: {
       title: "What makes Digitory KDS different?",
-      desc: "Digitory is built for the way Indian restaurants actually work. From weekend rushes to online delivery spikes, it helps kitchens stay organised even during the busiest hours. It supports instant order updates from POS, QR ordering, Swiggy, and Zomato, along with batch cooking, clear special instructions, prep time tracking, off-line reliability, and kitchen performance reports."
+      desc: "Digitory is built for the way modern restaurants actually work. From weekend rushes to online delivery spikes, it helps kitchens stay organised even during the busiest hours. It supports instant order updates from POS, QR ordering, Swiggy, and Zomato, along with batch cooking, clear special instructions, prep time tracking, off-line reliability, and kitchen performance reports."
     },
     ctaBlock: {
       title: "Make your kitchen faster and more organised",
@@ -295,7 +295,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "Automated inventory management for restaurants",
     description: "Good food starts with good inventory management. If you don't know what you have in stock, you can end up wasting food, running out of ingredients, or spending more than you should. Digitory's automated Inventory Management System helps you track every ingredient automatically, so you always know what's available and what needs to be reordered.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across India.",
+    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across the globe.",
     whyChoose: [
       {
         title: "Why inventory management matters",
@@ -362,7 +362,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "Managing food and liquor stock shouldn't be difficult",
     description: "Digitory's Food & Liquor Control System helps you keep track of every ingredient and every bottle with accuracy. Know what you have in stock, reduce waste, and make better business decisions with real-time updates. Whether you run a restaurant, bar, brewery, pub, or café, Digitory helps you stay in control every day.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, bars, breweries, and cafés across India.",
+    trustText: "Trusted by restaurants, bars, breweries, and cafés across the globe.",
     whyChoose: [
       {
         title: "Track every bottle and ingredient accurately",
@@ -429,7 +429,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "Dashboard & reports system for smarter restaurant decisions",
     description: "Sales, orders, inventory, customer visits, and staff performance all tell you how your business is doing. Digitory brings all this information together in one place, so you can understand your restaurant better and make smarter decisions. Whether you have one outlet or many, Digitory gives you the insights you need to grow your business.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across India.",
+    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across the globe.",
     whyChoose: [
       {
         title: "See your business in one dashboard",
@@ -496,7 +496,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "Managing events should be simple, even when the crowd is large",
     description: "Digitory's Cashless Event & Entry Management System helps you manage guest entry, payments, registrations, and event operations from one simple platform. Guests can enter quickly, pay digitally, and enjoy a smooth event experience without long queues. Whether you're hosting a private party, a live concert, a brewery event, or a nightclub night, Digitory helps your team stay organised from start to finish.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, bars, breweries, cafés, and event venues across India.",
+    trustText: "Trusted by restaurants, bars, breweries, cafés, and event venues across the globe.",
     whyChoose: [
       {
         title: "Fast and secure check-ins",
@@ -562,7 +562,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "A great dining experience starts before your guests even walk through the door",
     description: "Digitory's Table Booking & Reservation System helps you manage reservations, walk-ins, and table availability from one place. Seat guests faster, reduce waiting time, and make better use of every table in your restaurant. Whether you run a café, fine dining restaurant, bar, or a multi-outlet chain, Digitory helps you deliver a smooth experience for both your guests and your staff.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across India.",
+    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across the globe.",
     whyChoose: [
       {
         title: "Manage tables more efficiently",
@@ -629,7 +629,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "Running a busy kitchen is easier when everything is planned in advance",
     description: "Digitory's Production Planning System helps you manage ingredients, organize recipes, plan food production, and control costs from one simple platform. Your kitchen stays prepared, your team works faster, and every dish is made with the same quality. Whether you run a restaurant, café, cloud kitchen, bakery, or brewery, Digitory helps you plan better every day.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across India.",
+    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across the globe.",
     whyChoose: [
       {
         title: "Track ingredients easily",
@@ -696,7 +696,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "A good menu doesn't just offer great food. It also helps your restaurant earn more",
     description: "Digitory's Menu Engineering System helps you understand which dishes sell the most, which ones make the highest profit, and which items need improvement. Use real sales data to build a menu that your customers love and your business benefits from. Whether you run a restaurant, café, bar, brewery, or cloud kitchen, Digitory helps you make smarter menu decisions.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across India.",
+    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across the globe.",
     whyChoose: [
       {
         title: "Understand what sells best",
@@ -763,7 +763,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "Every great dish starts with a great recipe",
     description: "Digitory's Recipe Management System helps you store, manage, and update all your recipes in one place. Follow the same recipes, track usage, control food costs, and make sure every dish is prepared the right way every time. Whether you run one restaurant or a growing chain, Digitory helps you maintain consistency.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across India.",
+    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across the globe.",
     whyChoose: [
       {
         title: "Store recipes digitally",
@@ -830,7 +830,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     subtitle: "Turn first-time customers into regular customers",
     description: "Great food brings people in. A great experience brings them back. Digitory's CRM & Loyalty Software helps you build better relationships with your customers. Reward loyal guests, stay connected through WhatsApp and SMS, collect feedback, and encourage repeat visits, all from one easy platform. Whether you own one cafe or manage many outlets, Digitory helps you keep customers coming back.",
     ctaText: "Request a Demo",
-    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across India.",
+    trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across the globe.",
     whyChoose: [
       {
         title: "Made for restaurants",
@@ -882,7 +882,7 @@ export const solutionsDb: Record<string, SolutionData> = {
     },
     extraOwnersChoice: {
       title: "Why restaurants choose Digitory CRM",
-      desc: "Digitory works with your POS, KDS, delivery apps, and online ordering. It is a cloud-based system accessible from anywhere, easy to use with minimal training, built for Indian restaurants, and proven to increase repeat customers."
+      desc: "Digitory works with your POS, KDS, delivery apps, and online ordering. It is a cloud-based system accessible from anywhere, easy to use with minimal training, made for all kind of restaurants, and proven to increase repeat customers."
     },
     ctaBlock: {
       title: "Build your loyal customer base",

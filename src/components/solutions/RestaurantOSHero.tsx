@@ -150,7 +150,7 @@ export default function RestaurantOSHero() {
               </div>
             </div>
             <p className="text-[13px] text-zinc-500 font-medium leading-relaxed max-w-sm">
-              Trusted by 500+ restaurants, cafés, bars, and cloud kitchens across India.
+              Trusted by 500+ restaurants, cafés, bars, and cloud kitchens across the globe.
             </p>
           </div>
         </div>

@@ -243,6 +243,9 @@ export default function Capabilities() {
               desc: descVal,
               image: s.image || '',
               category: itemCategory,
+              categoryOrder: typeof s.categoryOrder === 'number' && s.categoryOrder > 0 
+                ? s.categoryOrder 
+                : (staticItem ? (staticGroups.find(g => g.name === itemCategory)?.items.findIndex(it => it.id === staticItem.id) ?? 98) + 1 : 99),
               icon: s.icon || staticItem?.icon || null,
               isComingSoon: s.slug === 'booking' || s.isComingSoon || staticItem?.isComingSoon || false,
             };
@@ -263,7 +266,9 @@ export default function Capabilities() {
 
           const newGroups: FeatureGroup[] = sortedCategories.map((catName: string) => ({
             name: catName,
-            items: updatedItems.filter((item: any) => item.category === catName)
+            items: updatedItems
+              .filter((item: any) => item.category === catName)
+              .sort((a: any, b: any) => (a.categoryOrder - b.categoryOrder))
           })).filter(g => g.items.length > 0);
 
           setGroupedFeatures(newGroups);

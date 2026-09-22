@@ -35,7 +35,7 @@ function SolutionsDetailsContent() {
             subtitle: s.subtitle || '',
             description: s.description || '',
             ctaText: s.ctaText || 'Request a Demo',
-            trustText: s.trustText || 'Trusted by Indian restaurants',
+            trustText: s.trustText || 'Trusted by restaurants across the globe',
             gridTitle: s.gridTitle || '',
             gridDesc: s.gridDesc || '',
             opsTitle: s.opsTitle || '',
@@ -173,7 +173,7 @@ function SolutionsDetailsContent() {
                   ))}
                 </div>
                 <p className="text-xs md:text-sm text-zinc-500 max-w-xs leading-normal">
-                  {solution.trustText || "Trusted by restaurants, cafés, bars, breweries and cloud kitchens across India."}
+                  {solution.trustText || "Trusted by restaurants, cafés, bars, breweries and cloud kitchens across the globe."}
                 </p>
               </div>
             </div>

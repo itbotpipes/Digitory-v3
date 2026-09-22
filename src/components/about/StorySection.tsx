@@ -36,10 +36,10 @@ export default function StorySection() {
     },
     {
       year: 'Today',
-      title: 'Nationwide Growth',
-      description: 'Now power restaurant businesses across India. Over 100+ active outlets rely on Digitory to manage orders, inventory, billing, and staff every day.',
+      title: 'Global Growth',
+      description: 'Now power restaurant businesses across the globe. Over 100+ active outlets rely on Digitory to manage orders, inventory, billing, and staff every day.',
       icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
         </svg>
       ),
@@ -61,7 +61,7 @@ export default function StorySection() {
           </div>
           <div className="lg:col-span-5 text-zinc-650 dark:text-zinc-400 space-y-4 text-sm md:text-base leading-relaxed lg:pt-2">
             <p>
-              How we went from spent nights in busy restaurant kitchens to simplifying operations across India.
+              How we went from spent nights in busy restaurant kitchens to simplifying operations across the globe.
             </p>
           </div>
         </div>

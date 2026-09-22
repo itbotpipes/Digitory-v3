@@ -11,6 +11,7 @@ import BeliefsSection from '../../components/about/BeliefsSection';
 import TeamSection from '../../components/about/TeamSection';
 import MissionCta from '../../components/about/MissionCta';
 import VisionSection from '../../components/about/VisionSection';
+import VisionMissionSection from '../../components/about/VisionMissionSection';
 
 export async function generateMetadata() {
   return await generateSeoMetadata('Page', 'about', {
@@ -42,8 +43,14 @@ export default function AboutPage() {
           <BeliefsSection showBeliefs={false} showStats={true} />
         </ScrollFocusWrapper>
 
-        <ScrollFocusWrapper>
+        {/* Commented out previous Vision section */}
+        {/* <ScrollFocusWrapper>
           <VisionSection />
+        </ScrollFocusWrapper> */}
+
+        {/* 2-Card Vision & Mission Section */}
+        <ScrollFocusWrapper>
+          <VisionMissionSection />
         </ScrollFocusWrapper>
 
         <ScrollFocusWrapper>

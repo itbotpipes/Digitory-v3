@@ -123,12 +123,12 @@ export const ARTICLES_DATA: Record<string, ArticleData> = {
       name: 'Priya Sharma',
       role: 'Head of Growth at Digitory',
       avatar: '/demologo.jpg',
-      bio: 'Helping top F&B brands across India scale seamlessly through data-driven operational intelligence.',
+      bio: 'Helping top F&B brands across the globe scale seamlessly through data-driven operational intelligence.',
     },
     introText:
       'India’s F&B ecosystem is growing at an unprecedented rate, but rising raw material costs and high staff turnover make operational efficiency the top priority for restaurant owners.',
     secondaryIntro:
-      'Discover how leading restaurant brands across India rely on Digitory to automate inventory, optimize kitchen workflows, and boost profitability.',
+      'Discover how leading restaurant brands across the globe rely on Digitory to automate inventory, optimize kitchen workflows, and boost profitability.',
     tableOfContents: [
       { id: 'total-reward', title: '1. The Operational Challenge in India F&B' },
       { id: 'automation-rules', title: '2. Digitory Smart Automation Ecosystem' },
@@ -149,7 +149,7 @@ export const ARTICLES_DATA: Record<string, ArticleData> = {
         id: 'automation-rules',
         heading: '2. Digitory Smart Automation Ecosystem',
         paragraphs: [
-          'Digitory offers an end-to-end OS tailored for Indian restaurants, integrating order management, central kitchen management, and automated stock reconciliation.',
+          'Digitory offers an end-to-end OS tailored for all kind of restaurants, integrating order management, central kitchen management, and automated stock reconciliation.',
         ],
         bulletPoints: [
           'Unified POS & Central Kitchen Management',

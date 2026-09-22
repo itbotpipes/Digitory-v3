@@ -58,7 +58,7 @@ export default function DemoHero() {
             ))}
           </div>
           <p className="text-xs sm:text-sm text-zinc-505 dark:text-zinc-400 font-medium">
-            Trusted by top restaurants, cafés, and breweries across India.
+            Trusted by top restaurants, cafés, and breweries across the globe.
           </p>
         </div> */}
 

@@ -135,7 +135,7 @@ export const industriesDb: Record<string, IndustryData> = {
     title: "Bars & Restaurants",
     subtitle: "Everything your bar or restaurant needs to run smoothly",
     description: "Running a bar or restaurant isn't easy. You have to manage orders, staff, inventory, payments, tables, and customers, all at the same time. Digitory brings everything together in one simple system. From billing and kitchen management to inventory and reports, you can manage your entire business with less effort and fewer mistakes. Spend less time solving problems and more time serving great food and drinks.",
-    trustText: "Trusted by restaurants, bars, breweries, cafés, and pubs across India.",
+    trustText: "Trusted by restaurants, bars, breweries, cafés, and pubs across the globe.",
     featuresTitle: "Built for busy bars and restaurants",
     features: [
       { title: "Manage busy hours with ease", desc: "When your restaurant gets crowded, every second matters. Digitory helps you manage orders, tables, and service smoothly, even during your busiest hours." },
@@ -156,7 +156,7 @@ export const industriesDb: Record<string, IndustryData> = {
       "Better control over food and liquor inventory",
       "Easier table management and reservations",
       "Simple reports to track daily performance",
-      "Built for Indian restaurants and bars"
+      "Made for all kind of restaurants and bars"
     ],
     ctaBlock: {
       title: "Grow your business with Digitory",
@@ -170,7 +170,7 @@ export const industriesDb: Record<string, IndustryData> = {
     title: "Nightclubs & Dance Floors",
     subtitle: "Everything you need to run a better nightlife venue",
     description: "A great nightclub is more than good music. Behind every successful night are fast entries, quick bar service, smooth payments, and well-managed operations. Digitory helps you manage your nightclub with one connected system. From guest entry and bar billing to inventory and table bookings, everything works together to keep your nights running smoothly. Spend less time managing operations and more time creating unforgettable experiences.",
-    trustText: "Trusted by bars, breweries, nightclubs, restaurants, and entertainment venues across India.",
+    trustText: "Trusted by bars, breweries, nightclubs, restaurants, and entertainment venues across the globe.",
     featuresTitle: "Built for busy nightlife venues",
     features: [
       { title: "Faster guest entry", desc: "Long queues can spoil the experience before the party even starts. Digitory helps you manage guest entry quickly with cashless check-ins and digital access, so guests spend less time waiting and more time enjoying the night." },
@@ -203,7 +203,7 @@ export const industriesDb: Record<string, IndustryData> = {
     title: "Micro Breweries",
     subtitle: "Everything you need to run a better brewery",
     description: "Brewing great beer takes skill. Running a successful brewery takes the right system. Digitory helps you manage your brewery from one place. Track ingredients, manage production, handle orders, control inventory, and serve guests faster without adding extra work. Spend less time managing operations and more time creating great beer and memorable experiences.",
-    trustText: "Trusted by breweries, bars, restaurants, cafés, and pubs across India.",
+    trustText: "Trusted by breweries, bars, restaurants, cafés, and pubs across the globe.",
     featuresTitle: "Built for modern breweries",
     features: [
       { title: "Faster service during busy hours", desc: "Whether it's a weekend rush or a brewery event, your team needs to move quickly. Digitory sends orders directly to the kitchen and service stations, helping your team prepare and serve orders without confusion." },
@@ -239,7 +239,7 @@ export const industriesDb: Record<string, IndustryData> = {
     title: "Quick Service Restaurants (QSR)",
     subtitle: "Everything you need to run a faster QSR",
     description: "In a quick service restaurant, speed matters. Customers expect fast ordering, quick service, and accurate deliveries every time. Digitory helps you manage your entire QSR from one simple platform. Take orders faster, manage inventory, control recipes, and track your business in real time. Spend less time managing operations and more time serving customers.",
-    trustText: "Trusted by restaurants, cafés, QSRs, cloud kitchens, and food chains across India.",
+    trustText: "Trusted by restaurants, cafés, QSRs, cloud kitchens, and food chains across the globe.",
     featuresTitle: "Built for fast-moving QSRs",
     features: [
       { title: "Faster order management", desc: "Take orders quickly through mobile or desktop POS systems. Whether it's dine-in, takeaway, or delivery, every order reaches the right team without delays." },
@@ -271,7 +271,7 @@ export const industriesDb: Record<string, IndustryData> = {
     title: "Cloud Kitchens",
     subtitle: "Everything you need to run a smarter cloud kitchen",
     description: "Running a cloud kitchen is all about speed, accuracy, and efficiency. Managing orders from different delivery platforms, keeping inventory updated, and ensuring every order reaches customers on time can be challenging. Digitory brings everything together in one connected platform. Manage orders, inventory, production, recipes, and reports without switching between multiple systems. Spend less time managing operations and more time growing your business.",
-    trustText: "Trusted by cloud kitchens, restaurants, cafés, QSRs, and food brands across India.",
+    trustText: "Trusted by cloud kitchens, restaurants, cafés, QSRs, and food brands across the globe.",
     featuresTitle: "Built for modern cloud kitchens",
     features: [
       { title: "Better production planning", desc: "Plan your kitchen operations in advance. Organize batches, manage resources, and prepare for busy hours so your kitchen can handle more orders without delays." },
@@ -305,7 +305,7 @@ export const industriesDb: Record<string, IndustryData> = {
     title: "Pizzerias, cafés & ice cream parlours",
     subtitle: "Built for businesses that serve smiles every day",
     description: "Whether you run a pizza place, a café, or an ice cream shop, Digitory helps you manage your daily operations with less effort. From taking orders and managing recipes to tracking stock and sales, everything works together in one simple system. You focus on your food. We'll help with the rest.",
-    trustText: "Trusted by cafés, ice cream parlours, and pizzerias across India.",
+    trustText: "Trusted by cafés, ice cream parlours, and pizzerias across the globe.",
     featuresTitle: "Everything you need to serve smiles",
     features: [
       { title: "Easy order customization", desc: "Let customers add extra toppings, choose flavours, or make special requests without slowing down your staff.", linkText: "Learn more about Multi-Channel POS", linkHref: "/solutions/pos" },

@@ -38,7 +38,7 @@ export default function AboutHero() {
 
           <div className="pt-4 border-t border-zinc-100 dark:border-zinc-900/60 transition-colors duration-300">
             <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-450 font-medium">
-              Made in India. Made for Indian restaurants.
+              Built in India. Made for all kind of restaurants.
             </p>
           </div>
         </div>

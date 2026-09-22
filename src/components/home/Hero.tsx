@@ -342,7 +342,7 @@ export default function Hero() {
               ))}
             </div>
             <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 max-w-xs leading-normal">
-              Trusted by restaurants, cafes, bars, breweries and cloud kitchens across India.
+              Trusted by restaurants, cafes, bars, breweries and cloud kitchens across the globe.
             </p>
           </div>
         </div>

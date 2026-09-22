@@ -152,7 +152,7 @@ export default function IndustriesPage() {
             title: s.title || '',
             subtitle: s.subtitle || '',
             description: s.description || '',
-            trustText: s.trustText || 'Trusted by restaurants across India.',
+            trustText: s.trustText || 'Trusted by restaurants across the globe.',
             featuresTitle: s.featuresTitle || 'Key capabilities',
             features: s.features || [],
             whyChooseTitle: s.whyChooseTitle || 'Why choose Digitory?',
@@ -221,7 +221,7 @@ export default function IndustriesPage() {
                   ))}
                 </div>
                 <p className="text-xs md:text-sm text-zinc-500 max-w-xs leading-normal">
-                  Trusted by restaurants, cafés, bars, breweries and cloud kitchens across India.
+                  Trusted by restaurants, cafés, bars, breweries and cloud kitchens across the globe.
                 </p>
               </div>
             </div>
