@@ -234,10 +234,7 @@ export default function DigitoryAiLayerCard() {
           12  Ai integrated modules • 1 connected platform
         </span>
 
-        {/* Down Arrow Floating Icon */}
-        <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shadow-xs flex items-center justify-center text-zinc-500 dark:text-zinc-400 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors">
-          <ChevronDown className="w-3 h-3" />
-        </div>
+
       </div>
 
     </div>

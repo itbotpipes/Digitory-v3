@@ -17,15 +17,24 @@ const handle401 = () => {
 };
 
 export const api = {
-  get: async (endpoint: string, token?: string) => {
-    const headers: HeadersInit = { 'Content-Type': 'application/json' };
+  get: async (endpoint: string, token?: string, options?: RequestInit) => {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...(options?.headers as Record<string, string> || {}),
+    };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch(`${API_URL}${endpoint}`, {
+    const fetchOptions: RequestInit = {
       method: 'GET',
       headers,
-      cache: 'no-store'
-    });
+      ...options,
+    };
+
+    if (!options?.cache && !options?.next) {
+      fetchOptions.cache = 'no-store';
+    }
+
+    const res = await fetch(`${API_URL}${endpoint}`, fetchOptions);
     
     if (!res.ok) {
       if (res.status === 401) {

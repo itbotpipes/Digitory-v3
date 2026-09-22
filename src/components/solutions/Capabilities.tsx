@@ -19,6 +19,151 @@ interface FeatureGroup {
   items: FeatureItem[];
 }
 
+function renderCardIcon(item: FeatureItem) {
+  const icon = item.icon;
+  if (icon) {
+    if (typeof icon === 'string') {
+      const trimmed = icon.trim();
+      if (trimmed.startsWith('<svg')) {
+        return (
+          <div
+            className="w-6 h-6 [&>svg]:w-full [&>svg]:h-full flex items-center justify-center"
+            dangerouslySetInnerHTML={{ __html: trimmed }}
+          />
+        );
+      }
+      if (trimmed.startsWith('http') || trimmed.startsWith('/') || trimmed.startsWith('data:')) {
+        return <img src={trimmed} alt="" className="w-6 h-6 object-contain" />;
+      }
+    } else {
+      return <div className="w-6 h-6 flex items-center justify-center">{icon}</div>;
+    }
+  }
+
+  // Keyword matching fallback icons
+  const idStr = (item.id || '').toLowerCase();
+  const titleStr = (item.title || '').toLowerCase();
+  const text = `${idStr} ${titleStr}`;
+
+  if (text.includes('purchase') || text.includes('supplier') || text.includes('procurement') || text.includes('vendor')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      </svg>
+    );
+  }
+
+  if (text.includes('inventory') || text.includes('stock') || text.includes('warehouse')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7.5l-8 4-8-4M12 11.5v9M20 7.5v9l-8 4M20 7.5L12 3.5M4 7.5v9l8 4M4 7.5L12 3.5" />
+      </svg>
+    );
+  }
+
+  if (text.includes('pos') || text.includes('billing') || text.includes('cashier') || text.includes('checkout') || text.includes('invoice')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    );
+  }
+
+  if (text.includes('kds') || text.includes('kitchen') || text.includes('chef')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    );
+  }
+
+  if (text.includes('qr') || text.includes('scan') || text.includes('waiter') || text.includes('dine-in')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v1v6M4 9h16M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z" />
+      </svg>
+    );
+  }
+
+  if (text.includes('booking') || text.includes('reservation') || text.includes('table')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+    );
+  }
+
+  if (text.includes('recipe') || text.includes('cost') || text.includes('margin')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    );
+  }
+
+  if (text.includes('menu')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+      </svg>
+    );
+  }
+
+  if (text.includes('report') || text.includes('analytic') || text.includes('stat') || text.includes('insight') || text.includes('business')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+      </svg>
+    );
+  }
+
+  if (text.includes('loyalty') || text.includes('crm') || text.includes('customer') || text.includes('guest')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12h15m0 0l-3.75-3.75M19.5 12l-3.75 3.75m-11.25-3a9 9 0 1118 0 9 9 0 01-18 0z" />
+      </svg>
+    );
+  }
+
+  if (text.includes('outlet') || text.includes('control') || text.includes('chain') || text.includes('multi')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+    );
+  }
+
+  if (text.includes('event') || text.includes('club') || text.includes('ticket')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+      </svg>
+    );
+  }
+
+  if (text.includes('shift') || text.includes('payroll') || text.includes('staff') || text.includes('worker') || text.includes('employee')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    );
+  }
+
+  if (text.includes('prep') || text.includes('central')) {
+    return (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2h-2" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+    </svg>
+  );
+}
+
 function renderHighlightedText(text: string) {
   if (!text) return null;
   const parts = text.split(/(\*[^*]+\*)/g);
@@ -124,6 +269,16 @@ export default function Capabilities() {
           icon: (
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+            </svg>
+          ),
+        },
+        {
+          id: "purchase-supplier",
+          title: "Purchase & Supplier",
+          desc: "Manage purchase requests, track supplier invoices, log goods receipt details, and track food ingredient price variations.",
+          icon: (
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
           ),
         }
@@ -390,19 +545,9 @@ export default function Capabilities() {
                           <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                         </div>
                       ) : (
-                        item.icon && (
-                          <div className="mb-4 text-[#FF4F18] shrink-0">
-                            {typeof item.icon === 'string' ? (
-                              item.icon.trim().startsWith('<svg') ? (
-                                <div className="w-6 h-6 [&>svg]:w-full [&>svg]:h-full flex items-center justify-center" dangerouslySetInnerHTML={{ __html: item.icon }} />
-                              ) : (
-                                <span className="text-xs font-mono">{item.icon}</span>
-                              )
-                            ) : (
-                              <div className="w-6 h-6 flex items-center justify-center">{item.icon}</div>
-                            )}
-                          </div>
-                        )
+                        <div className="mb-4 text-[#FF4F18] shrink-0">
+                          {renderCardIcon(item)}
+                        </div>
                       )}
 
                       <h4 className="text-base font-bold text-zinc-950 dark:text-white mb-2 leading-snug group-hover:text-[#FF4F18] transition-colors">{item.title}</h4>

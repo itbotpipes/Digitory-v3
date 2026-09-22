@@ -8,7 +8,7 @@ export async function generateSeoMetadata(pageType: string, idOrSlug: string, fa
       ? `/seo/${pageType}/${idOrSlug}` 
       : `/seo/${pageType}/slug/${idOrSlug}`;
       
-    const res = await api.get(endpoint);
+    const res = await api.get(endpoint, undefined, { next: { revalidate: 60 } });
     const seo = res.data;
 
     if (!seo) {
@@ -46,8 +46,10 @@ export async function generateSeoMetadata(pageType: string, idOrSlug: string, fa
     }
 
     return metadata;
-  } catch (err) {
-    console.error('Failed to fetch SEO metadata', err);
+  } catch (err: any) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(`[SEO Metadata] Using fallback for ${pageType}/${idOrSlug}:`, err?.message || err);
+    }
     return fallback as Metadata;
   }
 }

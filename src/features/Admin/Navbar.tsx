@@ -38,17 +38,24 @@ const links: ILink[] = [
     permission: "manage_blogs",
   },
   {
-    label: "Demo Requests",
-    href: "/admin/leads",
-    Icon: Inbox,
-    permission: "manage_leads",
-  },
-  {
-    label: "Contact Messages",
+    label: "Leads",
     href: "/admin/contacts",
     Icon: MessageSquare,
     permission: "manage_contacts",
+    subItems: [{
+      label: "Demo Requests",
+      href: "/admin/leads",
+      Icon: Inbox,
+      permission: "manage_leads",
+    },
+    {
+      label: "Contact Messages",
+      href: "/admin/contacts",
+      Icon: MessageSquare,
+      permission: "manage_contacts",
+    },],
   },
+
   {
     label: "News and Updates",
     href: "/admin/updates",
@@ -94,7 +101,7 @@ const links: ILink[] = [
     permission: "manage_industries",
   },
   {
-    label: "Pages (Privacy & Terms)",
+    label: "Policy Pages",
     href: "/admin/pages",
     Icon: FileText,
     permission: "manage_blogs",
@@ -104,13 +111,20 @@ const links: ILink[] = [
     href: "/admin/admins",
     Icon: Users,
     permission: "manage_users",
+    subItems: [{
+      label: "Staff / Admins",
+      href: "/admin/admins",
+      Icon: Users,
+      permission: "manage_users",
+    },
+    {
+      label: "Roles",
+      href: "/admin/roles",
+      Icon: SettingsIcon,
+      permission: "manage_users",
+    },],
   },
-  {
-    label: "Roles",
-    href: "/admin/roles",
-    Icon: SettingsIcon,
-    permission: "manage_users",
-  },
+
   {
     label: "Settings",
     href: "/admin/settings",
@@ -125,15 +139,26 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
   const [permissions, setPermissions] = useState<string[]>([]);
   const [roleName, setRoleName] = useState<string>('');
 
-  // Dropdown open state for Blog Posts
-  const isBlogSubActive = pathname.startsWith('/admin/blogs') || pathname.startsWith('/admin/comments') || pathname.startsWith('/admin/users');
-  const [isBlogOpen, setIsBlogOpen] = useState(isBlogSubActive);
+  // Independent dropdown open state for sub-item menu sections
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    if (isBlogSubActive) {
-      setIsBlogOpen(true);
-    }
-  }, [pathname, isBlogSubActive]);
+    links.forEach((link) => {
+      if (link.subItems) {
+        const isChildActive = link.subItems.some((sub) => pathname === sub.href || (sub.href !== '/admin' && pathname.startsWith(sub.href)));
+        if (isChildActive) {
+          setOpenSections((prev) => ({ ...prev, [link.label]: true }));
+        }
+      }
+    });
+  }, [pathname]);
+
+  const toggleSection = (label: string) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [label]: prev[label] !== undefined ? !prev[label] : true,
+    }));
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
@@ -141,7 +166,7 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
       // Apply cached permissions instantly
       const cached = localStorage.getItem('admin_permissions');
       if (cached) {
-        try { setPermissions(JSON.parse(cached)); } catch (_) {}
+        try { setPermissions(JSON.parse(cached)); } catch (_) { }
       }
       const cachedRole = localStorage.getItem('admin_role_name');
       if (cachedRole) setRoleName(cachedRole);
@@ -227,7 +252,7 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
           localStorage.setItem('branding_logo_white', '/digitory-white.png');
         }
       }
-    }).catch(() => {});
+    }).catch(() => { });
 
     window.addEventListener('branding_logo_update', handleBrandingSync);
     return () => {
@@ -238,7 +263,7 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
   return (
     <div className={clsx("w-64 flex-shrink-0 bg-white dark:bg-[#121214] border-r border-zinc-200 dark:border-zinc-800/80 transition-colors duration-300", className)}>
       <div className="flex h-full flex-col justify-between py-6 px-4">
-        
+
         {/* Logo/Header area */}
         <div className="mb-8 px-2">
           <Link href="/admin/seo" className="block">
@@ -262,24 +287,26 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
             .map((link, indx) => {
               const linkUrl = new URL(link.href, 'http://localhost');
               const isPathMatch = pathname === linkUrl.pathname || (linkUrl.pathname !== '/admin/dashboard' && pathname.startsWith(linkUrl.pathname));
-              
+
               // Handle dropdown items
               if (link.subItems) {
-                const isOpen = isBlogOpen;
+                const isGroupActive = link.subItems.some(sub => pathname === sub.href || (sub.href !== '/admin' && pathname.startsWith(sub.href)));
+                const isOpen = openSections[link.label] !== undefined ? openSections[link.label] : isGroupActive;
+
                 return (
                   <div key={indx} className="space-y-1">
                     <button
                       type="button"
-                      onClick={() => setIsBlogOpen(!isBlogOpen)}
+                      onClick={() => toggleSection(link.label)}
                       className={clsx(
                         "w-full flex items-center justify-between rounded-xl px-3 py-2.5 transition-all duration-200 font-semibold text-[14px] cursor-pointer",
-                        isBlogSubActive
+                        isGroupActive
                           ? "bg-[#FFF3EF] dark:bg-orange-950/20 text-[#FF4F18]"
                           : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-white"
                       )}
                     >
                       <div className="flex items-center">
-                        <link.Icon size={18} className="mr-3 shrink-0" strokeWidth={isBlogSubActive ? 2.5 : 2} />
+                        <link.Icon size={18} className="mr-3 shrink-0" strokeWidth={isGroupActive ? 2.5 : 2} />
                         <span>{link.label}</span>
                       </div>
                       {isOpen ? (
@@ -295,7 +322,7 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
                         {link.subItems
                           .filter(sub => hasPermission(sub.permission))
                           .map((sub, subIdx) => {
-                            const isSubActive = pathname === sub.href || (sub.href !== '/admin/blogs' && pathname.startsWith(sub.href));
+                            const isSubActive = pathname === sub.href;
                             return (
                               <Link
                                 key={subIdx}
@@ -368,8 +395,8 @@ const NavItem: React.FC<ILink & { className?: string; isActive?: boolean }> = ({
     <Link
       className={clsx(
         "flex items-center rounded-xl px-3 py-2.5 transition-all duration-200 font-semibold text-[14px]",
-        isActive 
-          ? "bg-[#FFF3EF] dark:bg-orange-950/20 text-[#FF4F18]" 
+        isActive
+          ? "bg-[#FFF3EF] dark:bg-orange-950/20 text-[#FF4F18]"
           : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-white",
         className,
       )}
