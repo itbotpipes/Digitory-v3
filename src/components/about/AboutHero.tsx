@@ -6,11 +6,11 @@ import Image from 'next/image';
 
 export default function AboutHero() {
   return (
-    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-4 pb-10 md:pt-6 md:pb-14 lg:pt-8 lg:pb-16">
+    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-8 pb-10 md:pt-12 md:pb-14 lg:pt-16 lg:pb-16">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8 items-center">
 
         {/* Left Content Column */}
-        <div className="lg:col-span-7 flex flex-col justify-start lg:-mt-6 space-y-6 md:space-y-8">
+        <div className="lg:col-span-7 flex flex-col justify-center translate-y-4 lg:translate-y-8 space-y-6 md:space-y-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-[1.1] transition-colors duration-300">
             Software for <span className="text-[#FF4F18]">real</span>
             <br />
@@ -45,13 +45,14 @@ export default function AboutHero() {
 
         {/* Right Image Column */}
         <div className="lg:col-span-5 flex justify-center w-full relative">
-          <div className="relative w-full max-w-[500px] lg:max-w-[560px] aspect-[4/5] flex items-center justify-center select-none">
+          <div className="relative w-full max-w-[500px] lg:max-w-[560px] aspect-square flex items-center justify-center select-none">
             <Image
-              src="/Mascot copy.png"
+              src="/animated.gif"
               alt="About Digitory Mascot"
-              width={540}
-              height={675}
+              width={560}
+              height={560}
               priority
+              unoptimized
               className="
         w-full
         h-full
