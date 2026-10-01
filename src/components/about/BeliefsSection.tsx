@@ -10,10 +10,10 @@ interface BeliefsSectionProps {
 
 export default function BeliefsSection({ showStats = true, showBeliefs = true, showHeading = true }: BeliefsSectionProps) {
   const stats = [
-    { value: '100+', label: 'restaurant outlets', sublabel: 'using Digitory' },
-    { value: '2M+', label: 'orders', sublabel: 'handled every month' },
-    { value: '10+', label: 'years of experience', sublabel: 'solving restaurant challenges' },
-    { value: '150+', label: 'cities', sublabel: 'across the globe' },
+    { value: '500+', label: 'Outlets', sublabel: 'Scaling operations across a growing network of high-performing outlets.' },
+    { value: '190+', label: 'Brands', sublabel: 'Powering diverse brands across the hospitality ecosystem.' },
+    { value: '₹1,000 Cr+', label: 'GMV', sublabel: 'Enabling significant business value through Digitory.' },
+    { value: '100K+', label: 'Guest Check-ins/Day', sublabel: 'Powering seamless experiences for thousands of guests every day.' },
   ];
 
   const beliefs = [

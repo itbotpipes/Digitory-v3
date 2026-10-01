@@ -180,7 +180,7 @@ export default function IndustriesPage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="mx-auto max-w-7xl px-6 md:px-8 pt-4 pb-10 md:pt-8 md:pb-16 lg:pt-10 lg:pb-20">
+        <section className="mx-auto max-w-7xl px-6 md:px-8 pt-1 pb-10 md:pt-3 md:pb-16 lg:pt-4 lg:pb-20">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center">
             
             {/* Left Copy Column */}
@@ -389,53 +389,42 @@ export default function IndustriesPage() {
 
         {/* Industries Grid */}
         <section className="mx-auto max-w-7xl px-6 md:px-8 pt-12 md:pt-16 lg:pt-20 pb-24">
-          <div className="border border-zinc-200 dark:border-zinc-800 rounded-[28px] overflow-hidden bg-white dark:bg-zinc-950/20 grid grid-cols-1 md:grid-cols-3 shadow-[0_2px_8px_rgba(0,0,0,0.01)]">
-            {industries.map((item, idx) => {
-              const isLastInRow = (idx % 3) === 2;
-              const isLastRow = idx >= 6;
-              const isVeryLast = idx === 8;
-
-              return (
-                <Link
-                  key={item.id}
-                  href={`/industries/details?module=${item.id}`}
-                  className={`p-8 sm:p-10 flex flex-col justify-between transition-all duration-300 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/10 cursor-pointer text-left group
-                    border-zinc-200 dark:border-zinc-800
-                    ${!isVeryLast ? "border-b" : ""}
-                    ${isLastRow ? "md:border-b-0" : ""}
-                    ${!isLastInRow ? "md:border-r" : ""}
-                  `}
-                >
-                  <div className="space-y-6">
-                    {/* Header: Number and raw Icon */}
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-zinc-400 dark:text-zinc-600">0{idx + 1}</span>
-                      <div className="text-[#FF4F18] shrink-0">
-                        {item.icon}
-                      </div>
-                    </div>
-
-                    {/* Title & Description */}
-                    <div>
-                      <h3 className="text-xl font-bold text-zinc-950 dark:text-white mb-2 transition-colors duration-250">
-                        {item.title}
-                      </h3>
-                      <p className="text-zinc-550 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed line-clamp-3">
-                        {item.subtitle}
-                      </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {industries.map((item, idx) => (
+              <Link
+                key={item.id}
+                href={`/industries/details?module=${item.id}`}
+                className="p-8 sm:p-9 flex flex-col justify-between rounded-[24px] sm:rounded-[28px] border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-950/40 shadow-[0_2px_8px_rgba(0,0,0,0.015)] transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[#FF4F18]/40 dark:hover:border-[#FF4F18]/40 cursor-pointer text-left group"
+              >
+                <div className="space-y-6">
+                  {/* Header: Number and raw Icon */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold text-zinc-400 dark:text-zinc-600">0{idx + 1}</span>
+                    <div className="text-[#FF4F18] shrink-0">
+                      {item.icon}
                     </div>
                   </div>
 
-                  {/* Read More Link */}
-                  <div className="pt-6 flex items-center text-xs font-bold text-[#FF4F18]">
-                    <span>View Details</span>
-                    <svg className="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
+                  {/* Title & Description */}
+                  <div>
+                    <h3 className="text-xl font-bold text-zinc-950 dark:text-white mb-2 transition-colors duration-250 group-hover:text-[#FF4F18]">
+                      {item.title}
+                    </h3>
+                    <p className="text-zinc-550 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                      {item.subtitle}
+                    </p>
                   </div>
-                </Link>
-              );
-            })}
+                </div>
+
+                {/* Read More Link */}
+                <div className="pt-6 flex items-center text-xs font-bold text-[#FF4F18]">
+                  <span>View Details</span>
+                  <svg className="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
       </main>

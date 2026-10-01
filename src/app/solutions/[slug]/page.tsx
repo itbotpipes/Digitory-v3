@@ -141,7 +141,7 @@ function DynamicSolutionDetailContent({ slug }: { slug: string }) {
       <main className="flex-grow space-y-0">
         
         {/* 2. Hero Section */}
-        <section className="mx-auto max-w-7xl px-6 md:px-8 py-10 md:py-16">
+        <section className="mx-auto max-w-7xl px-6 md:px-8 pt-10 pb-10 md:pt-14 md:pb-16 lg:pt-16">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center">
             
             {/* Left Column: Solution Information */}

@@ -215,9 +215,11 @@ export default function RestaurantOSPage() {
     setCurrentIndex((prev) => prev - 1);
   };
 
-  const handleCardClick = (offset: number) => {
-    if (offset === 0) return;
-    setCurrentIndex((prev) => prev + offset);
+  const handleCardClick = (item: Testimonial, offset: number) => {
+    if (offset !== 0) {
+      setCurrentIndex((prev) => prev + offset);
+    }
+    setFullscreenVideo(item);
   };
 
   const togglePlayPause = (posKey: number, e: React.MouseEvent) => {
@@ -313,7 +315,7 @@ export default function RestaurantOSPage() {
               return (
                 <div
                   key={absPos}
-                  onClick={() => handleCardClick(offset)}
+                  onClick={() => handleCardClick(item, offset)}
                   className={`absolute transition-all duration-500 ease-out transform origin-center cursor-pointer ${opacityClass}`}
                   style={{
                     transform: `translateX(${offset * cardSpacing}px) scale(${scaleValue})`,

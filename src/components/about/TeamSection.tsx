@@ -9,7 +9,7 @@ export default function TeamSection() {
       name: 'Shiv Mogali',
       role: 'Founder and CEO',
       image: '/founder.jpg',
-      linkedin: 'https://www.linkedin.com/in/shivmogali/',
+      linkedin: 'https://www.linkedin.com/in/shivprakash-s-mogali-a276aa5?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       gradient: 'from-[#FF4F18] to-[#FF8A00]',
       highlights: [
         '20+ years of experience in business development and technology.',
@@ -19,7 +19,7 @@ export default function TeamSection() {
       name: 'Sandeep S',
       role: 'Delivery and Client Relations',
       image: '/delivery.png',
-      linkedin: 'https://www.linkedin.com/in/sandeep-singh-92931a20/',
+      linkedin: 'https://www.linkedin.com/in/sandeep-sundararajalu-73375b14a?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       gradient: 'from-[#FF4F18] to-[#FF8A00]',
       highlights: [
         'Ex-Infosys, MSRIT alumni',
@@ -41,7 +41,7 @@ export default function TeamSection() {
       name: 'Ashish Sharnagat',
       role: 'Strategy & Marketing',
       image: '/strategy.jpg',
-      linkedin: 'https://www.linkedin.com/in/ashishsharnagat/',
+      linkedin: 'https://www.linkedin.com/in/ashish-sharnagat-bab58230?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       gradient: 'from-[#FF4F18] to-[#FF8A00]',
       highlights: [
         'Retail & consumer business expert, ISB alumni, Ex-Reliance, Shoppers Stop & Landmark',
@@ -52,7 +52,7 @@ export default function TeamSection() {
       name: 'Bala Sundrasamy',
       role: 'Product & Design',
       image: '/product.png',
-      linkedin: 'https://www.linkedin.com/in/balasundrasamy/',
+      linkedin: 'https://www.linkedin.com/in/balas11?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       gradient: 'from-[#FF4F18] to-[#FF8A00]',
       highlights: [
         'Product development expert, COEG alumni, Software & Consulting head',
@@ -63,7 +63,7 @@ export default function TeamSection() {
       name: 'Panjury V',
       role: 'Marketing Director',
       image: '/marketing.png',
-      linkedin: 'https://www.linkedin.com/in/panjury-v-226871a2/',
+      linkedin: 'https://www.linkedin.com/in/panjury-v-shankar-47b673130?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       gradient: 'from-[#FF4F18] to-[#FF8A00]',
       highlights: [
         'B.E - Industrial Engineering and management, MBA Marketing, Passionate Entrepreneur',

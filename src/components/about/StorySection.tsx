@@ -1,48 +1,27 @@
 'use client';
 
 import React from 'react';
+import { Lightbulb, Code2, Trophy } from 'lucide-react';
 
 export default function StorySection() {
   const milestones = [
     {
+      year: '2017',
+      title: 'The Beginning',
+      description: 'Digitory started with a simple idea: make digital marketing more meaningful, measurable, and memorable.',
+      icon: <Lightbulb className="w-5 h-5 stroke-[2.2]" />,
+    },
+    {
       year: '2019',
-      title: 'Built in Kitchens',
-      description: 'We spent months inside actual kitchens watching staff manage orders and inventory. We saw firsthand how chaotic it gets using 8+ different disconnected apps.',
-      icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      ),
+      title: 'The Blueprint Goes Live',
+      description: 'Our vision took shape. The Digitory blueprint went live, turning our ideas into a growing digital-first reality.',
+      icon: <Code2 className="w-5 h-5 stroke-[2.2]" />,
     },
     {
       year: '2020',
-      title: 'The Blueprint',
-      description: 'We started writing code to build one unified restaurant system. No more messy tabs, no more manual reports, and no more lost Zomato printouts.',
-      icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-        </svg>
-      ),
-    },
-    {
-      year: '2022',
-      title: 'Going Live',
-      description: 'Our first restaurant trusted us to run their entire operation. We worked side-by-side with their staff to polish the interface and fix real-time kitchen issues.',
-      icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-    },
-    {
-      year: 'Today',
-      title: 'Global Growth',
-      description: 'Now power restaurant businesses across the globe. Over 100+ active outlets rely on Digitory to manage orders, inventory, billing, and staff every day.',
-      icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        </svg>
-      ),
+      title: 'Recognition Arrives',
+      description: 'Hard work met recognition. Digitory received an award, marking an important milestone in our journey.',
+      icon: <Trophy className="w-5 h-5 stroke-[2.2]" />,
     },
   ];
 
@@ -67,17 +46,13 @@ export default function StorySection() {
         </div>
 
         {/* Timeline Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-stretch border border-zinc-200/60 dark:border-[#2a2a2e]/60 rounded-[32px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.01)] bg-white dark:bg-zinc-950/20">
+        <div className="grid grid-cols-1 md:grid-cols-3 items-stretch border border-zinc-200/60 dark:border-[#2a2a2e]/60 rounded-[32px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.01)] bg-white dark:bg-zinc-950/20">
           
           {milestones.map((item, idx) => (
             <div
               key={idx}
               className={`flex flex-col h-full items-start text-left relative p-8 transition-all duration-300 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/10 border-zinc-200/60 dark:border-[#2a2a2e]/60
-                ${idx !== milestones.length - 1 ? "border-b" : ""}
-                ${idx >= 2 ? "md:border-b-0" : ""}
-                lg:border-b-0
-                ${idx % 2 === 0 ? "md:border-r" : "md:border-r-0"}
-                ${idx !== 3 ? "lg:border-r" : "lg:border-r-0"}
+                ${idx !== milestones.length - 1 ? "border-b md:border-b-0 md:border-r" : ""}
               `}
             >
               {/* Year & Circle Node */}

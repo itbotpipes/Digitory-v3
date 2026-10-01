@@ -525,39 +525,49 @@ export default function Capabilities() {
               </div>
             </div>
             
-            {/* Group Items Grid with border lines */}
+            {/* Group Items Grid with horizontal and vertical spacing */}
             <div className="w-full md:w-4/5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-zinc-200/80 dark:border-zinc-800/80 rounded-2xl overflow-hidden bg-white dark:bg-[#121214]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {group.items.map((item) => {
                   const cellContent = (
-                    <div className="h-full p-6 flex flex-col justify-start transition-colors duration-200 border-r border-b border-zinc-200/80 dark:border-zinc-800/80 group-hover:bg-zinc-50/90 dark:group-hover:bg-zinc-900/50">
-                      
-                      {item.isComingSoon && (
-                        <div className="mb-3">
-                          <span className="text-[10px] uppercase tracking-widest font-extrabold text-[#FF4F18] bg-[#FFF3EF] dark:bg-[#FF4F18]/10 px-2.5 py-1 rounded-full border border-orange-100 dark:border-transparent">
-                            Coming Soon
-                          </span>
+                    <div className="h-full p-6 sm:p-7 flex flex-col justify-between rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-[#121214] shadow-[0_2px_8px_rgba(0,0,0,0.01)] transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-1 group-hover:border-[#FF4F18]/40 dark:group-hover:border-[#FF4F18]/40">
+                      <div>
+                        {item.isComingSoon && (
+                          <div className="mb-3">
+                            <span className="text-[10px] uppercase tracking-widest font-extrabold text-[#FF4F18] bg-[#FFF3EF] dark:bg-[#FF4F18]/10 px-2.5 py-1 rounded-full border border-orange-100 dark:border-transparent">
+                              Coming Soon
+                            </span>
+                          </div>
+                        )}
+
+                        {item.image ? (
+                          <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-4 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800/60">
+                            <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="mb-4 text-[#FF4F18] shrink-0">
+                            {renderCardIcon(item)}
+                          </div>
+                        )}
+
+                        <h4 className="text-base font-bold text-zinc-950 dark:text-white mb-2 leading-snug group-hover:text-[#FF4F18] transition-colors">{item.title}</h4>
+                        <p className="text-zinc-500 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                      </div>
+
+                      {!item.isComingSoon && (
+                        <div className="pt-4 flex items-center text-xs font-bold text-[#FF4F18]">
+                          <span>Learn more</span>
+                          <svg className="w-3.5 h-3.5 ml-1 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                          </svg>
                         </div>
                       )}
-
-                      {item.image ? (
-                        <div className="relative w-full aspect-video rounded-lg overflow-hidden mb-4 bg-zinc-50 dark:bg-zinc-900">
-                          <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                        </div>
-                      ) : (
-                        <div className="mb-4 text-[#FF4F18] shrink-0">
-                          {renderCardIcon(item)}
-                        </div>
-                      )}
-
-                      <h4 className="text-base font-bold text-zinc-950 dark:text-white mb-2 leading-snug group-hover:text-[#FF4F18] transition-colors">{item.title}</h4>
-                      <p className="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed">{item.desc}</p>
                     </div>
                   );
 
                   if (item.isComingSoon) {
                     return (
-                      <div key={item.id} className="cursor-not-allowed opacity-75 filter grayscale-[40%] group">
+                      <div key={item.id} className="cursor-not-allowed opacity-75 filter grayscale-[40%] group h-full">
                         {cellContent}
                       </div>
                     );

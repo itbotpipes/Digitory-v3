@@ -90,20 +90,14 @@ export default function RestaurantTypes() {
         </div>
       </div>
 
-      {/* Grid Display */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch border border-zinc-200/60 dark:border-zinc-800/60 rounded-[32px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.01)] bg-white dark:bg-zinc-950/20">
+      {/* Grid Display with horizontal and vertical spacing */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
         {types.map((type, idx) => (
           <div 
             key={idx}
-            className={`flex flex-col h-full p-8 transition-all duration-300 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/10 cursor-default text-left border-zinc-200/60 dark:border-zinc-800/60
-              ${idx !== 5 ? 'border-b' : ''}
-              ${idx < 4 ? 'md:border-b' : 'md:border-b-0'}
-              ${idx < 3 ? 'lg:border-b' : 'lg:border-b-0'}
-              ${idx % 2 === 0 ? 'md:border-r' : 'md:border-r-0'}
-              ${idx % 3 !== 2 ? 'lg:border-r' : 'lg:border-r-0'}
-            `}
+            className="flex flex-col h-full p-8 rounded-[24px] sm:rounded-[28px] border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-950/40 shadow-[0_2px_8px_rgba(0,0,0,0.015)] transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[#FF4F18]/40 dark:hover:border-[#FF4F18]/40 cursor-default text-left"
           >
-            {/* Icon & Badge Row (No background wrapper on icon) */}
+            {/* Icon & Badge Row */}
             <div className="flex flex-col mb-6 shrink-0">
               <div className="text-[#FF4F18] mb-4">
                 {type.icon}

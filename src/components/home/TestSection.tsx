@@ -152,7 +152,7 @@ export default function TestSection() {
 
           {/* Left: WhatsApp Mockup Image (Before Digitory) */}
           <div className="lg:col-span-6 flex flex-col items-center lg:items-start w-full max-w-[440px] mx-auto lg:mr-auto">
-            <h3 className="text-base sm:text-lg font-semibold tracking-tight text-zinc-900 dark:text-white mb-4 text-center lg:text-left">
+            <h3 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 dark:text-white mb-5 text-center lg:text-left underline underline-offset-8 decoration-2 decoration-zinc-900 dark:decoration-white">
               Before Digitory
             </h3>
 
@@ -311,7 +311,7 @@ export default function TestSection() {
 
           {/* Right: Steps Timeline (After Digitory) */}
           <div className="lg:col-span-6 w-full max-w-[480px] mx-auto lg:ml-auto">
-            <h3 className="text-base sm:text-lg font-semibold tracking-tight text-[#FF4F18] mb-4 text-center lg:text-left">
+            <h3 className="text-lg sm:text-xl font-bold tracking-tight text-[#FF4F18] mb-5 text-center lg:text-left underline underline-offset-8 decoration-2 decoration-[#FF4F18]">
               After Digitory
             </h3>
 

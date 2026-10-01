@@ -108,7 +108,7 @@ export default function RestaurantOSHero() {
   };
 
   return (
-    <section className="mx-auto max-w-7xl px-6 md:px-8 py-6 md:py-10">
+    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-8 pb-8 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center">
 
         {/* Left Column: Product Information */}

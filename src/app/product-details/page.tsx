@@ -57,10 +57,10 @@ export default function ProductDetailsPage() {
     <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#09090b] transition-colors duration-300 flex flex-col font-sans">
       <Header />
 
-      <main className="flex-1 w-full pt-20">
+      <main className="flex-1 w-full pt-12 md:pt-14">
         
         {/* Hero Section */}
-        <section className="relative px-6 md:px-8 pt-16 pb-20 md:pt-24 md:pb-32 overflow-hidden flex flex-col items-center text-center">
+        <section className="relative px-6 md:px-8 pt-8 pb-16 md:pt-12 md:pb-24 overflow-hidden flex flex-col items-center text-center">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#FF4F18]/10 dark:bg-[#FF4F18]/15 blur-[100px] rounded-full pointer-events-none z-0" />
           
           <div className="relative z-10 max-w-4xl mx-auto space-y-6">

@@ -304,7 +304,7 @@ export default function Hero() {
   const activeDetails = activeNode ? activeNode.details : defaultDetails;
 
   return (
-    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-8 pb-6 md:pt-12 md:pb-10 lg:pt-16 lg:pb-12 min-h-[calc(100vh-80px)] flex flex-col justify-center">
+    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-4 pb-6 md:pt-6 md:pb-10 lg:pt-8 lg:pb-12 min-h-[calc(100vh-100px)] flex flex-col justify-center">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center">
 
         {/* Left Copy Column */}

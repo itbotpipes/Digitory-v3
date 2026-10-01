@@ -113,7 +113,7 @@ export default function BlogHero({
   const image = featuredPost?.featuredImage || defaultImage;
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-6 md:pt-10 md:pb-10">
+    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6 md:pt-4 md:pb-10">
       {/* Top Header Bar: Explore Topics & Categories + Right-aligned Search Bar */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 md:pb-12 border-b border-zinc-200/60 dark:border-zinc-800/60">
 

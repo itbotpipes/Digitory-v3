@@ -2,10 +2,10 @@ import React from 'react';
 
 export default function SolutionsStats() {
   const stats = [
-    { value: "22%", label: "Faster Table Turnover" },
-    { value: "32%", label: "Less Raw Wastage" },
-    { value: "98%", label: "Order Kitchen Accuracy" },
-    { value: "15 hrs", label: "Saved Weekly per Manager" }
+    { value: '500+', label: 'Outlets', desc: 'Scaling operations across a growing network of high-performing outlets.' },
+    { value: '190+', label: 'Brands', desc: 'Powering diverse brands across the hospitality ecosystem.' },
+    { value: '₹1,000 Cr+', label: 'GMV', desc: 'Enabling significant business value through Digitory.' },
+    { value: '100K+', label: 'Guest Check-ins/Day', desc: 'Powering seamless experiences for thousands of guests every day.' },
   ];
 
   return (
@@ -23,6 +23,9 @@ export default function SolutionsStats() {
               <h3 className="text-2xl md:text-3xl font-bold leading-tight max-w-[260px]">
                 <span className="text-zinc-900 dark:text-white">{item.label}</span>
               </h3>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-3 max-w-[260px] leading-relaxed">
+                {item.desc}
+              </p>
             </div>
           ))}
         </div>

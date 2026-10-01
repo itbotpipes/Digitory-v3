@@ -136,7 +136,7 @@ function IndustriesDetailsContent() {
       <main className="flex-grow bg-white dark:bg-[#0d0d0e]">
 
         {/* HERO SECTION */}
-        <section className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-20 bg-white dark:bg-[#0d0d0e]">
+        <section className="mx-auto max-w-7xl px-6 md:px-8 pt-4 pb-12 md:pt-6 md:pb-20 bg-white dark:bg-[#0d0d0e]">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center">
 
             {/* Left Column: Title & Intro */}

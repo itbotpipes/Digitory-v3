@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export default function AboutHero() {
   return (
-    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-8 pb-10 md:pt-12 md:pb-14 lg:pt-16 lg:pb-16">
+    <section className="mx-auto max-w-7xl px-6 md:px-8 pt-10 pb-10 md:pt-14 md:pb-14 lg:pt-16 lg:pb-16">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8 items-center">
 
         {/* Left Content Column */}
