@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Lightbulb, Code2, Trophy } from 'lucide-react';
+import { Lightbulb, Code2, Trophy, TrendingUp } from 'lucide-react';
 
 export default function StorySection() {
   const milestones = [
@@ -22,6 +22,12 @@ export default function StorySection() {
       title: 'Recognition Arrives',
       description: 'Hard work met recognition. Digitory received an award, marking an important milestone in our journey.',
       icon: <Trophy className="w-5 h-5 stroke-[2.2]" />,
+    },
+    {
+      year: 'Today',
+      title: 'Global Growth',
+      description: 'Now power restaurant businesses across the globe. Over 500+ active outlets rely on Digitory to manage orders, inventory, billing, and staff every day.',
+      icon: <TrendingUp className="w-5 h-5 stroke-[2.2]" />,
     },
   ];
 
@@ -46,13 +52,17 @@ export default function StorySection() {
         </div>
 
         {/* Timeline Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 items-stretch border border-zinc-200/60 dark:border-[#2a2a2e]/60 rounded-[32px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.01)] bg-white dark:bg-zinc-950/20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-stretch border border-zinc-200/60 dark:border-[#2a2a2e]/60 rounded-[32px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.01)] bg-white dark:bg-zinc-950/20">
           
           {milestones.map((item, idx) => (
             <div
               key={idx}
               className={`flex flex-col h-full items-start text-left relative p-8 transition-all duration-300 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/10 border-zinc-200/60 dark:border-[#2a2a2e]/60
-                ${idx !== milestones.length - 1 ? "border-b md:border-b-0 md:border-r" : ""}
+                ${idx !== milestones.length - 1 ? "border-b" : ""}
+                ${idx >= 2 ? "md:border-b-0" : ""}
+                lg:border-b-0
+                ${idx % 2 === 0 ? "md:border-r" : "md:border-r-0"}
+                ${idx !== 3 ? "lg:border-r" : "lg:border-r-0"}
               `}
             >
               {/* Year & Circle Node */}

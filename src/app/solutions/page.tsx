@@ -51,9 +51,9 @@ export default function SolutionsPage() {
         </ScrollFocusWrapper>
 
         {/* 5. One dashboard, every location in sync */}
-        <ScrollFocusWrapper>
+        {/* <ScrollFocusWrapper>
           <ChainControlDeck />
-        </ScrollFocusWrapper>
+        </ScrollFocusWrapper> */}
 
         {/* 6. Connects with your fav app */}
         <ScrollFocusWrapper>
