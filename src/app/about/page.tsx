@@ -14,6 +14,7 @@ import VisionSection from '../../components/about/VisionSection';
 import VisionMissionSection from '../../components/about/VisionMissionSection';
 import JourneySection from '../../components/about/JourneySection';
 import ClientsSection from '../../components/about/ClientsSection';
+import TextTestimonialsSection from '../../components/about/TextTestimonialsSection';
 
 export async function generateMetadata() {
   return await generateSeoMetadata('Page', 'about', {
@@ -68,6 +69,11 @@ export default function AboutPage() {
         {/* Logo Scroller Section */}
         <ScrollFocusWrapper>
           <ClientsSection />
+        </ScrollFocusWrapper>
+
+        {/* Text Testimonials Section */}
+        <ScrollFocusWrapper>
+          <TextTestimonialsSection />
         </ScrollFocusWrapper>
 
         <ScrollFocusWrapper>

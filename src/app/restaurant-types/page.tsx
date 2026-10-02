@@ -463,7 +463,16 @@ export default function IndustriesPage() {
         </section>
 
         {/* Counter Section (from About Page) */}
-        <BeliefsSection showBeliefs={false} showHeading={false} />
+        <BeliefsSection 
+          showBeliefs={false} 
+          showHeading={false} 
+          stats={[
+            { value: '190+', label: 'Brands', sublabel: 'Powering diverse brands across the hospitality ecosystem.' },
+            { value: '10+', label: 'Cities', sublabel: 'Building a presence across key cities.' },
+            { value: '4', label: 'Countries', sublabel: 'Expanding our footprint across global markets.' },
+            { value: '100K+', label: 'Guest Check-ins/Day', sublabel: 'Powering seamless experiences for thousands of guests every day.' },
+          ]}
+        />
 
         {/* Connects with your fav app section (from Solutions Page) */}
         <ToolIntegrations />

@@ -2,10 +2,10 @@ import React from 'react';
 
 export default function SolutionsStats() {
   const stats = [
-    { value: '500+', label: 'Outlets', desc: 'Scaling operations across a growing network of high-performing outlets.' },
+    { value: '4', label: 'Countries', desc: 'Expanding our footprint across global markets.' },
+    { value: '10+', label: 'Cities', desc: 'Building a presence across key cities.' },
     { value: '190+', label: 'Brands', desc: 'Powering diverse brands across the hospitality ecosystem.' },
     { value: '₹1,000 Cr+', label: 'GMV', desc: 'Enabling significant business value through Digitory.' },
-    { value: '100K+', label: 'Guest Check-ins/Day', desc: 'Powering seamless experiences for thousands of guests every day.' },
   ];
 
   return (

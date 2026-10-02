@@ -2,19 +2,33 @@
 
 import React from 'react';
 
+interface StatItem {
+  value: string;
+  label: string;
+  sublabel: string;
+}
+
 interface BeliefsSectionProps {
   showStats?: boolean;
   showBeliefs?: boolean;
   showHeading?: boolean;
+  stats?: StatItem[];
 }
 
-export default function BeliefsSection({ showStats = true, showBeliefs = true, showHeading = true }: BeliefsSectionProps) {
-  const stats = [
+export default function BeliefsSection({ 
+  showStats = true, 
+  showBeliefs = true, 
+  showHeading = true,
+  stats: customStats 
+}: BeliefsSectionProps) {
+  const defaultStats: StatItem[] = [
     { value: '500+', label: 'Outlets', sublabel: 'Scaling operations across a growing network of high-performing outlets.' },
-    { value: '190+', label: 'Brands', sublabel: 'Powering diverse brands across the hospitality ecosystem.' },
-    { value: '₹1,000 Cr+', label: 'GMV', sublabel: 'Enabling significant business value through Digitory.' },
-    { value: '100K+', label: 'Guest Check-ins/Day', sublabel: 'Powering seamless experiences for thousands of guests every day.' },
+    { value: '4', label: 'Countries', sublabel: 'Expanding our footprint across global markets.' },
+    { value: '10+', label: 'Cities', sublabel: 'Building a presence across key cities.' },
+    { value: '2 Regions Next', label: 'Expansion', sublabel: 'Taking Digitory into our next phase of expansion.' },
   ];
+
+  const stats = customStats || defaultStats;
 
   const beliefs = [
     {
