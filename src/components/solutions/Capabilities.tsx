@@ -378,7 +378,7 @@ export default function Capabilities() {
 
           // Map backend data directly
           const updatedItems = loaded.map((s: any) => {
-            const staticItem = staticItems.find(f => f.id === s.slug);
+            const staticItem = staticItems.find(f => f.id === s.slug || (s.slug === 'purchasing' && f.id === 'purchase-supplier'));
             const hasCustomCategory = s.category && s.category !== "Core Operations";
             const itemCategory = hasCustomCategory ? s.category : (staticItem?.category || "Run Operations");
 
@@ -390,7 +390,7 @@ export default function Capabilities() {
             
             const descVal = s.gridDesc && s.gridDesc.trim() !== '' 
               ? s.gridDesc 
-              : (s.description && s.description.trim() !== '' ? s.description : (s.subtitle && s.subtitle.trim() !== '' ? s.subtitle : (staticItem?.desc || '')));
+              : (staticItem?.desc || (s.description && s.description.length < 180 ? s.description : (s.subtitle && s.subtitle.length < 180 ? s.subtitle : (staticItem?.desc || ''))));
 
             return {
               id: s.slug || s._id,

@@ -36,6 +36,8 @@ export interface SolutionData {
   description: string;
   ctaText: string;
   trustText: string;
+  gridTitle?: string;
+  gridDesc?: string;
   whyChoose: WhyChooseItem[];
   featuresTitle: string;
   features: FeatureItem[];
@@ -135,6 +137,8 @@ export const solutionsDb: Record<string, SolutionData> = {
     title: "Multi-channel integrated POS",
     subtitle: "Restaurant POS software built for real restaurant work",
     description: "Digitory helps restaurants, cafés, bars, breweries, and cloud kitchens manage their daily operations with one simple system. Take orders, create bills, track inventory, manage staff, and view business reports, all from one platform. Whether you have one outlet or many, Digitory helps you save time, reduce mistakes, and run your business with confidence.",
+    gridTitle: "POS & Billing",
+    gridDesc: "Billing that keeps up. Dine-in, online, direct — every order and every payment through one fast, reliable system.",
     ctaText: "Request a Demo",
     trustText: "Trusted by restaurants, cafés, bars, and breweries across the globe.",
     whyChoose: [
@@ -227,6 +231,8 @@ export const solutionsDb: Record<string, SolutionData> = {
     title: "Kitchen display system",
     subtitle: "Kitchen Display System (KDS) for faster, smarter kitchens",
     description: "A busy kitchen needs more than skilled chefs. It needs a system that keeps every order organised. Digitory's Kitchen Display System (KDS) sends orders directly from the billing counter to the kitchen screen in real time. No paper tickets, no confusion, and no missed orders. Whether you run a restaurant, café, bar, brewery, or cloud kitchen, Digitory helps your team prepare food faster and serve customers on time.",
+    gridTitle: "Kitchen Display System (KDS)",
+    gridDesc: "The kitchen, in sync. Every ticket hits the right station instantly. Less shouting, less confusion, faster plates.",
     ctaText: "Request a Demo",
     trustText: "Trusted by restaurants, cafés, bars, and breweries across the globe.",
     whyChoose: [
@@ -294,6 +300,8 @@ export const solutionsDb: Record<string, SolutionData> = {
     title: "Automated inventory management",
     subtitle: "Automated inventory management for restaurants",
     description: "Good food starts with good inventory management. If you don't know what you have in stock, you can end up wasting food, running out of ingredients, or spending more than you should. Digitory's automated Inventory Management System helps you track every ingredient automatically, so you always know what's available and what needs to be reordered.",
+    gridTitle: "Automated inventory management",
+    gridDesc: "Inventory that thinks ahead. Every dish deducts stock automatically. Know what's running low before your chef does.",
     ctaText: "Request a Demo",
     trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across the globe.",
     whyChoose: [
@@ -361,6 +369,8 @@ export const solutionsDb: Record<string, SolutionData> = {
     title: "Food & liquor control system",
     subtitle: "Managing food and liquor stock shouldn't be difficult",
     description: "Digitory's Food & Liquor Control System helps you keep track of every ingredient and every bottle with accuracy. Know what you have in stock, reduce waste, and make better business decisions with real-time updates. Whether you run a restaurant, bar, brewery, pub, or café, Digitory helps you stay in control every day.",
+    gridTitle: "Multi-Outlet Management",
+    gridDesc: "One outlet or twenty. Full visibility across every location without chasing managers or waiting on end-of-day reports.",
     ctaText: "Request a Demo",
     trustText: "Trusted by restaurants, bars, breweries, and cafés across the globe.",
     whyChoose: [
@@ -428,6 +438,8 @@ export const solutionsDb: Record<string, SolutionData> = {
     title: "Analytics & reports",
     subtitle: "Dashboard & reports system for smarter restaurant decisions",
     description: "Sales, orders, inventory, customer visits, and staff performance all tell you how your business is doing. Digitory brings all this information together in one place, so you can understand your restaurant better and make smarter decisions. Whether you have one outlet or many, Digitory gives you the insights you need to grow your business.",
+    gridTitle: "Business Analytics",
+    gridDesc: "Your business, live. Sales, orders, inventory, outlet performance — everything you need to know, in one place, in real time.",
     ctaText: "Request a Demo",
     trustText: "Trusted by restaurants, cafés, bars, breweries, and cloud kitchens across the globe.",
     whyChoose: [
@@ -494,7 +506,9 @@ export const solutionsDb: Record<string, SolutionData> = {
     badge: "06 • Cashless Event & Entry System",
     title: "Cashless Event & Entry Management System",
     subtitle: "Managing events should be simple, even when the crowd is large",
-    description: "Digitory's Cashless Event & Entry Management System helps you manage guest entry, payments, registrations, and event operations from one simple platform. Guests can enter quickly, pay digitally, and enjoy a smooth event experience without long queues. Whether you're hosting a private party, a live concert, a brewery event, or a nightclub night, Digitory helps your team stay organised from start to finish.",
+    description: "Digitory's Cashless Event & Entry Management System helps you manage guest entry, payments, registrations, and event operations from one simple platform. Guests can enter quickly, pay digitally, and enjoy a smooth event experience without long queues.",
+    gridTitle: "Clubs & Events",
+    gridDesc: "Cashless, end to end. Prepaid ticketing to final settlement — run high-volume events with no cash handling and no leakage.",
     ctaText: "Request a Demo",
     trustText: "Trusted by restaurants, bars, breweries, cafés, and event venues across the globe.",
     whyChoose: [

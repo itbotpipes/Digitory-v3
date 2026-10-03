@@ -5,10 +5,12 @@ import Image from "next/image";
 import { 
   ShoppingBag, 
   UtensilsCrossed, 
+  Gift, 
+  Star, 
+  CalendarCheck, 
   CreditCard, 
-  QrCode, 
-  Receipt, 
-  Gift 
+  Utensils, 
+  Megaphone 
 } from "lucide-react";
 
 interface IntegrationItem {
@@ -27,16 +29,22 @@ export default function ToolIntegrations() {
       icon: <ShoppingBag className="w-4.5 h-4.5 stroke-[2.2]" />,
     },
     {
-      id: "razorpay",
-      name: "Razorpay",
-      subtext: "UPI & Card reconciliation.",
-      icon: <CreditCard className="w-4.5 h-4.5 stroke-[2.2]" />,
+      id: "reelo",
+      name: "Reelo",
+      subtext: "Automated customer loyalty.",
+      icon: <Gift className="w-4.5 h-4.5 stroke-[2.2]" />,
     },
     {
-      id: "paytm",
-      name: "Paytm",
-      subtext: "Instant QR payments.",
-      icon: <QrCode className="w-4.5 h-4.5 stroke-[2.2]" />,
+      id: "reserve-go",
+      name: "Reserve Go",
+      subtext: "Smart table reservations.",
+      icon: <CalendarCheck className="w-4.5 h-4.5 stroke-[2.2]" />,
+    },
+    {
+      id: "eat-app",
+      name: "Eat App",
+      subtext: "Guest & table management.",
+      icon: <Utensils className="w-4.5 h-4.5 stroke-[2.2]" />,
     },
   ];
 
@@ -48,16 +56,22 @@ export default function ToolIntegrations() {
       icon: <UtensilsCrossed className="w-4.5 h-4.5 stroke-[2.2]" />,
     },
     {
-      id: "pinelabs",
-      name: "Pine Labs",
-      subtext: "Smart POS & card swipe.",
-      icon: <Receipt className="w-4.5 h-4.5 stroke-[2.2]" />,
+      id: "rannkly",
+      name: "Rannkly",
+      subtext: "Review & reputation sync.",
+      icon: <Star className="w-4.5 h-4.5 stroke-[2.2]" />,
     },
     {
-      id: "reelo",
-      name: "Reelo",
-      subtext: "Automated customer loyalty.",
-      icon: <Gift className="w-4.5 h-4.5 stroke-[2.2]" />,
+      id: "payments",
+      name: "Payments",
+      subtext: "UPI, Cards & QR reconciliation.",
+      icon: <CreditCard className="w-4.5 h-4.5 stroke-[2.2]" />,
+    },
+    {
+      id: "fame-pilot",
+      name: "Fame Pilot",
+      subtext: "Brand feedback & customer growth.",
+      icon: <Megaphone className="w-4.5 h-4.5 stroke-[2.2]" />,
     },
   ];
 
@@ -75,7 +89,7 @@ export default function ToolIntegrations() {
         </div>
         <div className="lg:col-span-5 text-zinc-650 dark:text-zinc-400 text-sm md:text-base leading-relaxed lg:pt-2">
           <p>
-            1-click setup with Swiggy, Zomato, Razorpay, Paytm, Pine Labs, Reelo, and leading industry platforms.
+            1-click setup with Swiggy, Zomato, Reelo, Rannkly, Reserve Go, Payments, Eat App, and Fame Pilot.
           </p>
         </div>
       </div>
@@ -84,7 +98,7 @@ export default function ToolIntegrations() {
       <div className="relative w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12 md:gap-0">
         
         {/* Mobile View: Simple Grid (Hidden on Desktop) */}
-        <div className="md:hidden grid grid-cols-1 gap-4 w-full">
+        <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
           {allIntegrations.map((item) => (
             <div key={item.id} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 flex items-center gap-4 shadow-sm w-full">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-zinc-50 dark:bg-zinc-800/60 text-zinc-700 dark:text-zinc-300">
@@ -101,10 +115,10 @@ export default function ToolIntegrations() {
         {/* Desktop View: Network Diagram */}
         <div className="hidden md:flex items-center justify-center w-full">
           
-          {/* Left Column (3 items) */}
-          <div className="relative flex flex-col gap-10 w-[220px]">
+          {/* Left Column (4 items) */}
+          <div className="relative flex flex-col gap-6 w-[220px]">
             {/* Vertical Circuit Line */}
-            <div className="absolute -right-10 top-[3rem] bottom-[3rem] w-[2px] bg-gradient-to-b from-zinc-200/20 via-zinc-200 dark:via-zinc-700 to-zinc-200/20" />
+            <div className="absolute -right-10 top-[2.2rem] bottom-[2.2rem] w-[2px] bg-gradient-to-b from-zinc-200/20 via-zinc-200 dark:via-zinc-700 to-zinc-200/20" />
             {/* Horizontal Connection to Center Node */}
             <div className="absolute -right-20 top-1/2 w-10 h-[2px] bg-gradient-to-r from-zinc-200 dark:from-zinc-700 to-[#FF4F18]/40" />
             
@@ -138,10 +152,10 @@ export default function ToolIntegrations() {
             </div>
           </div>
 
-          {/* Right Column (3 items) */}
-          <div className="relative flex flex-col gap-10 w-[220px]">
+          {/* Right Column (4 items) */}
+          <div className="relative flex flex-col gap-6 w-[220px]">
             {/* Vertical Circuit Line */}
-            <div className="absolute -left-10 top-[3rem] bottom-[3rem] w-[2px] bg-gradient-to-b from-zinc-200/20 via-zinc-200 dark:via-zinc-700 to-zinc-200/20" />
+            <div className="absolute -left-10 top-[2.2rem] bottom-[2.2rem] w-[2px] bg-gradient-to-b from-zinc-200/20 via-zinc-200 dark:via-zinc-700 to-zinc-200/20" />
             {/* Horizontal Connection to Center Node */}
             <div className="absolute -left-20 top-1/2 w-10 h-[2px] bg-gradient-to-l from-zinc-200 dark:from-zinc-700 to-[#FF4F18]/40" />
             
@@ -168,3 +182,4 @@ export default function ToolIntegrations() {
     </section>
   );
 }
+

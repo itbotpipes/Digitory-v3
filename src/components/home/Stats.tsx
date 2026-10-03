@@ -21,7 +21,7 @@ export default function Stats() {
     },
     {
       value: '100K+',
-      label: 'Guest Check-ins/Day',
+      label: 'Check-ins/Day',
       desc: 'Powering seamless experiences for thousands of guests every day.',
     },
   ];

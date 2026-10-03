@@ -24,18 +24,11 @@ export default function ClientsSection() {
     <section className="bg-white dark:bg-[#0d0d0e] py-10 md:py-16 transition-colors duration-300 relative overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 md:px-8">
 
-        {/* Header Block: Left Heading, Right Paragraph */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mb-10 md:mb-14 items-center">
-          <div className="lg:col-span-6">
-            <h2 className="text-3xl sm:text-4xl md:text-[44px] font-[850] tracking-tight leading-[1.15] text-[#111111] dark:text-white">
-              Our <span className="text-[#FF4F18]">Clients</span>
-            </h2>
-          </div>
-          <div className="lg:col-span-6 lg:text-right text-zinc-650 dark:text-zinc-400 text-[17px] leading-relaxed">
-            <p>
-              Trusted by Premium Bars, Breweries & Clubs
-            </p>
-          </div>
+        {/* Header Block: Centered Heading */}
+        <div className="mb-10 md:mb-14 text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-[44px] font-[850] tracking-tight leading-[1.15] text-[#111111] dark:text-white">
+            Our <span className="text-[#FF4F18]">Clients</span>
+          </h2>
         </div>
 
         {/* Logo Scroller Container with Edge Gradient Mask */}

@@ -41,21 +41,21 @@ export default function VisionMissionSection() {
           {cards.map((card, idx) => (
             <div
               key={idx}
-              className="flex flex-col justify-start rounded-[32px] p-6 sm:p-8 md:p-9 border border-zinc-200/70 dark:border-[#2a2a2e]/70 bg-white dark:bg-zinc-950/40 shadow-[0_2px_8px_rgba(0,0,0,0.01)] transition-all duration-300 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/10"
+              className="flex flex-col justify-start rounded-[32px] p-6 sm:p-8 md:p-9 border border-zinc-800/80 dark:border-zinc-200/80 bg-[#111111] dark:bg-white shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-300 hover:bg-[#18181b] dark:hover:bg-zinc-50"
             >
               <div className="space-y-4">
                 {/* Icon Container */}
-                <div className="flex h-13 w-13 items-center justify-center rounded-2xl  dark:bg-[#FF4F18]/10 border border-orange-200/60 dark:border-[#FF4F18]/20 text-[#FF4F18] shrink-0 shadow-xs">
+                <div className="flex h-13 w-13 items-center justify-center rounded-2xl bg-[#FF4F18]/15 dark:bg-orange-50 border border-[#FF4F18]/25 dark:border-orange-200/80 text-[#FF4F18] shrink-0 shadow-xs">
                   {card.icon}
                 </div>
 
                 {/* Card Title */}
-                <h3 className="text-[18px] sm:text-[20px] font-bold text-zinc-900 dark:text-white leading-snug">
+                <h3 className="text-[18px] sm:text-[20px] font-bold text-white dark:text-zinc-900 leading-snug">
                   {card.title}
                 </h3>
 
                 {/* Body Text */}
-                <p className="text-[14px] sm:text-[15px] text-zinc-500 dark:text-zinc-400 leading-relaxed font-normal">
+                <p className="text-[14px] sm:text-[15px] text-zinc-400 dark:text-zinc-600 leading-relaxed font-normal">
                   {card.description}
                 </p>
               </div>

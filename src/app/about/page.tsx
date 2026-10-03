@@ -55,6 +55,10 @@ export default function AboutPage() {
         <ScrollFocusWrapper>
           <VisionMissionSection />
         </ScrollFocusWrapper>
+        
+        <ScrollFocusWrapper>
+          <BeliefsSection showBeliefs={true} showStats={false} />
+        </ScrollFocusWrapper>
 
         {/* Our Journey of Empathy and Excellence */}
         <ScrollFocusWrapper>
@@ -76,9 +80,7 @@ export default function AboutPage() {
           <TextTestimonialsSection />
         </ScrollFocusWrapper>
 
-        <ScrollFocusWrapper>
-          <BeliefsSection showBeliefs={true} showStats={false} />
-        </ScrollFocusWrapper>
+        
 
 
         {/* <ScrollFocusWrapper>
