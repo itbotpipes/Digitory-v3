@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 interface Testimonial {
   id: string;
@@ -86,6 +87,11 @@ export default function RestaurantOSPage() {
   const [playingState, setPlayingState] = useState<{ [key: number]: boolean }>({});
   const [fullscreenVideo, setFullscreenVideo] = useState<Testimonial | null>(null);
   const [cardSpacing, setCardSpacing] = useState(275);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
   const popupVideoRef = useRef<HTMLVideoElement | null>(null);
@@ -99,6 +105,26 @@ export default function RestaurantOSPage() {
 
   // Visible position offsets around the center card (offset 0)
   const visibleOffsets = [-3, -2, -1, 0, 1, 2, 3];
+
+  // Lock background body scroll and listen for Escape key when popup modal is open
+  useEffect(() => {
+    if (fullscreenVideo) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setFullscreenVideo(null);
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [fullscreenVideo]);
 
   // Fetch dynamic video testimonials from API
   useEffect(() => {
@@ -471,14 +497,15 @@ export default function RestaurantOSPage() {
         </div>
       </div>
 
-      {/* Fullscreen Video Popup Modal */}
-      {fullscreenVideo && (
+      {/* Fullscreen Video Popup Modal rendered via Portal */}
+      {mounted && fullscreenVideo && createPortal(
         <div
-          className="fixed inset-0 z-40 flex items-center justify-center bg-black/80 backdrop-blur-md px-4 pt-24 pb-6 md:pt-28 md:pb-8 animate-in fade-in duration-200"
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-6 md:p-8 animate-in fade-in duration-200"
           onClick={() => setFullscreenVideo(null)}
+          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh" }}
         >
           <div
-            className="relative w-full max-w-4xl bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[calc(100vh-7.5rem)] my-auto"
+            className="relative w-full max-w-4xl bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] my-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Modal Button */}
@@ -570,7 +597,8 @@ export default function RestaurantOSPage() {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

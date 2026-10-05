@@ -50,12 +50,12 @@ export default function VisionMissionSection() {
                 </div>
 
                 {/* Card Title */}
-                <h3 className="text-[18px] sm:text-[20px] font-bold text-white dark:text-zinc-900 leading-snug">
+                <h3 className="text-[18px] sm:text-[20px] font-bold text-white dark:!text-black leading-snug">
                   {card.title}
                 </h3>
 
                 {/* Body Text */}
-                <p className="text-[14px] sm:text-[15px] text-zinc-400 dark:text-zinc-600 leading-relaxed font-normal">
+                <p className="text-[14px] sm:text-[15px] text-zinc-400 dark:!text-zinc-700 leading-relaxed font-normal">
                   {card.description}
                 </p>
               </div>

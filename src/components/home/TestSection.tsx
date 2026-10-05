@@ -311,7 +311,7 @@ export default function TestSection() {
 
           {/* Right: Steps Timeline (After Digitory) */}
           <div className="lg:col-span-6 w-full max-w-[480px] mx-auto lg:ml-auto">
-            <h3 className="text-lg sm:text-xl font-bold tracking-tight text-[#FF4F18] mb-5 text-center lg:text-left underline underline-offset-8 decoration-2 decoration-[#FF4F18]">
+            <h3 className="text-lg sm:text-xl font-bold italic tracking-tight text-[#FF4F18] mb-5 text-center lg:text-left underline underline-offset-8 decoration-2 decoration-[#FF4F18]">
               After Digitory
             </h3>
 

@@ -148,7 +148,7 @@ export default function Features() {
         </div>
 
         {/* Features Card Container with 3x2 inner grid */}
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-[28px] overflow-hidden bg-white dark:bg-zinc-900 grid grid-cols-1 md:grid-cols-3">
+        <div className="border border-zinc-200 dark:border-zinc-800 rounded-[24px] md:rounded-[28px] overflow-hidden bg-white dark:bg-zinc-900 grid grid-cols-1 md:grid-cols-3">
           {features.map((item, idx) => {
             const isLastRow = Math.floor(idx / 3) === Math.floor((features.length - 1) / 3);
             const isLastColInRow = (idx + 1) % 3 === 0;
@@ -163,23 +163,27 @@ export default function Features() {
               <Link
                 key={idx}
                 href={`/solutions/${item.slug}`}
-                className={`p-8 sm:p-10 flex flex-col justify-start transition-all duration-300 hover:bg-zinc-100/60 dark:hover:bg-white/5 cursor-pointer group ${borderClasses}`}
+                className={`p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:bg-zinc-100/60 dark:hover:bg-white/5 cursor-pointer group ${borderClasses}`}
               >
-                {/* Feature Index */}
-                <span className="text-sm font-bold text-zinc-400 dark:text-zinc-600 mb-2">{item.num}</span>
+                <div>
+                  {/* Feature Index */}
+                  <span className="text-xs sm:text-sm font-bold text-zinc-400 dark:text-zinc-600 block mb-0.5">{item.num}</span>
 
-                {/* Feature Image Mockup */}
-                <div className="w-full h-[140px] flex items-center justify-center my-4 select-none relative">
-                  <img
-                    src={item.imageSrc}
-                    alt={item.title}
-                    className="max-w-[240px] max-h-[140px] object-contain rounded-xl"
-                  />
+                  {/* Feature Image Mockup - maximized inside tight container */}
+                  <div className="w-full h-[155px] sm:h-[170px] flex items-center justify-center my-1 select-none relative">
+                    <img
+                      src={item.imageSrc}
+                      alt={item.title}
+                      className="w-full h-full max-h-[170px] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.03]"
+                    />
+                  </div>
                 </div>
 
                 {/* Title & Description */}
-                <h3 className="text-lg font-bold text-zinc-950 dark:text-white mb-2 mt-4">{item.title}</h3>
-                <p className="text-zinc-500 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                <div className="mt-1">
+                  <h3 className="text-base sm:text-[17px] font-bold text-zinc-950 dark:text-white mb-1.5">{item.title}</h3>
+                  <p className="text-zinc-500 dark:text-zinc-400 text-xs sm:text-[13px] leading-relaxed">{item.desc}</p>
+                </div>
               </Link>
             );
           })}
