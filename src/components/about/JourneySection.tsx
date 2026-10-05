@@ -12,12 +12,12 @@ export default function JourneySection() {
           {/* Left Column: Heading and Description */}
           <div className="lg:col-span-6 flex flex-col justify-center space-y-6 md:space-y-8 text-left">
             <h2 className="text-3xl sm:text-4xl md:text-[44px] font-[850] tracking-tight leading-[1.15] text-[#111111] dark:text-white">
-              Our Journey of <br />
-              <span className="text-[#FF4F18]">Empathy and Excellence</span>
+              Technology Built Around <br />
+              <span className="text-[#FF4F18]">People and Possibilities</span>
             </h2>
 
             <p className="text-[17px] text-zinc-650 dark:text-zinc-400 leading-relaxed">
-              We are proud to be recognized as a K-tech Elevate call 2 Award Winning Company. This accolade highlights our commitment to excellence and innovation in the tech industry. Our solutions have made a significant impact, driving success and transformation in our clients’ operations.
+              We believe technology is at its best when it solves real problems for real people. Our journey has been shaped by understanding our clients, creating meaningful solutions, and constantly finding better ways to move their businesses forward. This recognition reflects our commitment to building technology with purpose, empathy, and impact.
             </p>
           </div>
 
